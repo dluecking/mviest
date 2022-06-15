@@ -1,0 +1,13 @@
+virome_min_len: 2000
+metagenome_min_min_len: 25000
+minimum_number_of_virome_input_contigs: 20
+long_contig_cutoff: 150000
+threads: 2
+dvf_path: "/home/dlueckin/bin/DeepVirFinder/dvf.py"
+viromeQC_path: "/home/dlueckin/bin/viromeqc"
+platon_db: "/home/dlueckin/dbs/platon_db/db/"
+vs2_db: "/home/dlueckin/dbs/vs2/db/"
+checkv_db: "/home/dlueckin/dbs/checkv-db-v1.0"
+mv_producer_list: "data/mv_producer/list_of_mv_producer.list"
+samples:
+    - sargasso
