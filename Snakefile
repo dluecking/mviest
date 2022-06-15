@@ -27,13 +27,14 @@ rule mvip_plot:
         viromeQC_mvome="results/{sample}/virome/mvome_QC.tsv",
         viromeQC_virome="results/{sample}/virome/virome_QC.tsv",
         contig_summary="results/{sample}/contig_summary_{sample}.tsv",
+        mvome_reads_vs_metagenome_rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt",
+
 
 
     
     output:
         "results/{sample}/{sample}_mvip_plot.png""
     shell:
-
 
 
 ### sanity checks ##############################################################
@@ -122,15 +123,16 @@ rule contig_selector:
     shell:
         "python scripts/contig_selector.py {wildcards.sample} 2> {log}"
 
+
 ### kaiju ######################################################################
 rule kaiju:
     conda:
         "envs/kaiju.yaml"
     input:
-        mvome_r1="results/{sample}/reads/mvome.reads1.fq.gz",
-        mvome_r2="results/{sample}/reads/mvome.reads2.fq.gz",
-        virome_r1="results/{sample}/reads/mvome.reads2.fq.gz",
-        virome_r2="results/{sample}/reads/mvome.reads2.fq.gz"
+        mvome_r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
+        mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
+        virome_r1="results/{sample}/reads/true.virome.reads1.fq.gz",
+        virome_r2="results/{sample}/reads/true.virome.reads2.fq.gz"
     output:
         mvome_raw="results/{sample}/kaiju/mvome.out",
         virome_raw="results/{sample}/kaiju/virome.out",
@@ -170,10 +172,10 @@ rule viromeQC:
         viromeQC_path=config["viromeQC_path"]
     threads: 8
     input:
-        mvome_r1="results/{sample}/reads/mvome.reads1.fq.gz",
-        mvome_r2="results/{sample}/reads/mvome.reads2.fq.gz",
-        virome_r1="results/{sample}/reads/mvome.reads2.fq.gz",
-        virome_r2="results/{sample}/reads/mvome.reads2.fq.gz"
+        mvome_r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
+        mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
+        virome_r1="results/{sample}/reads/true.mvome.reads2.fq.gz",
+        virome_r2="results/{sample}/reads/true.vome.reads2.fq.gz"
     output:
         mvome_out="results/{sample}/viromeQC/mvome_QC.tsv",
         virome_out="results/{sample}/viromeQC/virome_QC.tsv"        
@@ -190,7 +192,6 @@ rule viromeQC:
         -i {input.virome_r1} {input.virome_r2} \
         -o {output.virome_out}
         """
-
 
 ### viral prediction ###########################################################
 rule DeepVirFinder:
@@ -285,8 +286,8 @@ rule map_virome_reads_to_mv_contigs:
         r2="results/{sample}/reads/virome.reads2.fastq.gz",
         mv_contigs="results/{sample}/contigs/true.mvome.fasta"
     output:
-        r1="results/{sample}/reads/mvome.reads1.fq.gz",
-        r2="results/{sample}/reads/mvome.reads2.fq.gz",
+        r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
+        r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
         statsfile="results/{sample}/mappings/input_reads_vs_mv_contigs/statsfile.txt",
     log:
         "results/{sample}/log/map_virome_reads_to_mv_contigs.log"
@@ -310,6 +311,8 @@ rule map_virome_reads_to_true_virome_contigs:
         r2="results/{sample}/reads/virome.reads2.fastq.gz",
         virome_contigs="results/{sample}/contigs/true.virome.fasta"
     output:
+        r1="results/{sample}/reads/true.virome.reads1.fq.gz",
+        r2="results/{sample}/reads/true.virome.reads2.fq.gz",
         scafstats="results/{sample}/mappings/input_reads_vs_true_virome_contigs/scafstats.txt",
         rpkm="results/{sample}/mappings/input_reads_vs_true_virome_contigs/rpkm.txt"
     log:
@@ -321,6 +324,7 @@ rule map_virome_reads_to_true_virome_contigs:
 
         bbmap.sh in={input.r1} in2={input.r2} \
         ref={input.virome_contigs} \
+        outm={output.r1} outm2={output.r2} \
         scafstats={output.statsfile} \
         t={threads}
         """
@@ -329,8 +333,8 @@ rule map_mv_positive_reads_to_metagenome:
     conda:
         "envs/bbmap.yaml" # "echo lala"
     input:
-        r1="results/{sample}/reads/mvome.reads1.fq.gz",
-        r2="results/{sample}/reads/mvome.reads2.fq.gz",
+        r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
+        r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
         metagenome_contigs="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
     output:
         rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt",
