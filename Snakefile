@@ -21,7 +21,14 @@ rule mvip_summary:
     shell:
 
 rule mvip_plot:
-    input: 
+    input:
+        kaiju_mvome_table="results/{sample}/kaiju/mvome_summary.tsv",
+        kaiju_virome_table="results/{sample}/kaiju/virome_summary.tsv",
+        viromeQC_mvome="results/{sample}/virome/mvome_QC.tsv",
+        viromeQC_virome="results/{sample}/virome/virome_QC.tsv",
+        contig_summary="results/{sample}/contig_summary_{sample}.tsv",
+
+
     
     output:
         "results/{sample}/{sample}_mvip_plot.png""
@@ -115,6 +122,42 @@ rule contig_selector:
     shell:
         "python scripts/contig_selector.py {wildcards.sample} 2> {log}"
 
+### kaiju ######################################################################
+rule kaiju:
+    conda:
+        "envs/kaiju.yaml"
+    input:
+        mvome_r1="results/{sample}/reads/mvome.reads1.fq.gz",
+        mvome_r2="results/{sample}/reads/mvome.reads2.fq.gz",
+        virome_r1="results/{sample}/reads/mvome.reads2.fq.gz",
+        virome_r2="results/{sample}/reads/mvome.reads2.fq.gz"
+    output:
+        mvome_raw="results/{sample}/kaiju/mvome.out",
+        virome_raw="results/{sample}/kaiju/virome.out",
+        mvome_table="results/{sample}/kaiju/mvome_summary.tsv",
+        virome_table="results/{sample}/kaiju/virome_summary.tsv"
+    params:
+        kaiju_fmi=config["kaiju_fmi"],
+        kaiju_nodes=config["kaiju_fmi"],
+        kaiju_names=config["kaiju_names"]
+    threads: 8
+    shell:
+    """
+    mkdir -p results/{sample}/kaiju
+
+    kaiju-multi -z {threads} \
+    -t {params.kaiju_nodes} -f {params.kaiju_fmi} \
+    -i {input.mvome_r1},{input.virome_r1} \
+    -j {input.mvome_r2},{input.virome_r2} \
+    -o {output.mvome_raw},{output.virome_raw}
+
+    kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
+    -r genus -o {output.mvome_table} {output.mvome_raw}
+
+    kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
+    -r genus -o {output.virome_table} {output.virome_raw}
+    """
+
 
 ### viromeQC ###################################################################
 rule viromeQC:
@@ -132,10 +175,11 @@ rule viromeQC:
         virome_r1="results/{sample}/reads/mvome.reads2.fq.gz",
         virome_r2="results/{sample}/reads/mvome.reads2.fq.gz"
     output:
-        mvome_out="results/{sample}/viromeQC_mvome_{sample}.tsv",
-        virome_out="results/{sample}/viromeQC_virome_{sample}.tsv"        
+        mvome_out="results/{sample}/viromeQC/mvome_QC.tsv",
+        virome_out="results/{sample}/viromeQC/virome_QC.tsv"        
     shell:
         """
+        mkdir -p viromeQC
         python {params.viromeQC_path}/viromeQC.py -w environmental \
         --diamond_threads {threads} --bowtie2_threads {threads} \
         -i {input.mvome_r1} {input.mvome_r2} \
@@ -146,8 +190,6 @@ rule viromeQC:
         -i {input.virome_r1} {input.virome_r2} \
         -o {output.virome_out}
         """
-
-
 
 
 ### viral prediction ###########################################################
@@ -257,6 +299,7 @@ rule map_virome_reads_to_mv_contigs:
         ref={input.mv_contigs} \
         outm={output.r1} outm2={output.r2} \
         statsfile={output.statsfile} \
+        t={threads}
         """
 
 rule map_virome_reads_to_true_virome_contigs:
@@ -279,36 +322,27 @@ rule map_virome_reads_to_true_virome_contigs:
         bbmap.sh in={input.r1} in2={input.r2} \
         ref={input.virome_contigs} \
         scafstats={output.statsfile} \
+        t={threads}
         """
 
-rule map_mv_positive_reads_to_mv_producer:
+rule map_mv_positive_reads_to_metagenome:
     conda:
         "envs/bbmap.yaml" # "echo lala"
-    params:
-        reference_list = config["mv_producer_list"]
     input:
         r1="results/{sample}/reads/mvome.reads1.fq.gz",
-        r2="results/{sample}/reads/mvome.reads2.fq.gz"
+        r2="results/{sample}/reads/mvome.reads2.fq.gz",
+        metagenome_contigs="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
     output:
-        "results/{sample}/all_mv_producer_mapped.txt"
+        rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt",
+        scafstats="results/{sample}/mappings/mvome_positive_vs_metagenome/scafstats.txt"
     threads: 8
     shell:
         """
-        mkdir -p results/{wildcards.sample}/mappings/mv_producer
+        mkdir -p results/{wildcards.sample}/mappings/mvome_positive_vs_metagenome/
 
-        for reference in `cat {params.reference_list}`; do
-            bash scripts/map_reads_to_reference.sh \
-            {input.r1} data/mv_producer/genomes/${{reference}} \
-            {wildcards.sample}_r1_vs_${{reference}} \
-            results/{wildcards.sample}/mappings/mv_producer {threads};
-
-            bash scripts/map_reads_to_reference.sh \
-            {input.r2} data/mv_producer/genomes/${{reference}} \
-            {wildcards.sample}_r2_vs_${{reference}} \
-            results/{wildcards.sample}/mappings/mv_producer {threads};
-        done;
-
-        rm results/{wildcards.sample}/mappings/mv_producer/*.fastq.gz
-        rm results/{wildcards.sample}/mappings/mv_producer/*.bam
-        touch {output}
+        bbmap.sh in={input.r1} in2={input.r2} \
+        ref={input.metagenome_contigs} \
+        scafstats={output.scafstats} \
+        rpkm={output.rpkm} \
+        t={threads}
         """    

@@ -8,6 +8,9 @@ viromeQC_path: "/home/dlueckin/bin/viromeqc"
 platon_db: "/home/dlueckin/dbs/platon_db/db/"
 vs2_db: "/home/dlueckin/dbs/vs2/db/"
 checkv_db: "/home/dlueckin/dbs/checkv-db-v1.0"
+kaiju_fmi: 
+kaiju_nodes:
+kaiju_names:
 mv_producer_list: "data/mv_producer/list_of_mv_producer.list"
 samples:
     - sargasso
