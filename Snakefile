@@ -1,40 +1,60 @@
+"""
+Command to run:
+ Sakemake -pr -j 16 --use-conda --conda-frontend mamba --keep-going \
+ --latency-wait 340 --rerun-incomplete --conda-prefix ~/envs/ \
+ --cluster  "sbatch --time={resources.time} --mem={resources.mem} --ntasks={resources.threads} \
+ --output log/%x.%j.out --partition=CLUSTER"
+
+Where
+mem: 80G (kaiju 250)
+time: 12:00:00 h
+ntasks: 8
+"""
+
+
 import os
 
-localrules: filter_input_by_length, count_virome_contigs,
-            check_input, vs2_summary
+localrules: mviest_summary, mviest_plot, check_input, count_virome_contigs, 
+            filter_input_by_length, contig_summary, contig_selector, vs2_summary
 
 configfile: "config.yaml"
 ### all ########################################################################
 rule all:
     input:
-        expand("results/{sample}/{sample}_mvip_summary.tsv", sample = config["samples"]),
-        expand("results/{sample}/{sample}_mvip_plot.png", sample = config["samples"])
-
+        expand("results/{sample}/{sample}_mviest_summary.tsv", sample = config["samples"]),
+        expand("results/{sample}/{sample}_mviest_plot.png", sample = config["samples"])
 
 
 ### summary steps ##############################################################
-rule mvip_summary:
+rule mviest_summary:
     input: 
-    
+        "results/{sample}/{sample}_mviest_plot.png"
     output:
-        "results/{sample}/{sample}_mvip_summary.tsv"
+        "results/{sample}/{sample}_mviest_summary.tsv"
     shell:
+        "touch {output}"
 
-rule mvip_plot:
+rule mviest_plot:
+    conda:
+        "envs/R.yaml"
     input:
         kaiju_mvome_table="results/{sample}/kaiju/mvome_summary.tsv",
         kaiju_virome_table="results/{sample}/kaiju/virome_summary.tsv",
-        viromeQC_mvome="results/{sample}/virome/mvome_QC.tsv",
-        viromeQC_virome="results/{sample}/virome/virome_QC.tsv",
+        viromeQC_mvome="results/{sample}/viromeQC/mvome_QC.tsv",
+        viromeQC_virome="results/{sample}/viromeQC/virome_QC.tsv",
         contig_summary="results/{sample}/contig_summary_{sample}.tsv",
-        mvome_reads_vs_metagenome_rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt",
-
-
-
-    
+        mvome_reads_vs_metagenome_rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt"
     output:
-        "results/{sample}/{sample}_mvip_plot.png""
+        "results/{sample}/{sample}_mviest_plot.png"
     shell:
+        """
+        Rscript scripts/mviest_plot.R \
+        {input.kaiju_mvome_table} {input.kaiju_virome_table} \
+        {input.viromeQC_mvome} {input.viromeQC_virome} \
+        {input.contig_summary} \
+        {input.mvome_reads_vs_metagenome_rpkm} \
+        {output}
+        """
 
 
 ### sanity checks ##############################################################
@@ -66,6 +86,7 @@ rule count_virome_contigs:
             touch results/{wildcards.sample}/NOT_enough_filtered_virome_contigs.txt
         fi
         """
+
 
 ### handle contigs #############################################################
 rule filter_input_by_length:
@@ -142,23 +163,26 @@ rule kaiju:
         kaiju_fmi=config["kaiju_fmi"],
         kaiju_nodes=config["kaiju_fmi"],
         kaiju_names=config["kaiju_names"]
-    threads: 8
+    resources:
+        mem=config["sbatch_high_mem"],
+        time="12:00:00",
+        ntasks=8
     shell:
-    """
-    mkdir -p results/{sample}/kaiju
+        """
+        mkdir -p results/{wildcards.sample}/kaiju
 
-    kaiju-multi -z {threads} \
-    -t {params.kaiju_nodes} -f {params.kaiju_fmi} \
-    -i {input.mvome_r1},{input.virome_r1} \
-    -j {input.mvome_r2},{input.virome_r2} \
-    -o {output.mvome_raw},{output.virome_raw}
+        kaiju-multi -z {resources.ntasks} \
+        -t {params.kaiju_nodes} -f {params.kaiju_fmi} \
+        -i {input.mvome_r1},{input.virome_r1} \
+        -j {input.mvome_r2},{input.virome_r2} \
+        -o {output.mvome_raw},{output.virome_raw}
 
-    kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
-    -r genus -o {output.mvome_table} {output.mvome_raw}
+        kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
+        -r genus -o {output.mvome_table} {output.mvome_raw}
 
-    kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
-    -r genus -o {output.virome_table} {output.virome_raw}
-    """
+        kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
+        -r genus -o {output.virome_table} {output.virome_raw}
+        """
 
 
 ### viromeQC ###################################################################
@@ -170,12 +194,15 @@ rule viromeQC:
         "envs/viromeQC.yaml"
     params:
         viromeQC_path=config["viromeQC_path"]
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     input:
         mvome_r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
         mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
         virome_r1="results/{sample}/reads/true.mvome.reads2.fq.gz",
-        virome_r2="results/{sample}/reads/true.vome.reads2.fq.gz"
+        virome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz"
     output:
         mvome_out="results/{sample}/viromeQC/mvome_QC.tsv",
         virome_out="results/{sample}/viromeQC/virome_QC.tsv"        
@@ -183,15 +210,16 @@ rule viromeQC:
         """
         mkdir -p viromeQC
         python {params.viromeQC_path}/viromeQC.py -w environmental \
-        --diamond_threads {threads} --bowtie2_threads {threads} \
+        --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
         -i {input.mvome_r1} {input.mvome_r2} \
         -o {output.mvome_out}
 
         python {params.viromeQC_path}/viromeQC.py -w environmental \
-        --diamond_threads {threads} --bowtie2_threads {threads} \
+        --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
         -i {input.virome_r1} {input.virome_r2} \
         -o {output.virome_out}
         """
+
 
 ### viral prediction ###########################################################
 rule DeepVirFinder:
@@ -201,14 +229,17 @@ rule DeepVirFinder:
         "results/{sample}/contigs/virome.contigs.filtered.fasta"
     output:
         "results/{sample}/dvf/virome.contigs.filtered.fasta_gt2000bp_dvfpred.txt"
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     params:
         dvf_executable=config["dvf_path"]
     shell:
         """
         python {params.dvf_executable} \
         -i results/{wildcards.sample}/contigs/virome.contigs.filtered.fasta \
-        -o results/{wildcards.sample}/dvf -c {threads}
+        -o results/{wildcards.sample}/dvf -c {resources.ntasks}
         """
 
 rule vs2:
@@ -220,14 +251,17 @@ rule vs2:
     output:
         "results/{sample}/vs2/final-viral-combined.fa",
         "results/{sample}/vs2/final-viral-score.tsv"
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     params:
         vsdbdir=config["vs2_db"]
     shell:
         """
         virsorter run --keep-original-seq -i {input.virome_contigs} \
         -w results/{wildcards.sample}/vs2-pass1 \
-        --min-score 0.5 -j {threads} all --db-dir {params.vsdbdir}
+        --min-score 0.5 -j {resources.ntasks} all --db-dir {params.vsdbdir}
         """
 
 rule checkv:
@@ -237,13 +271,16 @@ rule checkv:
         "results/{sample}/vs2/final-viral-combined.fa"
     output:
         "results/{sample}/checkv/contamination.tsv",
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     params:
         checkvdbdir=config["checkv_db"]
     shell:
         """
         checkv end_to_end {input} results/{wildcards.sample}/checkv \
-        -t {threads} -d {params.checkvdbdir}
+        -t {resources.ntasks} -d {params.checkvdbdir}
         """
 
 rule vs2_summary:
@@ -257,6 +294,7 @@ rule vs2_summary:
     shell:
         "Rscript scripts/analyze_vs2_output.R {input} {output}"
 
+
 ### plasmid prediction #########################################################
 rule platon:
     conda:
@@ -268,12 +306,15 @@ rule platon:
         "results/{sample}/platon_out/platon_plasmids.log"
     params:
         platon_db=config["platon_db"]
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     shell:
         """
         platon --db {params.platon_db} --prefix platon_plasmids \
         --output results/{wildcards.sample}/platon_out/ \
-        --threads {threads}
+        --threads {resources.ntasks}
         """
 
 
@@ -291,7 +332,10 @@ rule map_virome_reads_to_mv_contigs:
         statsfile="results/{sample}/mappings/input_reads_vs_mv_contigs/statsfile.txt",
     log:
         "results/{sample}/log/map_virome_reads_to_mv_contigs.log"
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     shell:
         """
         mkdir -p results/{wildcards.sample}/mappings/input_reads_vs_mv_contigs/
@@ -300,7 +344,7 @@ rule map_virome_reads_to_mv_contigs:
         ref={input.mv_contigs} \
         outm={output.r1} outm2={output.r2} \
         statsfile={output.statsfile} \
-        t={threads}
+        t={resources.ntasks}
         """
 
 rule map_virome_reads_to_true_virome_contigs:
@@ -317,7 +361,10 @@ rule map_virome_reads_to_true_virome_contigs:
         rpkm="results/{sample}/mappings/input_reads_vs_true_virome_contigs/rpkm.txt"
     log:
         "results/{sample}/log/map_virome_reads_vs_true_virome_contigs.log"
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     shell:
         """
         mkdir -p results/{wildcards.sample}/mappings/input_reads_vs_true_virome_contigs/
@@ -325,8 +372,8 @@ rule map_virome_reads_to_true_virome_contigs:
         bbmap.sh in={input.r1} in2={input.r2} \
         ref={input.virome_contigs} \
         outm={output.r1} outm2={output.r2} \
-        scafstats={output.statsfile} \
-        t={threads}
+        scafstats={output.scafstats} \
+        t={resources.ntasks}
         """
 
 rule map_mv_positive_reads_to_metagenome:
@@ -339,7 +386,10 @@ rule map_mv_positive_reads_to_metagenome:
     output:
         rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt",
         scafstats="results/{sample}/mappings/mvome_positive_vs_metagenome/scafstats.txt"
-    threads: 8
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
     shell:
         """
         mkdir -p results/{wildcards.sample}/mappings/mvome_positive_vs_metagenome/
@@ -348,5 +398,5 @@ rule map_mv_positive_reads_to_metagenome:
         ref={input.metagenome_contigs} \
         scafstats={output.scafstats} \
         rpkm={output.rpkm} \
-        t={threads}
+        t={resources.ntasks}
         """    

@@ -1,3 +1,5 @@
+sbatch_normal_mem: "80G"
+sbatch_high_mem: "250G"
 virome_min_len: 2000
 metagenome_min_min_len: 25000
 minimum_number_of_virome_input_contigs: 20
