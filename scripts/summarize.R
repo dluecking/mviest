@@ -76,7 +76,7 @@ rm(vs_df, vs_df_path)
 
 
 # gather dvf information --------------------------------------------------
-dvf_path <- paste0(output_dir, "/dvf/virome.contigs.filtered.fasta_gt2000bp_dvfpred.txt")
+dvf_path <- paste0(output_dir, "/dvf/virome.contigs.filtered.fasta_gt1bp_dvfpred.txt")
 dvf_df <- fread(dvf_path)
 
 dvf_df$viral <- NA
@@ -91,10 +91,11 @@ rm(dvf_df, dvf_path)
 contig_df <- contig_df %>% 
     mutate(final_label = replace(final_label, length>=long_contig_cutoff, "long_contig"))
 
-contig_df$final_label[contig_df$vs2 == "TRUE" | contig_df$dvf == "TRUE"] <- "viral"
-
+# plasmids are plasmids
 contig_df$final_label[contig_df$plasmid  == "TRUE"] <- "plasmid"
-
+# anything that is viral become viral, including previously assigned plasmids
+contig_df$final_label[contig_df$vs2 == "TRUE" | contig_df$dvf == "TRUE"] <- "viral"
+# rest is mv
 contig_df$final_label[is.na(contig_df$final_label)] <- "mv"
 
 

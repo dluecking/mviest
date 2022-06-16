@@ -1,6 +1,6 @@
 """
 Command to run:
- Sakemake -pr -j 16 --use-conda --conda-frontend mamba --keep-going \
+ snakemake -pr -j 16 --use-conda --conda-frontend mamba --keep-going \
  --latency-wait 340 --rerun-incomplete --conda-prefix ~/envs/ \
  --cluster  "sbatch --time={resources.time} --mem={resources.mem} --ntasks={resources.threads} \
  --output log/%x.%j.out --partition=CLUSTER"
@@ -21,6 +21,7 @@ configfile: "config.yaml"
 ### all ########################################################################
 rule all:
     input:
+        expand("results/{sample}/log/00_INPUT_CHECK_DONE.log", sample = config["samples"]),
         expand("results/{sample}/{sample}_mviest_summary.tsv", sample = config["samples"]),
         expand("results/{sample}/{sample}_mviest_plot.png", sample = config["samples"])
 
@@ -117,7 +118,7 @@ rule contig_summary:
     input:
         contigs="results/{sample}/contigs/virome.contigs.filtered.fasta",
         vs2_out="results/{sample}/vs2_final_report.tsv",
-        dvf_out="results/{sample}/dvf/virome.contigs.filtered.fasta_gt2000bp_dvfpred.txt",
+        dvf_out="results/{sample}/dvf/virome.contigs.filtered.fasta_gt1bp_dvfpred.txt",
         platon_out="results/{sample}/platon_out/platon_plasmids.log",
         enough="results/{sample}/enough_filtered_virome_contigs.txt"
     output:
@@ -161,7 +162,7 @@ rule kaiju:
         virome_table="results/{sample}/kaiju/virome_summary.tsv"
     params:
         kaiju_fmi=config["kaiju_fmi"],
-        kaiju_nodes=config["kaiju_fmi"],
+        kaiju_nodes=config["kaiju_nodes"],
         kaiju_names=config["kaiju_names"]
     resources:
         mem=config["sbatch_high_mem"],
@@ -170,7 +171,7 @@ rule kaiju:
     shell:
         """
         mkdir -p results/{wildcards.sample}/kaiju
-
+        
         kaiju-multi -z {resources.ntasks} \
         -t {params.kaiju_nodes} -f {params.kaiju_fmi} \
         -i {input.mvome_r1},{input.virome_r1} \
@@ -182,7 +183,9 @@ rule kaiju:
 
         kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
         -r genus -o {output.virome_table} {output.virome_raw}
+
         """
+
 
 
 ### viromeQC ###################################################################
@@ -228,7 +231,7 @@ rule DeepVirFinder:
     input: 
         "results/{sample}/contigs/virome.contigs.filtered.fasta"
     output:
-        "results/{sample}/dvf/virome.contigs.filtered.fasta_gt2000bp_dvfpred.txt"
+        "results/{sample}/dvf/virome.contigs.filtered.fasta_gt1bp_dvfpred.txt"
     resources:
         mem=config["sbatch_normal_mem"],
         time="12:00:00",
@@ -260,7 +263,7 @@ rule vs2:
     shell:
         """
         virsorter run --keep-original-seq -i {input.virome_contigs} \
-        -w results/{wildcards.sample}/vs2-pass1 \
+        -w results/{wildcards.sample}/vs2 \
         --min-score 0.5 -j {resources.ntasks} all --db-dir {params.vsdbdir}
         """
 
@@ -314,7 +317,8 @@ rule platon:
         """
         platon --db {params.platon_db} --prefix platon_plasmids \
         --output results/{wildcards.sample}/platon_out/ \
-        --threads {resources.ntasks}
+        --threads {resources.ntasks} \
+        {input.virome_contigs}
         """
 
 
@@ -373,6 +377,7 @@ rule map_virome_reads_to_true_virome_contigs:
         ref={input.virome_contigs} \
         outm={output.r1} outm2={output.r2} \
         scafstats={output.scafstats} \
+        rpkm={output.rpkm} \
         t={resources.ntasks}
         """
 
