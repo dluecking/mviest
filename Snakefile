@@ -44,7 +44,7 @@ rule mviest_plot:
         viromeQC_mvome="results/{sample}/viromeQC/mvome_QC.tsv",
         viromeQC_virome="results/{sample}/viromeQC/virome_QC.tsv",
         contig_summary="results/{sample}/contig_summary_{sample}.tsv",
-        mvome_reads_vs_metagenome_rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt"
+        mvome_reads_vs_metagenome_scafstats="results/{sample}/mappings/mvome_positive_vs_metagenome/scafstats.txt"
     output:
         "results/{sample}/{sample}_mviest_plot.png"
     shell:
@@ -53,7 +53,7 @@ rule mviest_plot:
         {input.kaiju_mvome_table} {input.kaiju_virome_table} \
         {input.viromeQC_mvome} {input.viromeQC_virome} \
         {input.contig_summary} \
-        {input.mvome_reads_vs_metagenome_rpkm} \
+        {input.mvome_reads_vs_metagenome_scafstats} \
         {output}
         """
 
@@ -204,8 +204,8 @@ rule viromeQC:
     input:
         mvome_r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
         mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
-        virome_r1="results/{sample}/reads/true.mvome.reads2.fq.gz",
-        virome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz"
+        virome_r1="results/{sample}/reads/true.virome.reads1.fq.gz",
+        virome_r2="results/{sample}/reads/true.virome.reads2.fq.gz"
     output:
         mvome_out="results/{sample}/viromeQC/mvome_QC.tsv",
         virome_out="results/{sample}/viromeQC/virome_QC.tsv"        
