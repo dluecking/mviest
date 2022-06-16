@@ -6,10 +6,9 @@
 suppressMessages(library(data.table))
 suppressMessages(library(dplyr))
 suppressMessages(library(stringr))
-suppressMessages(library(seqinr))
 suppressMessages(library(ggplot2))
 suppressMessages(library(ggpmisc))
-library(patchwork)
+suppressMessages(library(patchwork))
 
 
 # handling arguments ------------------------------------------------------
@@ -93,15 +92,17 @@ kiaju_virome_df<- fread(kaiju_table_virome) %>%
     mutate(origin = 'viral')
 
 kaiju_plot_df <- rbind(kiaju_virome_df, kiaju_mvome_df)
-kaiju_plot_df$color <- "red"
+
+kaiju_plot_df$color <- "blue"
 kaiju_plot_df$color[kaiju_plot_df$taxon_name == 'Viruses'] <- "#FED766"
 kaiju_plot_df$color[kaiju_plot_df$taxon_name == 'unclassified'] <- "grey"
-
+colors <- kaiju_plot_df$color
+names(colors) <- kaiju_plot_df$taxon_name
 
 kaiju_plot <- ggplot(kaiju_plot_df, aes(x = origin, y = percent, fill = taxon_name)) +
     geom_bar(position="fill", stat="identity", color = "black", alpha = 0.8) +
     theme_minimal() +
-    scale_fill_manual(values = a) +
+    scale_fill_manual(values = colors) +
     ylab("fraction of reads [%]") +
     xlab("") +
     ggtitle("", subtitle = 'i)                                                ii)')
@@ -128,5 +129,5 @@ final_plot <- plot_1 + kaiju_plot
 
 # save plots --------------------------------------------------------------
 
-ggsave(paste0(outfile), plot = final_plot, width = 25, height = 10, units = "cm")
+ggsave(paste0(outfile), plot = final_plot, width = 25, height = 15, units = "cm")
 
