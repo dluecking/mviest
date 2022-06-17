@@ -11,7 +11,6 @@ time: 12:00:00 h
 ntasks: 8
 """
 
-
 import os
 
 localrules: mviest_summary, mviest_plot, check_input, count_virome_contigs, 
@@ -187,7 +186,6 @@ rule kaiju:
         """
 
 
-
 ### viromeQC ###################################################################
 rule viromeQC:
     """
@@ -211,7 +209,8 @@ rule viromeQC:
         virome_out="results/{sample}/viromeQC/virome_QC.tsv"        
     shell:
         """
-        mkdir -p viromeQC
+        mkdir -p results/{wildcards.sample}/viromeQC/viromeQC
+
         python {params.viromeQC_path}/viromeQC.py -w environmental \
         --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
         -i {input.mvome_r1} {input.mvome_r2} \
@@ -229,7 +228,8 @@ rule DeepVirFinder:
     conda:
         "envs/dvf.yaml"
     input: 
-        "results/{sample}/contigs/virome.contigs.filtered.fasta"
+        contigs="results/{sample}/contigs/virome.contigs.filtered.fasta",
+        enough="results/{sample}/enough_filtered_virome_contigs.txt"
     output:
         "results/{sample}/dvf/virome.contigs.filtered.fasta_gt1bp_dvfpred.txt"
     resources:
