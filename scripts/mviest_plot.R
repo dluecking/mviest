@@ -27,13 +27,13 @@ contig_summary <- args[5]
 mvome_reads_vs_metagenome_scafstats <- args[6]
 outfile <- args[7]
 
-# kaiju_table_mvome <- 'results/sargasso/kaiju/mvome_summary.tsv'
-# kaiju_table_virome <- 'results/sargasso/kaiju/virome_summary.tsv'
-# viromeQC_mvome <- 'results/sargasso/viromeQC/mvome_QC.tsv'
-# viromeQC_virome <- 'results/sargasso/viromeQC/virome_QC.tsv'
-# contig_summary <- 'results/sargasso/contig_summary_sargasso.tsv'
-# mvome_reads_vs_metagenome_scafstats <- "results/sargasso/mappings/mvome_positive_vs_metagenome/scafstats.txt"
-# outfile <- 'results/sargasso/sargasso_mviest_plot.png'
+# kaiju_table_mvome <- 'results/DRR173069/kaiju/mvome_summary.tsv'
+# kaiju_table_virome <- 'results/DRR173069/kaiju/virome_summary.tsv'
+# viromeQC_mvome <- 'results/DRR173069/viromeQC/mvome_QC.tsv'
+# viromeQC_virome <- 'results/DRR173069/viromeQC/virome_QC.tsv'
+# contig_summary <- 'results/DRR173069/contig_summary_DRR173069.tsv'
+# mvome_reads_vs_metagenome_scafstats <- "results/DRR173069/mappings/mvome_positive_vs_metagenome/scafstats.txt"
+# outfile <- 'results/DRR173069/DRR173064_mviest_plot.png'
 
 SAMPLE <- unlist(strsplit(outfile, "\\/"))[2]
 
@@ -81,20 +81,21 @@ plot_1 <- ggplot(mini_df, aes(fill=label, y=no_of_reads, x = sample)) +
 
 kiaju_mvome_df <- fread(kaiju_table_mvome) %>% 
     arrange(desc(percent)) %>% 
-    top_n(5, wt = percent) %>% 
+    filter(percent >= 1) %>% 
     mutate(sample = SAMPLE) %>% 
     mutate(origin = 'non-viral')
 
 
 kiaju_virome_df<- fread(kaiju_table_virome) %>%
     arrange(desc(percent)) %>% 
-    top_n(5, wt = percent) %>% 
+    filter(percent >= 1) %>%  
     mutate(sample = SAMPLE) %>% 
     mutate(origin = 'viral')
 
 kaiju_plot_df <- rbind(kiaju_virome_df, kiaju_mvome_df)
 
-kaiju_plot_df$color <- brewer.pal(n = nrow(kaiju_plot_df), name = 'PiYG')
+getPalette <- colorRampPalette(brewer.pal(11, 'PiYG'))
+kaiju_plot_df$color <- getPalette(nrow(kaiju_plot_df))
 kaiju_plot_df$color[kaiju_plot_df$taxon_name == 'Viruses'] <- "#FED766"
 kaiju_plot_df$color[kaiju_plot_df$taxon_name == 'unclassified'] <- "grey"
 colors <- kaiju_plot_df$color
@@ -106,30 +107,29 @@ kaiju_plot <- ggplot(kaiju_plot_df, aes(x = origin, y = percent, fill = taxon_na
     scale_fill_manual(values = colors) +
     ylab("fraction of reads [%]") +
     xlab("") +
-    ggtitle("", subtitle = 'i)                                                ii)')
+    ggtitle("", subtitle = 'reads classified by kaiju')
 
-# mv producer plots -------------------------------------------------------
+# mv producer table  -------------------------------------------------------
 
 mv_prod_df <- fread(mvome_reads_vs_metagenome_scafstats) %>% 
     arrange(desc(assignedReads)) %>% 
-    select('#name', 'assignedReads')
+    select('#name', 'assignedReads') %>% 
+    head(10)
 
 mv_prod_df <-  mv_prod_df %>% 
-    head(5)
+    head(10)
 
-kaiju_plot <- kaiju_plot +
-    annotate(geom = 'table',
-             x=3,
-             y=0.75,
-             label=list(mv_prod_df), hjust = 0, vjust = 0)
+fwrite(mv_prod_df, str_replace(outfile, pattern = '\\_mviest\\_plot\\.png', 'potential_mv_producer.tsv'))
 
 
 # patchwork plots ---------------------------------------------------------
 
-final_plot <- plot_1 + kaiju_plot
+final_plot <- plot_1 +  kaiju_plot 
 
 
 # save plots --------------------------------------------------------------
 
 ggsave(paste0(outfile), plot = final_plot, width = 25, height = 15, units = "cm")
+
+
 

@@ -209,7 +209,7 @@ rule viromeQC:
         virome_out="results/{sample}/viromeQC/virome_QC.tsv"        
     shell:
         """
-        mkdir -p results/{wildcards.sample}/viromeQC/viromeQC
+        mkdir -p results/{wildcards.sample}/viromeQC
 
         python {params.viromeQC_path}/viromeQC.py -w environmental \
         --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
