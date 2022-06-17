@@ -16,13 +16,13 @@ kaiju_names: "/bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp"
 mv_producer_list: "data/mv_producer/list_of_mv_producer.list"
 samples:
     - sargasso
-    - DRR173063
-    - DRR173064
-    - DRR173065
-    # - DRR173066
-    # - DRR173067
-    - DRR173068
-    - DRR173069
-    - DRR173070
-    # - DRR173071
+    # - DRR173063
+    # - DRR173064
+    # - DRR173065
+    # # - DRR173066
+    # # - DRR173067
+    # - DRR173068
+    # - DRR173069
+    # - DRR173070
+    # # - DRR173071
     - DRR173072

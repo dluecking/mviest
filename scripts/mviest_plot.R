@@ -9,7 +9,7 @@ suppressMessages(library(stringr))
 suppressMessages(library(ggplot2))
 suppressMessages(library(ggpmisc))
 suppressMessages(library(patchwork))
-
+suppressMessages(library(RColorBrewer))
 
 # handling arguments ------------------------------------------------------
 args = commandArgs(trailingOnly=TRUE)
@@ -58,6 +58,8 @@ mini_df <- data.table(sample = c(SAMPLE, SAMPLE),
                       no_of_reads = unlist(c(NO_OF_READS_VIROME, NO_OF_READS_MVOME)),
                       viromeQC_scores = unlist(c(VIROMEQC_SCORE_VIROME, VIROMEQC_SCORE_MVOME)))
 
+mini_df$viromeQC_scores <- round(mini_df$viromeQC_scores, 2)
+
 mini_df <- mini_df %>% 
     mutate(viromeQC_label_position = (cumsum(mini_df$no_of_reads) - 0.5 * mini_df$no_of_reads) / sum(mini_df$no_of_reads) )
 
@@ -73,7 +75,6 @@ plot_1 <- ggplot(mini_df, aes(fill=label, y=no_of_reads, x = sample)) +
     ggtitle(SAMPLE, subtitle = paste0("no of contigs = ", NO_OF_TOTAL_CONTIGS, ",\nno of mapped reads = ", sum(NO_OF_READS_MVOME, NO_OF_READS_VIROME))) +
     theme(axis.text.x=element_blank(),
           axis.ticks.x=element_blank())
-
 
 
 # kaiju plots -------------------------------------------------------------
@@ -93,7 +94,7 @@ kiaju_virome_df<- fread(kaiju_table_virome) %>%
 
 kaiju_plot_df <- rbind(kiaju_virome_df, kiaju_mvome_df)
 
-kaiju_plot_df$color <- "blue"
+kaiju_plot_df$color <- brewer.pal(n = nrow(kaiju_plot_df), name = 'PiYG')
 kaiju_plot_df$color[kaiju_plot_df$taxon_name == 'Viruses'] <- "#FED766"
 kaiju_plot_df$color[kaiju_plot_df$taxon_name == 'unclassified'] <- "grey"
 colors <- kaiju_plot_df$color
@@ -126,6 +127,7 @@ kaiju_plot <- kaiju_plot +
 # patchwork plots ---------------------------------------------------------
 
 final_plot <- plot_1 + kaiju_plot
+
 
 # save plots --------------------------------------------------------------
 

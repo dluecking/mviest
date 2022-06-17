@@ -348,7 +348,8 @@ rule map_virome_reads_to_mv_contigs:
         ref={input.mv_contigs} \
         outm={output.r1} outm2={output.r2} \
         statsfile={output.statsfile} \
-        t={resources.ntasks}
+        t={resources.ntasks} \
+        path=results/{wildcards.sample}/
         """
 
 rule map_virome_reads_to_true_virome_contigs:
@@ -378,7 +379,8 @@ rule map_virome_reads_to_true_virome_contigs:
         outm={output.r1} outm2={output.r2} \
         scafstats={output.scafstats} \
         rpkm={output.rpkm} \
-        t={resources.ntasks}
+        t={resources.ntasks} \
+        path=results/{wildcards.sample}/
         """
 
 rule map_mv_positive_reads_to_metagenome:
@@ -403,5 +405,6 @@ rule map_mv_positive_reads_to_metagenome:
         ref={input.metagenome_contigs} \
         scafstats={output.scafstats} \
         rpkm={output.rpkm} \
-        t={resources.ntasks}
+        t={resources.ntasks} \
+        path=results/{wildcards.sample}/
         """    
