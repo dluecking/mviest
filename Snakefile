@@ -89,26 +89,36 @@ rule count_virome_contigs:
 
 
 ### handle contigs #############################################################
-rule filter_input_by_length:
+rule filter_input_virome_by_length:
     conda:
         "envs/python.yaml"
     input:
         vc="results/{sample}/contigs/virome.contigs.fasta",
-        mc="results/{sample}/contigs/metagenome.contigs.fasta",
         input_check="results/{sample}/log/00_INPUT_CHECK_DONE.log"
     output:
         vc_filtered="results/{sample}/contigs/virome.contigs.filtered.fasta",
-        mc_filtered="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
     params:
         virome_min_len=config["virome_min_len"],
-        metagenome_min_min_len=config["metagenome_min_min_len"]
     shell:
         """
         python3 scripts/filter_by_len.py {input.vc} \
         {params.virome_min_len} > {output.vc_filtered}
+        """
 
+rule filter_input_metagenome_by_length:
+    conda:
+        "envs/python.yaml"
+    input:
+        mc="results/{sample}/contigs/metagenome.contigs.fasta",
+        input_check="results/{sample}/log/00_INPUT_CHECK_DONE.log"
+    output:
+        mc_filtered="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
+    params:
+        metagenome_min_min_len=config["metagenome_min_min_len"]
+    shell:
+        """
         python3 scripts/filter_by_len.py {input.mc} \
-        {params.virome_min_len} > {output.mc_filtered}
+        {params.metagenome_min_min_len} > {output.mc_filtered}
         """
 
 rule contig_summary:
