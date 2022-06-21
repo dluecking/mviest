@@ -14,7 +14,7 @@ ntasks: 8
 import os
 
 localrules: mviest_summary, mviest_plot, check_input, count_virome_contigs, 
-            filter_input_by_length, contig_summary, contig_selector, vs2_summary
+            filter_input_virome_by_length, filter_input_metagenome_by_length, contig_summary, contig_selector, vs2_summary
 
 configfile: "config.yaml"
 ### all ########################################################################
@@ -135,7 +135,7 @@ rule contig_summary:
     params:
         cutoff=config["long_contig_cutoff"]
     log:
-        "results/{sample}/log/text_summary.log"
+        "results/{sample}/log/contig_summary.log"
     shell:
         "Rscript scripts/summarize.R {wildcards.sample} {params.cutoff} 2> {log}"
 

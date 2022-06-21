@@ -3331,3 +3331,1454 @@ rule map_virome_reads_to_mv_contigs:
         bbmap.sh in=results/111_SRF/reads/virome.reads1.fastq.gz in2=results/111_SRF/reads/virome.reads2.fastq.gz         ref=results/111_SRF/contigs/true.mvome.fasta         outm=results/111_SRF/reads/true.mvome.reads1.fq.gz outm2=results/111_SRF/reads/true.mvome.reads2.fq.gz         statsfile=results/111_SRF/mappings/input_reads_vs_mv_contigs/statsfile.txt         t=8         path=results/111_SRF/
         
 Submitted job 146 with external jobid 'Submitted batch job 27873'.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cluster nodes: 16
+Job stats:
+job                                        count    min threads    max threads
+---------------------------------------  -------  -------------  -------------
+all                                            1              1              1
+checkv                                         2              1              1
+contig_selector                                4              1              1
+contig_summary                                 4              1              1
+filter_input_metagenome_by_length             14              1              1
+kaiju                                         14              1              1
+map_mv_positive_reads_to_metagenome           14              1              1
+map_virome_reads_to_mv_contigs                 5              1              1
+map_virome_reads_to_true_virome_contigs        7              1              1
+mviest_plot                                   14              1              1
+mviest_summary                                14              1              1
+platon                                         2              1              1
+viromeQC                                       9              1              1
+vs2                                            2              1              1
+vs2_summary                                    2              1              1
+total                                        108              1              1
+
+Select jobs to execute...
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/102_DCM/contigs/metagenome.contigs.fasta, results/102_DCM/log/00_INPUT_CHECK_DONE.log
+    output: results/102_DCM/contigs/metagenome.contigs.filtered.fasta
+    jobid: 65
+    reason: Missing output files: results/102_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=102_DCM
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/102_DCM/contigs/metagenome.contigs.fasta         100000 > results/102_DCM/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/102_SRF/contigs/metagenome.contigs.fasta, results/102_SRF/log/00_INPUT_CHECK_DONE.log
+    output: results/102_SRF/contigs/metagenome.contigs.filtered.fasta
+    jobid: 99
+    reason: Missing output files: results/102_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=102_SRF
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/102_SRF/contigs/metagenome.contigs.fasta         100000 > results/102_SRF/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/100_DCM/contigs/metagenome.contigs.fasta, results/100_DCM/log/00_INPUT_CHECK_DONE.log
+    output: results/100_DCM/contigs/metagenome.contigs.filtered.fasta
+    jobid: 31
+    reason: Missing output files: results/100_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=100_DCM
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/100_DCM/contigs/metagenome.contigs.fasta         100000 > results/100_DCM/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/122_MES/contigs/metagenome.contigs.fasta, results/122_MES/log/00_INPUT_CHECK_DONE.log
+    output: results/122_MES/contigs/metagenome.contigs.filtered.fasta
+    jobid: 218
+    reason: Missing output files: results/122_MES/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=122_MES
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/122_MES/contigs/metagenome.contigs.fasta         100000 > results/122_MES/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/109_SRF/contigs/metagenome.contigs.fasta, results/109_SRF/log/00_INPUT_CHECK_DONE.log
+    output: results/109_SRF/contigs/metagenome.contigs.filtered.fasta
+    jobid: 133
+    reason: Missing output files: results/109_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=109_SRF
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/109_SRF/contigs/metagenome.contigs.fasta         100000 > results/109_SRF/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/123_MIX/contigs/metagenome.contigs.fasta, results/123_MIX/log/00_INPUT_CHECK_DONE.log
+    output: results/123_MIX/contigs/metagenome.contigs.filtered.fasta
+    jobid: 252
+    reason: Missing output files: results/123_MIX/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/123_MIX/contigs/metagenome.contigs.fasta         100000 > results/123_MIX/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/102_MES/contigs/metagenome.contigs.fasta, results/102_MES/log/00_INPUT_CHECK_DONE.log
+    output: results/102_MES/contigs/metagenome.contigs.filtered.fasta
+    jobid: 82
+    reason: Missing output files: results/102_MES/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=102_MES
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/102_MES/contigs/metagenome.contigs.fasta         100000 > results/102_MES/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/122_DCM/contigs/metagenome.contigs.fasta, results/122_DCM/log/00_INPUT_CHECK_DONE.log
+    output: results/122_DCM/contigs/metagenome.contigs.filtered.fasta
+    jobid: 201
+    reason: Missing output files: results/122_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=122_DCM
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/122_DCM/contigs/metagenome.contigs.fasta         100000 > results/122_DCM/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:03:22 2022]
+rule map_virome_reads_to_true_virome_contigs:
+    input: results/122_SRF/reads/virome.reads1.fastq.gz, results/122_SRF/reads/virome.reads2.fastq.gz, results/122_SRF/contigs/true.virome.fasta
+    output: results/122_SRF/reads/true.virome.reads1.fq.gz, results/122_SRF/reads/true.virome.reads2.fq.gz, results/122_SRF/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/122_SRF/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+    log: results/122_SRF/log/map_virome_reads_vs_true_virome_contigs.log
+    jobid: 232
+    reason: Forced execution
+    wildcards: sample=122_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/122_SRF/mappings/input_reads_vs_true_virome_contigs/
+
+        bbmap.sh in=results/122_SRF/reads/virome.reads1.fastq.gz in2=results/122_SRF/reads/virome.reads2.fastq.gz         ref=results/122_SRF/contigs/true.virome.fasta         outm=results/122_SRF/reads/true.virome.reads1.fq.gz outm2=results/122_SRF/reads/true.virome.reads2.fq.gz         scafstats=results/122_SRF/mappings/input_reads_vs_true_virome_contigs/scafstats.txt         rpkm=results/122_SRF/mappings/input_reads_vs_true_virome_contigs/rpkm.txt         t=8         path=results/122_SRF/
+        
+Submitted job 232 with external jobid 'Submitted batch job 27905'.
+
+[Mon Jun 20 12:03:22 2022]
+rule kaiju:
+    input: results/100_DCM/reads/true.mvome.reads1.fq.gz, results/100_DCM/reads/true.mvome.reads2.fq.gz, results/100_DCM/reads/true.virome.reads1.fq.gz, results/100_DCM/reads/true.virome.reads2.fq.gz
+    output: results/100_DCM/kaiju/mvome.out, results/100_DCM/kaiju/virome.out, results/100_DCM/kaiju/mvome_summary.tsv, results/100_DCM/kaiju/virome_summary.tsv
+    jobid: 17
+    reason: Missing output files: results/100_DCM/kaiju/mvome_summary.tsv, results/100_DCM/kaiju/virome_summary.tsv
+    wildcards: sample=100_DCM
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/100_DCM/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/100_DCM/reads/true.mvome.reads1.fq.gz,results/100_DCM/reads/true.virome.reads1.fq.gz         -j results/100_DCM/reads/true.mvome.reads2.fq.gz,results/100_DCM/reads/true.virome.reads2.fq.gz         -o results/100_DCM/kaiju/mvome.out,results/100_DCM/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/100_DCM/kaiju/mvome_summary.tsv results/100_DCM/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/100_DCM/kaiju/virome_summary.tsv results/100_DCM/kaiju/virome.out
+
+        
+Submitted job 17 with external jobid 'Submitted batch job 27906'.
+
+[Mon Jun 20 12:03:23 2022]
+rule map_virome_reads_to_true_virome_contigs:
+    input: results/102_DCM/reads/virome.reads1.fastq.gz, results/102_DCM/reads/virome.reads2.fastq.gz, results/102_DCM/contigs/true.virome.fasta
+    output: results/102_DCM/reads/true.virome.reads1.fq.gz, results/102_DCM/reads/true.virome.reads2.fq.gz, results/102_DCM/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/102_DCM/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+    log: results/102_DCM/log/map_virome_reads_vs_true_virome_contigs.log
+    jobid: 62
+    reason: Forced execution
+    wildcards: sample=102_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_DCM/mappings/input_reads_vs_true_virome_contigs/
+
+        bbmap.sh in=results/102_DCM/reads/virome.reads1.fastq.gz in2=results/102_DCM/reads/virome.reads2.fastq.gz         ref=results/102_DCM/contigs/true.virome.fasta         outm=results/102_DCM/reads/true.virome.reads1.fq.gz outm2=results/102_DCM/reads/true.virome.reads2.fq.gz         scafstats=results/102_DCM/mappings/input_reads_vs_true_virome_contigs/scafstats.txt         rpkm=results/102_DCM/mappings/input_reads_vs_true_virome_contigs/rpkm.txt         t=8         path=results/102_DCM/
+        
+Submitted job 62 with external jobid 'Submitted batch job 27907'.
+
+[Mon Jun 20 12:03:23 2022]
+rule kaiju:
+    input: results/11_SRF/reads/true.mvome.reads1.fq.gz, results/11_SRF/reads/true.mvome.reads2.fq.gz, results/11_SRF/reads/true.virome.reads1.fq.gz, results/11_SRF/reads/true.virome.reads2.fq.gz
+    output: results/11_SRF/kaiju/mvome.out, results/11_SRF/kaiju/virome.out, results/11_SRF/kaiju/mvome_summary.tsv, results/11_SRF/kaiju/virome_summary.tsv
+    jobid: 170
+    reason: Missing output files: results/11_SRF/kaiju/mvome_summary.tsv, results/11_SRF/kaiju/virome_summary.tsv
+    wildcards: sample=11_SRF
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/11_SRF/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/11_SRF/reads/true.mvome.reads1.fq.gz,results/11_SRF/reads/true.virome.reads1.fq.gz         -j results/11_SRF/reads/true.mvome.reads2.fq.gz,results/11_SRF/reads/true.virome.reads2.fq.gz         -o results/11_SRF/kaiju/mvome.out,results/11_SRF/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/11_SRF/kaiju/mvome_summary.tsv results/11_SRF/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/11_SRF/kaiju/virome_summary.tsv results/11_SRF/kaiju/virome.out
+
+        
+Submitted job 170 with external jobid 'Submitted batch job 27908'.
+
+[Mon Jun 20 12:03:23 2022]
+rule vs2:
+    input: results/109_DCM/contigs/virome.contigs.filtered.fasta, results/109_DCM/enough_filtered_virome_contigs.txt
+    output: results/109_DCM/vs2/final-viral-combined.fa, results/109_DCM/vs2/final-viral-score.tsv
+    jobid: 108
+    reason: Missing output files: results/109_DCM/vs2/final-viral-combined.fa, results/109_DCM/vs2/final-viral-score.tsv
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        virsorter run --keep-original-seq -i results/109_DCM/contigs/virome.contigs.filtered.fasta         -w results/109_DCM/vs2         --min-score 0.5 -j 8 all --db-dir /home/dlueckin/dbs/vs2/db/
+        
+Submitted job 108 with external jobid 'Submitted batch job 27909'.
+
+[Mon Jun 20 12:03:23 2022]
+rule kaiju:
+    input: results/111_DCM/reads/true.mvome.reads1.fq.gz, results/111_DCM/reads/true.mvome.reads2.fq.gz, results/111_DCM/reads/true.virome.reads1.fq.gz, results/111_DCM/reads/true.virome.reads2.fq.gz
+    output: results/111_DCM/kaiju/mvome.out, results/111_DCM/kaiju/virome.out, results/111_DCM/kaiju/mvome_summary.tsv, results/111_DCM/kaiju/virome_summary.tsv
+    jobid: 136
+    reason: Missing output files: results/111_DCM/kaiju/mvome_summary.tsv, results/111_DCM/kaiju/virome_summary.tsv
+    wildcards: sample=111_DCM
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/111_DCM/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/111_DCM/reads/true.mvome.reads1.fq.gz,results/111_DCM/reads/true.virome.reads1.fq.gz         -j results/111_DCM/reads/true.mvome.reads2.fq.gz,results/111_DCM/reads/true.virome.reads2.fq.gz         -o results/111_DCM/kaiju/mvome.out,results/111_DCM/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/111_DCM/kaiju/mvome_summary.tsv results/111_DCM/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/111_DCM/kaiju/virome_summary.tsv results/111_DCM/kaiju/virome.out
+
+        
+Submitted job 136 with external jobid 'Submitted batch job 27910'.
+
+[Mon Jun 20 12:03:23 2022]
+rule platon:
+    input: results/122_MES/contigs/virome.contigs.filtered.fasta, results/122_MES/enough_filtered_virome_contigs.txt
+    output: results/122_MES/platon_out/platon_plasmids.log
+    jobid: 214
+    reason: Forced execution
+    wildcards: sample=122_MES
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        platon --db /home/dlueckin/dbs/platon_db/db/ --prefix platon_plasmids         --output results/122_MES/platon_out/         --threads 8         results/122_MES/contigs/virome.contigs.filtered.fasta
+        
+Submitted job 214 with external jobid 'Submitted batch job 27911'.
+
+[Mon Jun 20 12:03:23 2022]
+rule map_virome_reads_to_true_virome_contigs:
+    input: results/111_SRF/reads/virome.reads1.fastq.gz, results/111_SRF/reads/virome.reads2.fastq.gz, results/111_SRF/contigs/true.virome.fasta
+    output: results/111_SRF/reads/true.virome.reads1.fq.gz, results/111_SRF/reads/true.virome.reads2.fq.gz, results/111_SRF/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/111_SRF/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+    log: results/111_SRF/log/map_virome_reads_vs_true_virome_contigs.log
+    jobid: 164
+    reason: Missing output files: results/111_SRF/reads/true.virome.reads1.fq.gz, results/111_SRF/reads/true.virome.reads2.fq.gz
+    wildcards: sample=111_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/111_SRF/mappings/input_reads_vs_true_virome_contigs/
+
+        bbmap.sh in=results/111_SRF/reads/virome.reads1.fastq.gz in2=results/111_SRF/reads/virome.reads2.fastq.gz         ref=results/111_SRF/contigs/true.virome.fasta         outm=results/111_SRF/reads/true.virome.reads1.fq.gz outm2=results/111_SRF/reads/true.virome.reads2.fq.gz         scafstats=results/111_SRF/mappings/input_reads_vs_true_virome_contigs/scafstats.txt         rpkm=results/111_SRF/mappings/input_reads_vs_true_virome_contigs/rpkm.txt         t=8         path=results/111_SRF/
+        
+Submitted job 164 with external jobid 'Submitted batch job 27912'.
+[Mon Jun 20 12:08:41 2022]
+Finished job 201.
+1 of 108 steps (1%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:08:48 2022]
+rule viromeQC:
+    input: results/100_SRF/reads/true.mvome.reads1.fq.gz, results/100_SRF/reads/true.mvome.reads2.fq.gz, results/100_SRF/reads/true.virome.reads1.fq.gz, results/100_SRF/reads/true.virome.reads2.fq.gz
+    output: results/100_SRF/viromeQC/mvome_QC.tsv, results/100_SRF/viromeQC/virome_QC.tsv
+    jobid: 46
+    reason: Missing output files: results/100_SRF/viromeQC/virome_QC.tsv, results/100_SRF/viromeQC/mvome_QC.tsv
+    wildcards: sample=100_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/100_SRF/viromeQC
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/100_SRF/reads/true.mvome.reads1.fq.gz results/100_SRF/reads/true.mvome.reads2.fq.gz         -o results/100_SRF/viromeQC/mvome_QC.tsv
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/100_SRF/reads/true.virome.reads1.fq.gz results/100_SRF/reads/true.virome.reads2.fq.gz         -o results/100_SRF/viromeQC/virome_QC.tsv
+        
+Submitted job 46 with external jobid 'Submitted batch job 27913'.
+[Mon Jun 20 12:08:50 2022]
+Finished job 218.
+2 of 108 steps (2%) done
+[Mon Jun 20 12:08:51 2022]
+Finished job 65.
+3 of 108 steps (3%) done
+[Mon Jun 20 12:08:51 2022]
+Finished job 133.
+4 of 108 steps (4%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:08:52 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/109_DCM/contigs/metagenome.contigs.fasta, results/109_DCM/log/00_INPUT_CHECK_DONE.log
+    output: results/109_DCM/contigs/metagenome.contigs.filtered.fasta
+    jobid: 116
+    reason: Missing output files: results/109_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/109_DCM/contigs/metagenome.contigs.fasta         100000 > results/109_DCM/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+
+[Mon Jun 20 12:08:52 2022]
+rule platon:
+    input: results/109_SRF/contigs/virome.contigs.filtered.fasta, results/109_SRF/enough_filtered_virome_contigs.txt
+    output: results/109_SRF/platon_out/platon_plasmids.log
+    jobid: 129
+    reason: Missing output files: results/109_SRF/platon_out/platon_plasmids.log
+    wildcards: sample=109_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        platon --db /home/dlueckin/dbs/platon_db/db/ --prefix platon_plasmids         --output results/109_SRF/platon_out/         --threads 8         results/109_SRF/contigs/virome.contigs.filtered.fasta
+        
+Submitted job 129 with external jobid 'Submitted batch job 27914'.
+
+[Mon Jun 20 12:08:52 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/102_DCM/reads/true.mvome.reads1.fq.gz, results/102_DCM/reads/true.mvome.reads2.fq.gz, results/102_DCM/contigs/metagenome.contigs.filtered.fasta
+    output: results/102_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/102_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 64
+    reason: Missing output files: results/102_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/102_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=102_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/102_DCM/reads/true.mvome.reads1.fq.gz in2=results/102_DCM/reads/true.mvome.reads2.fq.gz         ref=results/102_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/102_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/102_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/102_DCM/
+        
+Submitted job 64 with external jobid 'Submitted batch job 27915'.
+[Mon Jun 20 12:08:53 2022]
+Finished job 252.
+5 of 108 steps (5%) done
+[Mon Jun 20 12:08:54 2022]
+Finished job 82.
+6 of 108 steps (6%) done
+[Mon Jun 20 12:08:54 2022]
+Finished job 31.
+7 of 108 steps (6%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:08:54 2022]
+localrule contig_summary:
+    input: results/123_MIX/contigs/virome.contigs.filtered.fasta, results/123_MIX/vs2_final_report.tsv, results/123_MIX/dvf/virome.contigs.filtered.fasta_gt1bp_dvfpred.txt, results/123_MIX/platon_out/platon_plasmids.log, results/123_MIX/enough_filtered_virome_contigs.txt
+    output: results/123_MIX/contig_summary_123_MIX.tsv
+    log: results/123_MIX/log/text_summary.log
+    jobid: 241
+    reason: Missing output files: results/123_MIX/contig_summary_123_MIX.tsv
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp
+
+Rscript scripts/summarize.R 123_MIX 150000 2> results/123_MIX/log/text_summary.log
+Activating conda environment: /home/dlueckin/envs/f0661911c8f8fcc4fdcd06216d834fa1
+
+[Mon Jun 20 12:08:54 2022]
+rule kaiju:
+    input: results/102_MES/reads/true.mvome.reads1.fq.gz, results/102_MES/reads/true.mvome.reads2.fq.gz, results/102_MES/reads/true.virome.reads1.fq.gz, results/102_MES/reads/true.virome.reads2.fq.gz
+    output: results/102_MES/kaiju/mvome.out, results/102_MES/kaiju/virome.out, results/102_MES/kaiju/mvome_summary.tsv, results/102_MES/kaiju/virome_summary.tsv
+    jobid: 68
+    reason: Missing output files: results/102_MES/kaiju/mvome_summary.tsv, results/102_MES/kaiju/virome_summary.tsv
+    wildcards: sample=102_MES
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_MES/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/102_MES/reads/true.mvome.reads1.fq.gz,results/102_MES/reads/true.virome.reads1.fq.gz         -j results/102_MES/reads/true.mvome.reads2.fq.gz,results/102_MES/reads/true.virome.reads2.fq.gz         -o results/102_MES/kaiju/mvome.out,results/102_MES/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/102_MES/kaiju/mvome_summary.tsv results/102_MES/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/102_MES/kaiju/virome_summary.tsv results/102_MES/kaiju/virome.out
+
+        
+Submitted job 68 with external jobid 'Submitted batch job 27916'.
+
+[Mon Jun 20 12:08:54 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/100_DCM/reads/true.mvome.reads1.fq.gz, results/100_DCM/reads/true.mvome.reads2.fq.gz, results/100_DCM/contigs/metagenome.contigs.filtered.fasta
+    output: results/100_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/100_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 30
+    reason: Missing output files: results/100_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/100_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=100_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/100_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/100_DCM/reads/true.mvome.reads1.fq.gz in2=results/100_DCM/reads/true.mvome.reads2.fq.gz         ref=results/100_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/100_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/100_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/100_DCM/
+        
+Submitted job 30 with external jobid 'Submitted batch job 27917'.
+[Mon Jun 20 12:08:54 2022]
+Finished job 99.
+8 of 108 steps (7%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:08:54 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/122_SRF/contigs/metagenome.contigs.fasta, results/122_SRF/log/00_INPUT_CHECK_DONE.log
+    output: results/122_SRF/contigs/metagenome.contigs.filtered.fasta
+    jobid: 235
+    reason: Missing output files: results/122_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=122_SRF
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/122_SRF/contigs/metagenome.contigs.fasta         100000 > results/122_SRF/contigs/metagenome.contigs.filtered.fasta
+        
+Select jobs to execute...
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+[Mon Jun 20 12:10:22 2022]
+Finished job 241.
+9 of 108 steps (8%) done
+
+[Mon Jun 20 12:10:24 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/111_SRF/contigs/metagenome.contigs.fasta, results/111_SRF/log/00_INPUT_CHECK_DONE.log
+    output: results/111_SRF/contigs/metagenome.contigs.filtered.fasta
+    jobid: 167
+    reason: Missing output files: results/111_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=111_SRF
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/111_SRF/contigs/metagenome.contigs.fasta         100000 > results/111_SRF/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+[Mon Jun 20 12:10:25 2022]
+Finished job 116.
+10 of 108 steps (9%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:10:25 2022]
+rule kaiju:
+    input: results/100_SRF/reads/true.mvome.reads1.fq.gz, results/100_SRF/reads/true.mvome.reads2.fq.gz, results/100_SRF/reads/true.virome.reads1.fq.gz, results/100_SRF/reads/true.virome.reads2.fq.gz
+    output: results/100_SRF/kaiju/mvome.out, results/100_SRF/kaiju/virome.out, results/100_SRF/kaiju/mvome_summary.tsv, results/100_SRF/kaiju/virome_summary.tsv
+    jobid: 34
+    reason: Missing output files: results/100_SRF/kaiju/virome_summary.tsv, results/100_SRF/kaiju/mvome_summary.tsv
+    wildcards: sample=100_SRF
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/100_SRF/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/100_SRF/reads/true.mvome.reads1.fq.gz,results/100_SRF/reads/true.virome.reads1.fq.gz         -j results/100_SRF/reads/true.mvome.reads2.fq.gz,results/100_SRF/reads/true.virome.reads2.fq.gz         -o results/100_SRF/kaiju/mvome.out,results/100_SRF/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/100_SRF/kaiju/mvome_summary.tsv results/100_SRF/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/100_SRF/kaiju/virome_summary.tsv results/100_SRF/kaiju/virome.out
+
+        
+Submitted job 34 with external jobid 'Submitted batch job 27918'.
+[Mon Jun 20 12:10:27 2022]
+Finished job 235.
+11 of 108 steps (10%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:10:27 2022]
+localrule contig_selector:
+    input: results/123_MIX/contig_summary_123_MIX.tsv, results/123_MIX/contigs/virome.contigs.filtered.fasta, results/123_MIX/enough_filtered_virome_contigs.txt
+    output: results/123_MIX/contigs/true.mvome.fasta, results/123_MIX/contigs/true.virome.fasta
+    log: results/123_MIX/log/contig_selector.log
+    jobid: 240
+    reason: Missing output files: results/123_MIX/contigs/true.mvome.fasta, results/123_MIX/contigs/true.virome.fasta; Input files updated by another job: results/123_MIX/contig_summary_123_MIX.tsv
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp
+
+python scripts/contig_selector.py 123_MIX 2> results/123_MIX/log/contig_selector.log
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+[Mon Jun 20 12:11:07 2022]
+Finished job 167.
+12 of 108 steps (11%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:11:07 2022]
+rule map_virome_reads_to_mv_contigs:
+    input: results/111_SRF/reads/virome.reads1.fastq.gz, results/111_SRF/reads/virome.reads2.fastq.gz, results/111_SRF/contigs/true.mvome.fasta
+    output: results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz, results/111_SRF/mappings/input_reads_vs_mv_contigs/statsfile.txt
+    log: results/111_SRF/log/map_virome_reads_to_mv_contigs.log
+    jobid: 154
+    reason: Missing output files: results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz
+    wildcards: sample=111_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/111_SRF/mappings/input_reads_vs_mv_contigs/
+
+        bbmap.sh in=results/111_SRF/reads/virome.reads1.fastq.gz in2=results/111_SRF/reads/virome.reads2.fastq.gz         ref=results/111_SRF/contigs/true.mvome.fasta         outm=results/111_SRF/reads/true.mvome.reads1.fq.gz outm2=results/111_SRF/reads/true.mvome.reads2.fq.gz         statsfile=results/111_SRF/mappings/input_reads_vs_mv_contigs/statsfile.txt         t=8         path=results/111_SRF/
+        
+Submitted job 154 with external jobid 'Submitted batch job 27919'.
+[Mon Jun 20 12:11:39 2022]
+Finished job 240.
+13 of 108 steps (12%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:11:39 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/122_DCM/reads/true.mvome.reads1.fq.gz, results/122_DCM/reads/true.mvome.reads2.fq.gz, results/122_DCM/contigs/metagenome.contigs.filtered.fasta
+    output: results/122_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/122_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 200
+    reason: Missing output files: results/122_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/122_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=122_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/122_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/122_DCM/reads/true.mvome.reads1.fq.gz in2=results/122_DCM/reads/true.mvome.reads2.fq.gz         ref=results/122_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/122_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/122_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/122_DCM/
+        
+Submitted job 200 with external jobid 'Submitted batch job 27920'.
+[Mon Jun 20 12:13:20 2022]
+Finished job 108.
+14 of 108 steps (13%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:13:20 2022]
+rule vs2:
+    input: results/122_MES/contigs/virome.contigs.filtered.fasta, results/122_MES/enough_filtered_virome_contigs.txt
+    output: results/122_MES/vs2/final-viral-combined.fa, results/122_MES/vs2/final-viral-score.tsv
+    jobid: 210
+    reason: Missing output files: results/122_MES/vs2/final-viral-score.tsv, results/122_MES/vs2/final-viral-combined.fa
+    wildcards: sample=122_MES
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        virsorter run --keep-original-seq -i results/122_MES/contigs/virome.contigs.filtered.fasta         -w results/122_MES/vs2         --min-score 0.5 -j 8 all --db-dir /home/dlueckin/dbs/vs2/db/
+        
+Submitted job 210 with external jobid 'Submitted batch job 27921'.
+[Mon Jun 20 12:15:10 2022]
+Finished job 170.
+15 of 108 steps (14%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:15:10 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/102_MES/reads/true.mvome.reads1.fq.gz, results/102_MES/reads/true.mvome.reads2.fq.gz, results/102_MES/contigs/metagenome.contigs.filtered.fasta
+    output: results/102_MES/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/102_MES/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 81
+    reason: Missing output files: results/102_MES/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/102_MES/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=102_MES
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_MES/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/102_MES/reads/true.mvome.reads1.fq.gz in2=results/102_MES/reads/true.mvome.reads2.fq.gz         ref=results/102_MES/contigs/metagenome.contigs.filtered.fasta         scafstats=results/102_MES/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/102_MES/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/102_MES/
+        
+Submitted job 81 with external jobid 'Submitted batch job 27922'.
+[Mon Jun 20 12:15:11 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 64
+    output: results/102_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/102_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/102_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/102_DCM/reads/true.mvome.reads1.fq.gz in2=results/102_DCM/reads/true.mvome.reads2.fq.gz         ref=results/102_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/102_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/102_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/102_DCM/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27915
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 64, external: Submitted batch job 27915, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.64.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:15:11 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/11_SRF/contigs/metagenome.contigs.fasta, results/11_SRF/log/00_INPUT_CHECK_DONE.log
+    output: results/11_SRF/contigs/metagenome.contigs.filtered.fasta
+    jobid: 184
+    reason: Missing output files: results/11_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=11_SRF
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/11_SRF/contigs/metagenome.contigs.fasta         100000 > results/11_SRF/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+[Mon Jun 20 12:15:51 2022]
+Finished job 184.
+16 of 108 steps (15%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:15:51 2022]
+rule map_virome_reads_to_true_virome_contigs:
+    input: results/123_MIX/reads/virome.reads1.fastq.gz, results/123_MIX/reads/virome.reads2.fastq.gz, results/123_MIX/contigs/true.virome.fasta
+    output: results/123_MIX/reads/true.virome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads2.fq.gz, results/123_MIX/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/123_MIX/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+    log: results/123_MIX/log/map_virome_reads_vs_true_virome_contigs.log
+    jobid: 249
+    reason: Missing output files: results/123_MIX/reads/true.virome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads2.fq.gz; Input files updated by another job: results/123_MIX/contigs/true.virome.fasta
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/123_MIX/mappings/input_reads_vs_true_virome_contigs/
+
+        bbmap.sh in=results/123_MIX/reads/virome.reads1.fastq.gz in2=results/123_MIX/reads/virome.reads2.fastq.gz         ref=results/123_MIX/contigs/true.virome.fasta         outm=results/123_MIX/reads/true.virome.reads1.fq.gz outm2=results/123_MIX/reads/true.virome.reads2.fq.gz         scafstats=results/123_MIX/mappings/input_reads_vs_true_virome_contigs/scafstats.txt         rpkm=results/123_MIX/mappings/input_reads_vs_true_virome_contigs/rpkm.txt         t=8         path=results/123_MIX/
+        
+Submitted job 249 with external jobid 'Submitted batch job 27923'.
+[Mon Jun 20 12:15:55 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 30
+    output: results/100_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/100_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/100_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/100_DCM/reads/true.mvome.reads1.fq.gz in2=results/100_DCM/reads/true.mvome.reads2.fq.gz         ref=results/100_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/100_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/100_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/100_DCM/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27917
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 30, external: Submitted batch job 27917, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.30.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+[Mon Jun 20 12:15:55 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 200
+    output: results/122_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/122_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/122_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/122_DCM/reads/true.mvome.reads1.fq.gz in2=results/122_DCM/reads/true.mvome.reads2.fq.gz         ref=results/122_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/122_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/122_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/122_DCM/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27920
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 200, external: Submitted batch job 27920, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.200.sh). For error details see the cluster log and the log files of the involved rule(s).
+
+[Mon Jun 20 12:15:55 2022]
+rule viromeQC:
+    input: results/102_MES/reads/true.mvome.reads1.fq.gz, results/102_MES/reads/true.mvome.reads2.fq.gz, results/102_MES/reads/true.virome.reads1.fq.gz, results/102_MES/reads/true.virome.reads2.fq.gz
+    output: results/102_MES/viromeQC/mvome_QC.tsv, results/102_MES/viromeQC/virome_QC.tsv
+    jobid: 80
+    reason: Missing output files: results/102_MES/viromeQC/mvome_QC.tsv, results/102_MES/viromeQC/virome_QC.tsv
+    wildcards: sample=102_MES
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_MES/viromeQC
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/102_MES/reads/true.mvome.reads1.fq.gz results/102_MES/reads/true.mvome.reads2.fq.gz         -o results/102_MES/viromeQC/mvome_QC.tsv
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/102_MES/reads/true.virome.reads1.fq.gz results/102_MES/reads/true.virome.reads2.fq.gz         -o results/102_MES/viromeQC/virome_QC.tsv
+        
+Submitted job 80 with external jobid 'Submitted batch job 27924'.
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:15:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/122_SRF/reads/true.mvome.reads1.fq.gz, results/122_SRF/reads/true.mvome.reads2.fq.gz, results/122_SRF/contigs/metagenome.contigs.filtered.fasta
+    output: results/122_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/122_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 234
+    reason: Missing output files: results/122_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/122_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=122_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/122_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/122_SRF/reads/true.mvome.reads1.fq.gz in2=results/122_SRF/reads/true.mvome.reads2.fq.gz         ref=results/122_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/122_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/122_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/122_SRF/
+        
+Submitted job 234 with external jobid 'Submitted batch job 27925'.
+[Mon Jun 20 12:19:47 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 234
+    output: results/122_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/122_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/122_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/122_SRF/reads/true.mvome.reads1.fq.gz in2=results/122_SRF/reads/true.mvome.reads2.fq.gz         ref=results/122_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/122_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/122_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/122_SRF/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27925
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 234, external: Submitted batch job 27925, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.234.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:19:47 2022]
+rule kaiju:
+    input: results/102_SRF/reads/true.mvome.reads1.fq.gz, results/102_SRF/reads/true.mvome.reads2.fq.gz, results/102_SRF/reads/true.virome.reads1.fq.gz, results/102_SRF/reads/true.virome.reads2.fq.gz
+    output: results/102_SRF/kaiju/mvome.out, results/102_SRF/kaiju/virome.out, results/102_SRF/kaiju/mvome_summary.tsv, results/102_SRF/kaiju/virome_summary.tsv
+    jobid: 85
+    reason: Missing output files: results/102_SRF/kaiju/mvome_summary.tsv, results/102_SRF/kaiju/virome_summary.tsv
+    wildcards: sample=102_SRF
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_SRF/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/102_SRF/reads/true.mvome.reads1.fq.gz,results/102_SRF/reads/true.virome.reads1.fq.gz         -j results/102_SRF/reads/true.mvome.reads2.fq.gz,results/102_SRF/reads/true.virome.reads2.fq.gz         -o results/102_SRF/kaiju/mvome.out,results/102_SRF/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/102_SRF/kaiju/mvome_summary.tsv results/102_SRF/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/102_SRF/kaiju/virome_summary.tsv results/102_SRF/kaiju/virome.out
+
+        
+Submitted job 85 with external jobid 'Submitted batch job 27926'.
+[Mon Jun 20 12:22:31 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 81
+    output: results/102_MES/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/102_MES/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/102_MES/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/102_MES/reads/true.mvome.reads1.fq.gz in2=results/102_MES/reads/true.mvome.reads2.fq.gz         ref=results/102_MES/contigs/metagenome.contigs.filtered.fasta         scafstats=results/102_MES/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/102_MES/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/102_MES/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27922
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 81, external: Submitted batch job 27922, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.81.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:22:31 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/11_SRF/reads/true.mvome.reads1.fq.gz, results/11_SRF/reads/true.mvome.reads2.fq.gz, results/11_SRF/contigs/metagenome.contigs.filtered.fasta
+    output: results/11_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/11_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 183
+    reason: Missing output files: results/11_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/11_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=11_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/11_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/11_SRF/reads/true.mvome.reads1.fq.gz in2=results/11_SRF/reads/true.mvome.reads2.fq.gz         ref=results/11_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/11_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/11_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/11_SRF/
+        
+Submitted job 183 with external jobid 'Submitted batch job 27927'.
+[Mon Jun 20 12:24:22 2022]
+Finished job 154.
+17 of 108 steps (16%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:24:23 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz, results/111_SRF/contigs/metagenome.contigs.filtered.fasta
+    output: results/111_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/111_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 166
+    reason: Missing output files: results/111_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/111_SRF/contigs/metagenome.contigs.filtered.fasta, results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz
+    wildcards: sample=111_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/111_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/111_SRF/reads/true.mvome.reads1.fq.gz in2=results/111_SRF/reads/true.mvome.reads2.fq.gz         ref=results/111_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/111_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/111_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/111_SRF/
+        
+Submitted job 166 with external jobid 'Submitted batch job 27928'.
+[Mon Jun 20 12:28:13 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 183
+    output: results/11_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/11_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/11_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/11_SRF/reads/true.mvome.reads1.fq.gz in2=results/11_SRF/reads/true.mvome.reads2.fq.gz         ref=results/11_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/11_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/11_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/11_SRF/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27927
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 183, external: Submitted batch job 27927, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.183.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:28:13 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/100_SRF/contigs/metagenome.contigs.fasta, results/100_SRF/log/00_INPUT_CHECK_DONE.log
+    output: results/100_SRF/contigs/metagenome.contigs.filtered.fasta
+    jobid: 48
+    reason: Missing output files: results/100_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=100_SRF
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/100_SRF/contigs/metagenome.contigs.fasta         100000 > results/100_SRF/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+[Mon Jun 20 12:28:14 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 166
+    output: results/111_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/111_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/111_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/111_SRF/reads/true.mvome.reads1.fq.gz in2=results/111_SRF/reads/true.mvome.reads2.fq.gz         ref=results/111_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/111_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/111_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/111_SRF/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27928
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 166, external: Submitted batch job 27928, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.166.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:28:14 2022]
+rule checkv:
+    input: results/109_DCM/vs2/final-viral-combined.fa
+    output: results/109_DCM/checkv/contamination.tsv
+    jobid: 110
+    reason: Missing output files: results/109_DCM/checkv/contamination.tsv; Input files updated by another job: results/109_DCM/vs2/final-viral-combined.fa
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        checkv end_to_end results/109_DCM/vs2/final-viral-combined.fa results/109_DCM/checkv         -t 8 -d /home/dlueckin/dbs/checkv-db-v1.0
+        
+Submitted job 110 with external jobid 'Submitted batch job 27929'.
+[Mon Jun 20 12:28:53 2022]
+Finished job 48.
+18 of 108 steps (17%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:28:53 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/100_SRF/reads/true.mvome.reads1.fq.gz, results/100_SRF/reads/true.mvome.reads2.fq.gz, results/100_SRF/contigs/metagenome.contigs.filtered.fasta
+    output: results/100_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/100_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 47
+    reason: Missing output files: results/100_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/100_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=100_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/100_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/100_SRF/reads/true.mvome.reads1.fq.gz in2=results/100_SRF/reads/true.mvome.reads2.fq.gz         ref=results/100_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/100_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/100_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/100_SRF/
+        
+Submitted job 47 with external jobid 'Submitted batch job 27930'.
+[Mon Jun 20 12:32:49 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 47
+    output: results/100_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/100_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/100_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/100_SRF/reads/true.mvome.reads1.fq.gz in2=results/100_SRF/reads/true.mvome.reads2.fq.gz         ref=results/100_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/100_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/100_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/100_SRF/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27930
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 47, external: Submitted batch job 27930, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.47.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:32:49 2022]
+rule map_virome_reads_to_mv_contigs:
+    input: results/123_MIX/reads/virome.reads1.fastq.gz, results/123_MIX/reads/virome.reads2.fastq.gz, results/123_MIX/contigs/true.mvome.fasta
+    output: results/123_MIX/reads/true.mvome.reads1.fq.gz, results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/mappings/input_reads_vs_mv_contigs/statsfile.txt
+    log: results/123_MIX/log/map_virome_reads_to_mv_contigs.log
+    jobid: 239
+    reason: Missing output files: results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/reads/true.mvome.reads1.fq.gz; Input files updated by another job: results/123_MIX/contigs/true.mvome.fasta
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/123_MIX/mappings/input_reads_vs_mv_contigs/
+
+        bbmap.sh in=results/123_MIX/reads/virome.reads1.fastq.gz in2=results/123_MIX/reads/virome.reads2.fastq.gz         ref=results/123_MIX/contigs/true.mvome.fasta         outm=results/123_MIX/reads/true.mvome.reads1.fq.gz outm2=results/123_MIX/reads/true.mvome.reads2.fq.gz         statsfile=results/123_MIX/mappings/input_reads_vs_mv_contigs/statsfile.txt         t=8         path=results/123_MIX/
+        
+Submitted job 239 with external jobid 'Submitted batch job 27931'.
+[Mon Jun 20 12:52:28 2022]
+Finished job 239.
+19 of 108 steps (18%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:52:28 2022]
+localrule filter_input_metagenome_by_length:
+    input: results/111_DCM/contigs/metagenome.contigs.fasta, results/111_DCM/log/00_INPUT_CHECK_DONE.log
+    output: results/111_DCM/contigs/metagenome.contigs.filtered.fasta
+    jobid: 150
+    reason: Missing output files: results/111_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=111_DCM
+    resources: tmpdir=/tmp
+
+
+        python3 scripts/filter_by_len.py results/111_DCM/contigs/metagenome.contigs.fasta         100000 > results/111_DCM/contigs/metagenome.contigs.filtered.fasta
+        
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+[Mon Jun 20 12:53:21 2022]
+Finished job 150.
+20 of 108 steps (19%) done
+Select jobs to execute...
+
+[Mon Jun 20 12:53:21 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/111_DCM/reads/true.mvome.reads1.fq.gz, results/111_DCM/reads/true.mvome.reads2.fq.gz, results/111_DCM/contigs/metagenome.contigs.filtered.fasta
+    output: results/111_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/111_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 149
+    reason: Missing output files: results/111_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/111_DCM/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=111_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/111_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/111_DCM/reads/true.mvome.reads1.fq.gz in2=results/111_DCM/reads/true.mvome.reads2.fq.gz         ref=results/111_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/111_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/111_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/111_DCM/
+        
+Submitted job 149 with external jobid 'Submitted batch job 27932'.
+[Mon Jun 20 12:57:14 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 149
+    output: results/111_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/111_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/111_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/111_DCM/reads/true.mvome.reads1.fq.gz in2=results/111_DCM/reads/true.mvome.reads2.fq.gz         ref=results/111_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/111_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/111_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/111_DCM/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27932
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 149, external: Submitted batch job 27932, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.149.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+Select jobs to execute...
+
+[Mon Jun 20 12:57:15 2022]
+rule kaiju:
+    input: results/122_DCM/reads/true.mvome.reads1.fq.gz, results/122_DCM/reads/true.mvome.reads2.fq.gz, results/122_DCM/reads/true.virome.reads1.fq.gz, results/122_DCM/reads/true.virome.reads2.fq.gz
+    output: results/122_DCM/kaiju/mvome.out, results/122_DCM/kaiju/virome.out, results/122_DCM/kaiju/mvome_summary.tsv, results/122_DCM/kaiju/virome_summary.tsv
+    jobid: 187
+    reason: Missing output files: results/122_DCM/kaiju/virome_summary.tsv, results/122_DCM/kaiju/mvome_summary.tsv
+    wildcards: sample=122_DCM
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/122_DCM/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/122_DCM/reads/true.mvome.reads1.fq.gz,results/122_DCM/reads/true.virome.reads1.fq.gz         -j results/122_DCM/reads/true.mvome.reads2.fq.gz,results/122_DCM/reads/true.virome.reads2.fq.gz         -o results/122_DCM/kaiju/mvome.out,results/122_DCM/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/122_DCM/kaiju/mvome_summary.tsv results/122_DCM/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/122_DCM/kaiju/virome_summary.tsv results/122_DCM/kaiju/virome.out
+
+        
+Submitted job 187 with external jobid 'Submitted batch job 27933'.
+[Mon Jun 20 13:17:37 2022]
+Finished job 34.
+21 of 108 steps (19%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:17:37 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/123_MIX/reads/true.mvome.reads1.fq.gz, results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/contigs/metagenome.contigs.filtered.fasta
+    output: results/123_MIX/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/123_MIX/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 251
+    reason: Missing output files: results/123_MIX/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/reads/true.mvome.reads1.fq.gz, results/123_MIX/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/123_MIX/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/123_MIX/reads/true.mvome.reads1.fq.gz in2=results/123_MIX/reads/true.mvome.reads2.fq.gz         ref=results/123_MIX/contigs/metagenome.contigs.filtered.fasta         scafstats=results/123_MIX/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/123_MIX/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/123_MIX/
+        
+Submitted job 251 with external jobid 'Submitted batch job 27934'.
+[Mon Jun 20 13:20:21 2022]
+Finished job 136.
+22 of 108 steps (20%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:20:21 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/102_SRF/reads/true.mvome.reads1.fq.gz, results/102_SRF/reads/true.mvome.reads2.fq.gz, results/102_SRF/contigs/metagenome.contigs.filtered.fasta
+    output: results/102_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/102_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 98
+    reason: Missing output files: results/102_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/102_SRF/contigs/metagenome.contigs.filtered.fasta
+    wildcards: sample=102_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/102_SRF/reads/true.mvome.reads1.fq.gz in2=results/102_SRF/reads/true.mvome.reads2.fq.gz         ref=results/102_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/102_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/102_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/102_SRF/
+        
+Submitted job 98 with external jobid 'Submitted batch job 27935'.
+[Mon Jun 20 13:23:18 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 251
+    output: results/123_MIX/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/123_MIX/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/123_MIX/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/123_MIX/reads/true.mvome.reads1.fq.gz in2=results/123_MIX/reads/true.mvome.reads2.fq.gz         ref=results/123_MIX/contigs/metagenome.contigs.filtered.fasta         scafstats=results/123_MIX/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/123_MIX/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/123_MIX/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27934
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 251, external: Submitted batch job 27934, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.251.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+[Mon Jun 20 13:25:07 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 98
+    output: results/102_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/102_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/102_SRF/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/102_SRF/reads/true.mvome.reads1.fq.gz in2=results/102_SRF/reads/true.mvome.reads2.fq.gz         ref=results/102_SRF/contigs/metagenome.contigs.filtered.fasta         scafstats=results/102_SRF/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/102_SRF/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/102_SRF/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27935
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 98, external: Submitted batch job 27935, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.98.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+[Mon Jun 20 13:26:58 2022]
+Finished job 17.
+23 of 108 steps (21%) done
+[Mon Jun 20 13:27:42 2022]
+Finished job 68.
+24 of 108 steps (22%) done
+[Mon Jun 20 13:29:32 2022]
+Finished job 85.
+25 of 108 steps (23%) done
+[Mon Jun 20 13:48:59 2022]
+Finished job 110.
+26 of 108 steps (24%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:48:59 2022]
+localrule vs2_summary:
+    input: results/109_DCM/vs2/final-viral-score.tsv, results/109_DCM/checkv/contamination.tsv
+    output: results/109_DCM/vs2_final_report.tsv
+    jobid: 107
+    reason: Missing output files: results/109_DCM/vs2_final_report.tsv; Input files updated by another job: results/109_DCM/checkv/contamination.tsv, results/109_DCM/vs2/final-viral-score.tsv
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp
+
+Rscript scripts/analyze_vs2_output.R results/109_DCM/vs2/final-viral-score.tsv results/109_DCM/checkv/contamination.tsv results/109_DCM/vs2_final_report.tsv
+Activating conda environment: /home/dlueckin/envs/f0661911c8f8fcc4fdcd06216d834fa1
+[1] "Quick Summary"
+
+manual curation       not viral      true viral 
+             17             525           19673 
+[Mon Jun 20 13:49:32 2022]
+Finished job 107.
+27 of 108 steps (25%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:49:32 2022]
+localrule contig_summary:
+    input: results/109_DCM/contigs/virome.contigs.filtered.fasta, results/109_DCM/vs2_final_report.tsv, results/109_DCM/dvf/virome.contigs.filtered.fasta_gt1bp_dvfpred.txt, results/109_DCM/platon_out/platon_plasmids.log, results/109_DCM/enough_filtered_virome_contigs.txt
+    output: results/109_DCM/contig_summary_109_DCM.tsv
+    log: results/109_DCM/log/text_summary.log
+    jobid: 105
+    reason: Missing output files: results/109_DCM/contig_summary_109_DCM.tsv; Input files updated by another job: results/109_DCM/vs2_final_report.tsv
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp
+
+Rscript scripts/summarize.R 109_DCM 150000 2> results/109_DCM/log/text_summary.log
+Activating conda environment: /home/dlueckin/envs/f0661911c8f8fcc4fdcd06216d834fa1
+[Mon Jun 20 13:50:06 2022]
+Finished job 105.
+28 of 108 steps (26%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:50:06 2022]
+localrule contig_selector:
+    input: results/109_DCM/contig_summary_109_DCM.tsv, results/109_DCM/contigs/virome.contigs.filtered.fasta, results/109_DCM/enough_filtered_virome_contigs.txt
+    output: results/109_DCM/contigs/true.mvome.fasta, results/109_DCM/contigs/true.virome.fasta
+    log: results/109_DCM/log/contig_selector.log
+    jobid: 104
+    reason: Missing output files: results/109_DCM/contigs/true.virome.fasta, results/109_DCM/contigs/true.mvome.fasta; Input files updated by another job: results/109_DCM/contig_summary_109_DCM.tsv
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp
+
+python scripts/contig_selector.py 109_DCM 2> results/109_DCM/log/contig_selector.log
+Activating conda environment: /home/dlueckin/envs/f57ba2b792805d07331ad6f4d9adf21c
+[Mon Jun 20 13:50:53 2022]
+Finished job 104.
+29 of 108 steps (27%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:50:53 2022]
+rule map_virome_reads_to_mv_contigs:
+    input: results/109_DCM/reads/virome.reads1.fastq.gz, results/109_DCM/reads/virome.reads2.fastq.gz, results/109_DCM/contigs/true.mvome.fasta
+    output: results/109_DCM/reads/true.mvome.reads1.fq.gz, results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/mappings/input_reads_vs_mv_contigs/statsfile.txt
+    log: results/109_DCM/log/map_virome_reads_to_mv_contigs.log
+    jobid: 103
+    reason: Missing output files: results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/reads/true.mvome.reads1.fq.gz; Input files updated by another job: results/109_DCM/contigs/true.mvome.fasta
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/109_DCM/mappings/input_reads_vs_mv_contigs/
+
+        bbmap.sh in=results/109_DCM/reads/virome.reads1.fastq.gz in2=results/109_DCM/reads/virome.reads2.fastq.gz         ref=results/109_DCM/contigs/true.mvome.fasta         outm=results/109_DCM/reads/true.mvome.reads1.fq.gz outm2=results/109_DCM/reads/true.mvome.reads2.fq.gz         statsfile=results/109_DCM/mappings/input_reads_vs_mv_contigs/statsfile.txt         t=8         path=results/109_DCM/
+        
+Submitted job 103 with external jobid 'Submitted batch job 27955'.
+
+[Mon Jun 20 13:50:53 2022]
+rule map_virome_reads_to_true_virome_contigs:
+    input: results/109_DCM/reads/virome.reads1.fastq.gz, results/109_DCM/reads/virome.reads2.fastq.gz, results/109_DCM/contigs/true.virome.fasta
+    output: results/109_DCM/reads/true.virome.reads1.fq.gz, results/109_DCM/reads/true.virome.reads2.fq.gz, results/109_DCM/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/109_DCM/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+    log: results/109_DCM/log/map_virome_reads_vs_true_virome_contigs.log
+    jobid: 113
+    reason: Missing output files: results/109_DCM/reads/true.virome.reads2.fq.gz, results/109_DCM/reads/true.virome.reads1.fq.gz; Input files updated by another job: results/109_DCM/contigs/true.virome.fasta
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/109_DCM/mappings/input_reads_vs_true_virome_contigs/
+
+        bbmap.sh in=results/109_DCM/reads/virome.reads1.fastq.gz in2=results/109_DCM/reads/virome.reads2.fastq.gz         ref=results/109_DCM/contigs/true.virome.fasta         outm=results/109_DCM/reads/true.virome.reads1.fq.gz outm2=results/109_DCM/reads/true.virome.reads2.fq.gz         scafstats=results/109_DCM/mappings/input_reads_vs_true_virome_contigs/scafstats.txt         rpkm=results/109_DCM/mappings/input_reads_vs_true_virome_contigs/rpkm.txt         t=8         path=results/109_DCM/
+        
+Submitted job 113 with external jobid 'Submitted batch job 27956'.
+[Mon Jun 20 13:54:52 2022]
+Finished job 62.
+30 of 108 steps (28%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:54:52 2022]
+rule viromeQC:
+    input: results/102_DCM/reads/true.mvome.reads1.fq.gz, results/102_DCM/reads/true.mvome.reads2.fq.gz, results/102_DCM/reads/true.virome.reads1.fq.gz, results/102_DCM/reads/true.virome.reads2.fq.gz
+    output: results/102_DCM/viromeQC/mvome_QC.tsv, results/102_DCM/viromeQC/virome_QC.tsv
+    jobid: 63
+    reason: Missing output files: results/102_DCM/viromeQC/virome_QC.tsv, results/102_DCM/viromeQC/mvome_QC.tsv; Input files updated by another job: results/102_DCM/reads/true.virome.reads2.fq.gz, results/102_DCM/reads/true.virome.reads1.fq.gz
+    wildcards: sample=102_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_DCM/viromeQC
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/102_DCM/reads/true.mvome.reads1.fq.gz results/102_DCM/reads/true.mvome.reads2.fq.gz         -o results/102_DCM/viromeQC/mvome_QC.tsv
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/102_DCM/reads/true.virome.reads1.fq.gz results/102_DCM/reads/true.virome.reads2.fq.gz         -o results/102_DCM/viromeQC/virome_QC.tsv
+        
+Submitted job 63 with external jobid 'Submitted batch job 27961'.
+
+[Mon Jun 20 13:54:52 2022]
+rule kaiju:
+    input: results/102_DCM/reads/true.mvome.reads1.fq.gz, results/102_DCM/reads/true.mvome.reads2.fq.gz, results/102_DCM/reads/true.virome.reads1.fq.gz, results/102_DCM/reads/true.virome.reads2.fq.gz
+    output: results/102_DCM/kaiju/mvome.out, results/102_DCM/kaiju/virome.out, results/102_DCM/kaiju/mvome_summary.tsv, results/102_DCM/kaiju/virome_summary.tsv
+    jobid: 51
+    reason: Missing output files: results/102_DCM/kaiju/mvome_summary.tsv, results/102_DCM/kaiju/virome_summary.tsv; Input files updated by another job: results/102_DCM/reads/true.virome.reads2.fq.gz, results/102_DCM/reads/true.virome.reads1.fq.gz
+    wildcards: sample=102_DCM
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/102_DCM/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/102_DCM/reads/true.mvome.reads1.fq.gz,results/102_DCM/reads/true.virome.reads1.fq.gz         -j results/102_DCM/reads/true.mvome.reads2.fq.gz,results/102_DCM/reads/true.virome.reads2.fq.gz         -o results/102_DCM/kaiju/mvome.out,results/102_DCM/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/102_DCM/kaiju/mvome_summary.tsv results/102_DCM/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/102_DCM/kaiju/virome_summary.tsv results/102_DCM/kaiju/virome.out
+
+        
+Submitted job 51 with external jobid 'Submitted batch job 27962'.
+[Mon Jun 20 13:57:48 2022]
+Finished job 80.
+31 of 108 steps (29%) done
+[Mon Jun 20 13:58:34 2022]
+Finished job 103.
+32 of 108 steps (30%) done
+Select jobs to execute...
+
+[Mon Jun 20 13:58:34 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/109_DCM/reads/true.mvome.reads1.fq.gz, results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/contigs/metagenome.contigs.filtered.fasta
+    output: results/109_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/109_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 115
+    reason: Missing output files: results/109_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/109_DCM/contigs/metagenome.contigs.filtered.fasta, results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/reads/true.mvome.reads1.fq.gz
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/109_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/109_DCM/reads/true.mvome.reads1.fq.gz in2=results/109_DCM/reads/true.mvome.reads2.fq.gz         ref=results/109_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/109_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/109_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/109_DCM/
+        
+Submitted job 115 with external jobid 'Submitted batch job 27964'.
+[Mon Jun 20 14:01:18 2022]
+Finished job 187.
+33 of 108 steps (31%) done
+[Mon Jun 20 14:01:18 2022]
+Error in rule map_mv_positive_reads_to_metagenome:
+    jobid: 115
+    output: results/109_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/109_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
+    shell:
+        
+        mkdir -p results/109_DCM/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/109_DCM/reads/true.mvome.reads1.fq.gz in2=results/109_DCM/reads/true.mvome.reads2.fq.gz         ref=results/109_DCM/contigs/metagenome.contigs.filtered.fasta         scafstats=results/109_DCM/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/109_DCM/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/109_DCM/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27964
+
+Error executing rule map_mv_positive_reads_to_metagenome on cluster (jobid: 115, external: Submitted batch job 27964, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.map_mv_positive_reads_to_metagenome.115.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+[Mon Jun 20 14:21:51 2022]
+Finished job 232.
+34 of 108 steps (31%) done
+Select jobs to execute...
+
+[Mon Jun 20 14:21:51 2022]
+rule kaiju:
+    input: results/122_SRF/reads/true.mvome.reads1.fq.gz, results/122_SRF/reads/true.mvome.reads2.fq.gz, results/122_SRF/reads/true.virome.reads1.fq.gz, results/122_SRF/reads/true.virome.reads2.fq.gz
+    output: results/122_SRF/kaiju/mvome.out, results/122_SRF/kaiju/virome.out, results/122_SRF/kaiju/mvome_summary.tsv, results/122_SRF/kaiju/virome_summary.tsv
+    jobid: 221
+    reason: Missing output files: results/122_SRF/kaiju/mvome_summary.tsv, results/122_SRF/kaiju/virome_summary.tsv; Input files updated by another job: results/122_SRF/reads/true.virome.reads1.fq.gz, results/122_SRF/reads/true.virome.reads2.fq.gz
+    wildcards: sample=122_SRF
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/122_SRF/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/122_SRF/reads/true.mvome.reads1.fq.gz,results/122_SRF/reads/true.virome.reads1.fq.gz         -j results/122_SRF/reads/true.mvome.reads2.fq.gz,results/122_SRF/reads/true.virome.reads2.fq.gz         -o results/122_SRF/kaiju/mvome.out,results/122_SRF/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/122_SRF/kaiju/mvome_summary.tsv results/122_SRF/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/122_SRF/kaiju/virome_summary.tsv results/122_SRF/kaiju/virome.out
+
+        
+Submitted job 221 with external jobid 'Submitted batch job 27987'.
+
+[Mon Jun 20 14:21:51 2022]
+rule viromeQC:
+    input: results/122_SRF/reads/true.mvome.reads1.fq.gz, results/122_SRF/reads/true.mvome.reads2.fq.gz, results/122_SRF/reads/true.virome.reads1.fq.gz, results/122_SRF/reads/true.virome.reads2.fq.gz
+    output: results/122_SRF/viromeQC/mvome_QC.tsv, results/122_SRF/viromeQC/virome_QC.tsv
+    jobid: 233
+    reason: Missing output files: results/122_SRF/viromeQC/mvome_QC.tsv, results/122_SRF/viromeQC/virome_QC.tsv; Input files updated by another job: results/122_SRF/reads/true.virome.reads1.fq.gz, results/122_SRF/reads/true.virome.reads2.fq.gz
+    wildcards: sample=122_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/122_SRF/viromeQC
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/122_SRF/reads/true.mvome.reads1.fq.gz results/122_SRF/reads/true.mvome.reads2.fq.gz         -o results/122_SRF/viromeQC/mvome_QC.tsv
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/122_SRF/reads/true.virome.reads1.fq.gz results/122_SRF/reads/true.virome.reads2.fq.gz         -o results/122_SRF/viromeQC/virome_QC.tsv
+        
+Submitted job 233 with external jobid 'Submitted batch job 27988'.
+[Mon Jun 20 14:24:36 2022]
+Finished job 164.
+35 of 108 steps (32%) done
+Select jobs to execute...
+
+[Mon Jun 20 14:24:36 2022]
+rule viromeQC:
+    input: results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz, results/111_SRF/reads/true.virome.reads1.fq.gz, results/111_SRF/reads/true.virome.reads2.fq.gz
+    output: results/111_SRF/viromeQC/mvome_QC.tsv, results/111_SRF/viromeQC/virome_QC.tsv
+    jobid: 165
+    reason: Missing output files: results/111_SRF/viromeQC/mvome_QC.tsv, results/111_SRF/viromeQC/virome_QC.tsv; Input files updated by another job: results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz, results/111_SRF/reads/true.virome.reads1.fq.gz, results/111_SRF/reads/true.virome.reads2.fq.gz
+    wildcards: sample=111_SRF
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/111_SRF/viromeQC
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/111_SRF/reads/true.mvome.reads1.fq.gz results/111_SRF/reads/true.mvome.reads2.fq.gz         -o results/111_SRF/viromeQC/mvome_QC.tsv
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/111_SRF/reads/true.virome.reads1.fq.gz results/111_SRF/reads/true.virome.reads2.fq.gz         -o results/111_SRF/viromeQC/virome_QC.tsv
+        
+Submitted job 165 with external jobid 'Submitted batch job 27989'.
+
+[Mon Jun 20 14:24:36 2022]
+rule kaiju:
+    input: results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz, results/111_SRF/reads/true.virome.reads1.fq.gz, results/111_SRF/reads/true.virome.reads2.fq.gz
+    output: results/111_SRF/kaiju/mvome.out, results/111_SRF/kaiju/virome.out, results/111_SRF/kaiju/mvome_summary.tsv, results/111_SRF/kaiju/virome_summary.tsv
+    jobid: 153
+    reason: Missing output files: results/111_SRF/kaiju/virome_summary.tsv, results/111_SRF/kaiju/mvome_summary.tsv; Input files updated by another job: results/111_SRF/reads/true.mvome.reads1.fq.gz, results/111_SRF/reads/true.mvome.reads2.fq.gz, results/111_SRF/reads/true.virome.reads1.fq.gz, results/111_SRF/reads/true.virome.reads2.fq.gz
+    wildcards: sample=111_SRF
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/111_SRF/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/111_SRF/reads/true.mvome.reads1.fq.gz,results/111_SRF/reads/true.virome.reads1.fq.gz         -j results/111_SRF/reads/true.mvome.reads2.fq.gz,results/111_SRF/reads/true.virome.reads2.fq.gz         -o results/111_SRF/kaiju/mvome.out,results/111_SRF/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/111_SRF/kaiju/mvome_summary.tsv results/111_SRF/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/111_SRF/kaiju/virome_summary.tsv results/111_SRF/kaiju/virome.out
+
+        
+Submitted job 153 with external jobid 'Submitted batch job 27990'.
+[Mon Jun 20 14:27:32 2022]
+Finished job 113.
+36 of 108 steps (33%) done
+Select jobs to execute...
+
+[Mon Jun 20 14:27:32 2022]
+rule kaiju:
+    input: results/109_DCM/reads/true.mvome.reads1.fq.gz, results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/reads/true.virome.reads1.fq.gz, results/109_DCM/reads/true.virome.reads2.fq.gz
+    output: results/109_DCM/kaiju/mvome.out, results/109_DCM/kaiju/virome.out, results/109_DCM/kaiju/mvome_summary.tsv, results/109_DCM/kaiju/virome_summary.tsv
+    jobid: 102
+    reason: Missing output files: results/109_DCM/kaiju/virome_summary.tsv, results/109_DCM/kaiju/mvome_summary.tsv; Input files updated by another job: results/109_DCM/reads/true.virome.reads2.fq.gz, results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/reads/true.virome.reads1.fq.gz, results/109_DCM/reads/true.mvome.reads1.fq.gz
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/109_DCM/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/109_DCM/reads/true.mvome.reads1.fq.gz,results/109_DCM/reads/true.virome.reads1.fq.gz         -j results/109_DCM/reads/true.mvome.reads2.fq.gz,results/109_DCM/reads/true.virome.reads2.fq.gz         -o results/109_DCM/kaiju/mvome.out,results/109_DCM/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/109_DCM/kaiju/mvome_summary.tsv results/109_DCM/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/109_DCM/kaiju/virome_summary.tsv results/109_DCM/kaiju/virome.out
+
+        
+Submitted job 102 with external jobid 'Submitted batch job 27991'.
+
+[Mon Jun 20 14:27:32 2022]
+rule viromeQC:
+    input: results/109_DCM/reads/true.mvome.reads1.fq.gz, results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/reads/true.virome.reads1.fq.gz, results/109_DCM/reads/true.virome.reads2.fq.gz
+    output: results/109_DCM/viromeQC/mvome_QC.tsv, results/109_DCM/viromeQC/virome_QC.tsv
+    jobid: 114
+    reason: Missing output files: results/109_DCM/viromeQC/mvome_QC.tsv, results/109_DCM/viromeQC/virome_QC.tsv; Input files updated by another job: results/109_DCM/reads/true.virome.reads2.fq.gz, results/109_DCM/reads/true.mvome.reads2.fq.gz, results/109_DCM/reads/true.virome.reads1.fq.gz, results/109_DCM/reads/true.mvome.reads1.fq.gz
+    wildcards: sample=109_DCM
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/109_DCM/viromeQC
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/109_DCM/reads/true.mvome.reads1.fq.gz results/109_DCM/reads/true.mvome.reads2.fq.gz         -o results/109_DCM/viromeQC/mvome_QC.tsv
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/109_DCM/reads/true.virome.reads1.fq.gz results/109_DCM/reads/true.virome.reads2.fq.gz         -o results/109_DCM/viromeQC/virome_QC.tsv
+        
+Submitted job 114 with external jobid 'Submitted batch job 27992'.
+[Mon Jun 20 14:31:36 2022]
+Finished job 249.
+37 of 108 steps (34%) done
+Select jobs to execute...
+
+[Mon Jun 20 14:31:36 2022]
+rule kaiju:
+    input: results/123_MIX/reads/true.mvome.reads1.fq.gz, results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/reads/true.virome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads2.fq.gz
+    output: results/123_MIX/kaiju/mvome.out, results/123_MIX/kaiju/virome.out, results/123_MIX/kaiju/mvome_summary.tsv, results/123_MIX/kaiju/virome_summary.tsv
+    jobid: 238
+    reason: Missing output files: results/123_MIX/kaiju/virome_summary.tsv, results/123_MIX/kaiju/mvome_summary.tsv; Input files updated by another job: results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/reads/true.mvome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads2.fq.gz
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/123_MIX/kaiju
+        
+        kaiju-multi -z 8         -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi         -i results/123_MIX/reads/true.mvome.reads1.fq.gz,results/123_MIX/reads/true.virome.reads1.fq.gz         -j results/123_MIX/reads/true.mvome.reads2.fq.gz,results/123_MIX/reads/true.virome.reads2.fq.gz         -o results/123_MIX/kaiju/mvome.out,results/123_MIX/kaiju/virome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/123_MIX/kaiju/mvome_summary.tsv results/123_MIX/kaiju/mvome.out
+
+        kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp         -r genus -o results/123_MIX/kaiju/virome_summary.tsv results/123_MIX/kaiju/virome.out
+
+        
+Submitted job 238 with external jobid 'Submitted batch job 27993'.
+
+[Mon Jun 20 14:31:36 2022]
+rule viromeQC:
+    input: results/123_MIX/reads/true.mvome.reads1.fq.gz, results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/reads/true.virome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads2.fq.gz
+    output: results/123_MIX/viromeQC/mvome_QC.tsv, results/123_MIX/viromeQC/virome_QC.tsv
+    jobid: 250
+    reason: Missing output files: results/123_MIX/viromeQC/mvome_QC.tsv, results/123_MIX/viromeQC/virome_QC.tsv; Input files updated by another job: results/123_MIX/reads/true.mvome.reads2.fq.gz, results/123_MIX/reads/true.mvome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads1.fq.gz, results/123_MIX/reads/true.virome.reads2.fq.gz
+    wildcards: sample=123_MIX
+    resources: tmpdir=/tmp, mem=80G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/123_MIX/viromeQC
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/123_MIX/reads/true.mvome.reads1.fq.gz results/123_MIX/reads/true.mvome.reads2.fq.gz         -o results/123_MIX/viromeQC/mvome_QC.tsv
+
+        python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental         --diamond_threads 8 --bowtie2_threads 8         -i results/123_MIX/reads/true.virome.reads1.fq.gz results/123_MIX/reads/true.virome.reads2.fq.gz         -o results/123_MIX/viromeQC/virome_QC.tsv
+        
+Submitted job 250 with external jobid 'Submitted batch job 27994'.
+[Mon Jun 20 14:48:39 2022]
+Finished job 51.
+38 of 108 steps (35%) done
+[Mon Jun 20 14:53:47 2022]
+Finished job 46.
+39 of 108 steps (36%) done
+[Mon Jun 20 14:55:37 2022]
+Finished job 114.
+40 of 108 steps (37%) done
+[Mon Jun 20 15:01:51 2022]
+Finished job 63.
+41 of 108 steps (38%) done
+[Mon Jun 20 15:41:08 2022]
+Finished job 250.
+42 of 108 steps (39%) done
+[Mon Jun 20 16:29:52 2022]
+Error in rule vs2:
+    jobid: 210
+    output: results/122_MES/vs2/final-viral-combined.fa, results/122_MES/vs2/final-viral-score.tsv
+    conda-env: /home/dlueckin/envs/938627424651a88effb2697517bcbddb
+    shell:
+        
+        virsorter run --keep-original-seq -i results/122_MES/contigs/virome.contigs.filtered.fasta         -w results/122_MES/vs2         --min-score 0.5 -j 8 all --db-dir /home/dlueckin/dbs/vs2/db/
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 27921
+
+Error executing rule vs2 on cluster (jobid: 210, external: Submitted batch job 27921, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.vl63vk3m/snakejob.vs2.210.sh). For error details see the cluster log and the log files of the involved rule(s).
+Job failed, going on with independent jobs.
+[Mon Jun 20 16:38:33 2022]
+Finished job 165.
+43 of 108 steps (40%) done
+[Mon Jun 20 16:50:14 2022]
+Finished job 233.
+44 of 108 steps (41%) done
+[Tue Jun 21 00:47:25 2022]
+Finished job 102.
+45 of 108 steps (42%) done
+[Tue Jun 21 00:56:06 2022]
+Finished job 221.
+46 of 108 steps (43%) done
+[Tue Jun 21 01:49:49 2022]
+Finished job 153.
+47 of 108 steps (44%) done
+[Tue Jun 21 02:27:31 2022]
+Finished job 238.
+48 of 108 steps (44%) done
