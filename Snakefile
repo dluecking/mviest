@@ -417,7 +417,7 @@ rule map_virome_reads_to_mv_contigs:
             outm={output.r1} outm2={output.r2} \
             statsfile={output.statsfile} \
             t={resources.ntasks} \
-            path=results/{wildcards.sample}/
+            nodisk
         else
             # the input contig file IS empty
             touch {output.r1} {output.r2} {output.statsfile}
@@ -453,7 +453,7 @@ rule map_virome_reads_to_true_virome_contigs:
             scafstats={output.scafstats} \
             rpkm={output.rpkm} \
             t={resources.ntasks} \
-            path=results/{wildcards.sample}/
+            nodisk
         else
             # the input contig file IS empty
             touch {output.r1} {output.r2} {output.scafstats} {output.rpkm}
@@ -483,5 +483,5 @@ rule map_mv_positive_reads_to_metagenome:
         scafstats={output.scafstats} \
         rpkm={output.rpkm} \
         t={resources.ntasks} \
-        path=results/{wildcards.sample}/
+        nodisk
         """    

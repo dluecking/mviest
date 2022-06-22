@@ -1,4 +1,4 @@
-sbatch_normal_mem: "50G"
+sbatch_normal_mem: "100G"
 sbatch_high_mem: "250G"
 virome_min_len: 2000
 minimum_number_of_virome_input_contigs: 1

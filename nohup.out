@@ -7,955 +7,316 @@ job                                        count    min threads    max threads
 all                                            1              1              1
 contig_selector                                1              1              1
 contig_summary                                 1              1              1
-kaiju_mvome                                   25              1              1
-kaiju_virome                                  25              1              1
+kaiju_mvome                                    7              1              1
+kaiju_virome                                  10              1              1
 map_mv_positive_reads_to_metagenome           22              1              1
-map_virome_reads_to_mv_contigs                22              1              1
-map_virome_reads_to_true_virome_contigs        5              1              1
+map_virome_reads_to_mv_contigs                 6              1              1
+map_virome_reads_to_true_virome_contigs        3              1              1
 mviest_plot                                   25              1              1
 mviest_summary                                25              1              1
 platon                                         1              1              1
-viromeQC_mvome                                24              1              1
-viromeQC_virome                               24              1              1
-total                                        201              1              1
+viromeQC_mvome                                 7              1              1
+viromeQC_virome                                6              1              1
+total                                        115              1              1
 
 Select jobs to execute...
 
-[Wed Jun 22 13:32:28 2022]
-rule viromeQC_virome:
-    input: results/SRR12115932/reads/true.virome.reads1.fq.gz, results/SRR12115932/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115932/viromeQC/virome_QC.tsv
-    jobid: 305
-    reason: Missing output files: results/SRR12115932/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115932
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115932/viromeQC
-
-        if [ -s results/SRR12115932/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115932/reads/true.virome.reads1.fq.gz results/SRR12115932/reads/true.virome.reads2.fq.gz             -o results/SRR12115932/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115932/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 305 with external jobid 'Submitted batch job 28264'.
-
-[Wed Jun 22 13:32:28 2022]
+[Wed Jun 22 16:01:55 2022]
 rule kaiju_virome:
-    input: results/SRR12115966/reads/true.virome.reads1.fq.gz, results/SRR12115966/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115966/kaiju/virome.out, results/SRR12115966/kaiju/virome_summary.tsv
-    jobid: 500
-    reason: Missing output files: results/SRR12115966/kaiju/virome_summary.tsv
-    wildcards: sample=SRR12115966
+    input: results/mv16/reads/true.virome.reads1.fq.gz, results/mv16/reads/true.virome.reads2.fq.gz
+    output: results/mv16/kaiju/virome.out, results/mv16/kaiju/virome_summary.tsv
+    jobid: 104
+    reason: Missing output files: results/mv16/kaiju/virome_summary.tsv
+    wildcards: sample=mv16
     resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115966/kaiju
+        mkdir -p results/mv16/kaiju
         
-        if [ -s results/SRR12115966/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115966/reads/true.virome.reads1.fq.gz             -j results/SRR12115966/reads/true.virome.reads2.fq.gz             -o results/SRR12115966/kaiju/virome.out
+        if [ -s results/mv16/reads/true.virome.reads1.fq.gz ]; then
+            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv16/reads/true.virome.reads1.fq.gz             -j results/mv16/reads/true.virome.reads2.fq.gz             -o results/mv16/kaiju/virome.out
 
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115966/kaiju/virome_summary.tsv results/SRR12115966/kaiju/virome.out
+            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv16/kaiju/virome_summary.tsv results/mv16/kaiju/virome.out
         else
-            touch results/SRR12115966/kaiju/virome.out results/SRR12115966/kaiju/virome_summary.tsv
+            touch results/mv16/kaiju/virome.out results/mv16/kaiju/virome_summary.tsv
         fi
         
-Submitted job 500 with external jobid 'Submitted batch job 28265'.
+Submitted job 104 with external jobid 'Submitted batch job 28445'.
 
-[Wed Jun 22 13:32:28 2022]
+[Wed Jun 22 16:01:55 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115967/reads/true.mvome.reads1.fq.gz, results/SRR12115967/reads/true.mvome.reads2.fq.gz, results/SRR12115967/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115967/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115967/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 522
+    reason: Missing output files: results/SRR12115967/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115967
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115967/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115967/reads/true.mvome.reads1.fq.gz in2=results/SRR12115967/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115967/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115967/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115967/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 522 with external jobid 'Submitted batch job 28446'.
+
+[Wed Jun 22 16:01:55 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115962/reads/true.mvome.reads1.fq.gz, results/SRR12115962/reads/true.mvome.reads2.fq.gz, results/SRR12115962/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115962/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115962/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 432
+    reason: Missing output files: results/SRR12115962/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115962
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115962/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115962/reads/true.mvome.reads1.fq.gz in2=results/SRR12115962/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115962/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115962/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115962/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 432 with external jobid 'Submitted batch job 28447'.
+
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115932/reads/true.mvome.reads1.fq.gz, results/SRR12115932/reads/true.mvome.reads2.fq.gz, results/SRR12115932/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115932/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115932/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 306
+    reason: Missing output files: results/SRR12115932/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115932
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115932/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115932/reads/true.mvome.reads1.fq.gz in2=results/SRR12115932/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115932/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115932/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115932/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 306 with external jobid 'Submitted batch job 28448'.
+
+[Wed Jun 22 16:01:56 2022]
+rule map_virome_reads_to_true_virome_contigs:
+    input: results/mv3/reads/virome.reads1.fastq.gz, results/mv3/reads/virome.reads2.fastq.gz, results/mv3/contigs/true.virome.fasta
+    output: results/mv3/reads/true.virome.reads1.fq.gz, results/mv3/reads/true.virome.reads2.fq.gz, results/mv3/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/mv3/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+    log: results/mv3/log/map_virome_reads_vs_true_virome_contigs.log
+    jobid: 141
+    reason: Missing output files: results/mv3/reads/true.virome.reads1.fq.gz, results/mv3/reads/true.virome.reads2.fq.gz
+    wildcards: sample=mv3
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/mv3/mappings/input_reads_vs_true_virome_contigs/
+        if [ -s results/mv3/contigs/true.virome.fasta ]; then
+            # the input contig file is NOT empty
+            bbmap.sh in=results/mv3/reads/virome.reads1.fastq.gz in2=results/mv3/reads/virome.reads2.fastq.gz             ref=results/mv3/contigs/true.virome.fasta             outm=results/mv3/reads/true.virome.reads1.fq.gz outm2=results/mv3/reads/true.virome.reads2.fq.gz             scafstats=results/mv3/mappings/input_reads_vs_true_virome_contigs/scafstats.txt             rpkm=results/mv3/mappings/input_reads_vs_true_virome_contigs/rpkm.txt             t=8             nodisk
+        else
+            # the input contig file IS empty
+            touch results/mv3/reads/true.virome.reads1.fq.gz results/mv3/reads/true.virome.reads2.fq.gz results/mv3/mappings/input_reads_vs_true_virome_contigs/scafstats.txt results/mv3/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+        fi        
+        
+Submitted job 141 with external jobid 'Submitted batch job 28449'.
+
+[Wed Jun 22 16:01:56 2022]
+rule kaiju_virome:
+    input: results/mv6/reads/true.virome.reads1.fq.gz, results/mv6/reads/true.virome.reads2.fq.gz
+    output: results/mv6/kaiju/virome.out, results/mv6/kaiju/virome_summary.tsv
+    jobid: 194
+    reason: Missing output files: results/mv6/kaiju/virome_summary.tsv
+    wildcards: sample=mv6
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/mv6/kaiju
+        
+        if [ -s results/mv6/reads/true.virome.reads1.fq.gz ]; then
+            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv6/reads/true.virome.reads1.fq.gz             -j results/mv6/reads/true.virome.reads2.fq.gz             -o results/mv6/kaiju/virome.out
+
+            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv6/kaiju/virome_summary.tsv results/mv6/kaiju/virome.out
+        else
+            touch results/mv6/kaiju/virome.out results/mv6/kaiju/virome_summary.tsv
+        fi
+        
+Submitted job 194 with external jobid 'Submitted batch job 28450'.
+
+[Wed Jun 22 16:01:56 2022]
+rule kaiju_virome:
+    input: results/SRR12115949/reads/true.virome.reads1.fq.gz, results/SRR12115949/reads/true.virome.reads2.fq.gz
+    output: results/SRR12115949/kaiju/virome.out, results/SRR12115949/kaiju/virome_summary.tsv
+    jobid: 374
+    reason: Missing output files: results/SRR12115949/kaiju/virome_summary.tsv
+    wildcards: sample=SRR12115949
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115949/kaiju
+        
+        if [ -s results/SRR12115949/reads/true.virome.reads1.fq.gz ]; then
+            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115949/reads/true.virome.reads1.fq.gz             -j results/SRR12115949/reads/true.virome.reads2.fq.gz             -o results/SRR12115949/kaiju/virome.out
+
+            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115949/kaiju/virome_summary.tsv results/SRR12115949/kaiju/virome.out
+        else
+            touch results/SRR12115949/kaiju/virome.out results/SRR12115949/kaiju/virome_summary.tsv
+        fi
+        
+Submitted job 374 with external jobid 'Submitted batch job 28451'.
+
+[Wed Jun 22 16:01:56 2022]
 rule map_virome_reads_to_mv_contigs:
     input: results/mv11/reads/virome.reads1.fastq.gz, results/mv11/reads/virome.reads2.fastq.gz, results/mv11/contigs/true.mvome.fasta
     output: results/mv11/reads/true.mvome.reads1.fq.gz, results/mv11/reads/true.mvome.reads2.fq.gz, results/mv11/mappings/input_reads_vs_mv_contigs/statsfile.txt
     log: results/mv11/log/map_virome_reads_to_mv_contigs.log
     jobid: 22
-    reason: Missing output files: results/mv11/reads/true.mvome.reads1.fq.gz, results/mv11/reads/true.mvome.reads2.fq.gz
+    reason: Missing output files: results/mv11/reads/true.mvome.reads2.fq.gz, results/mv11/reads/true.mvome.reads1.fq.gz
     wildcards: sample=mv11
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
         mkdir -p results/mv11/mappings/input_reads_vs_mv_contigs/
 
         if [ -s results/mv11/contigs/true.mvome.fasta ]; then
             # the input contig file is NOT empty
-            bbmap.sh in=results/mv11/reads/virome.reads1.fastq.gz in2=results/mv11/reads/virome.reads2.fastq.gz             ref=results/mv11/contigs/true.mvome.fasta             outm=results/mv11/reads/true.mvome.reads1.fq.gz outm2=results/mv11/reads/true.mvome.reads2.fq.gz             statsfile=results/mv11/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv11/
+            bbmap.sh in=results/mv11/reads/virome.reads1.fastq.gz in2=results/mv11/reads/virome.reads2.fastq.gz             ref=results/mv11/contigs/true.mvome.fasta             outm=results/mv11/reads/true.mvome.reads1.fq.gz outm2=results/mv11/reads/true.mvome.reads2.fq.gz             statsfile=results/mv11/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             nodisk
         else
             # the input contig file IS empty
             touch results/mv11/reads/true.mvome.reads1.fq.gz results/mv11/reads/true.mvome.reads2.fq.gz results/mv11/mappings/input_reads_vs_mv_contigs/statsfile.txt
         fi
         
-Submitted job 22 with external jobid 'Submitted batch job 28266'.
+Submitted job 22 with external jobid 'Submitted batch job 28452'.
 
-[Wed Jun 22 13:32:28 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115962/reads/virome.reads1.fastq.gz, results/SRR12115962/reads/virome.reads2.fastq.gz, results/SRR12115962/contigs/true.mvome.fasta
-    output: results/SRR12115962/reads/true.mvome.reads1.fq.gz, results/SRR12115962/reads/true.mvome.reads2.fq.gz, results/SRR12115962/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115962/log/map_virome_reads_to_mv_contigs.log
-    jobid: 418
-    reason: Missing output files: results/SRR12115962/reads/true.mvome.reads1.fq.gz, results/SRR12115962/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115962
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115962/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115962/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115962/reads/virome.reads1.fastq.gz in2=results/SRR12115962/reads/virome.reads2.fastq.gz             ref=results/SRR12115962/contigs/true.mvome.fasta             outm=results/SRR12115962/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115962/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115962/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115962/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115962/reads/true.mvome.reads1.fq.gz results/SRR12115962/reads/true.mvome.reads2.fq.gz results/SRR12115962/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 418 with external jobid 'Submitted batch job 28267'.
-
-[Wed Jun 22 13:32:28 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115967/reads/virome.reads1.fastq.gz, results/SRR12115967/reads/virome.reads2.fastq.gz, results/SRR12115967/contigs/true.mvome.fasta
-    output: results/SRR12115967/reads/true.mvome.reads1.fq.gz, results/SRR12115967/reads/true.mvome.reads2.fq.gz, results/SRR12115967/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115967/log/map_virome_reads_to_mv_contigs.log
-    jobid: 508
-    reason: Missing output files: results/SRR12115967/reads/true.mvome.reads2.fq.gz, results/SRR12115967/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115967
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115967/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115967/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115967/reads/virome.reads1.fastq.gz in2=results/SRR12115967/reads/virome.reads2.fastq.gz             ref=results/SRR12115967/contigs/true.mvome.fasta             outm=results/SRR12115967/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115967/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115967/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115967/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115967/reads/true.mvome.reads1.fq.gz results/SRR12115967/reads/true.mvome.reads2.fq.gz results/SRR12115967/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 508 with external jobid 'Submitted batch job 28268'.
-
-[Wed Jun 22 13:32:28 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115930/reads/virome.reads1.fastq.gz, results/SRR12115930/reads/virome.reads2.fastq.gz, results/SRR12115930/contigs/true.mvome.fasta
-    output: results/SRR12115930/reads/true.mvome.reads1.fq.gz, results/SRR12115930/reads/true.mvome.reads2.fq.gz, results/SRR12115930/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115930/log/map_virome_reads_to_mv_contigs.log
-    jobid: 256
-    reason: Missing output files: results/SRR12115930/reads/true.mvome.reads2.fq.gz, results/SRR12115930/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115930
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115930/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115930/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115930/reads/virome.reads1.fastq.gz in2=results/SRR12115930/reads/virome.reads2.fastq.gz             ref=results/SRR12115930/contigs/true.mvome.fasta             outm=results/SRR12115930/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115930/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115930/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115930/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115930/reads/true.mvome.reads1.fq.gz results/SRR12115930/reads/true.mvome.reads2.fq.gz results/SRR12115930/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 256 with external jobid 'Submitted batch job 28269'.
-
-[Wed Jun 22 13:32:28 2022]
-rule kaiju_virome:
-    input: results/SRR12115932/reads/true.virome.reads1.fq.gz, results/SRR12115932/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115932/kaiju/virome.out, results/SRR12115932/kaiju/virome_summary.tsv
-    jobid: 302
-    reason: Missing output files: results/SRR12115932/kaiju/virome_summary.tsv
-    wildcards: sample=SRR12115932
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115932/kaiju
-        
-        if [ -s results/SRR12115932/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115932/reads/true.virome.reads1.fq.gz             -j results/SRR12115932/reads/true.virome.reads2.fq.gz             -o results/SRR12115932/kaiju/virome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115932/kaiju/virome_summary.tsv results/SRR12115932/kaiju/virome.out
-        else
-            touch results/SRR12115932/kaiju/virome.out results/SRR12115932/kaiju/virome_summary.tsv
-        fi
-        
-Submitted job 302 with external jobid 'Submitted batch job 28270'.
-
-[Wed Jun 22 13:32:28 2022]
-rule kaiju_virome:
-    input: results/SRR12115965/reads/true.virome.reads1.fq.gz, results/SRR12115965/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115965/kaiju/virome.out, results/SRR12115965/kaiju/virome_summary.tsv
-    jobid: 482
-    reason: Missing output files: results/SRR12115965/kaiju/virome_summary.tsv
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115965/reads/true.mvome.reads1.fq.gz, results/SRR12115965/reads/true.mvome.reads2.fq.gz, results/SRR12115965/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115965/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115965/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 486
+    reason: Missing output files: results/SRR12115965/mappings/mvome_positive_vs_metagenome/scafstats.txt
     wildcards: sample=SRR12115965
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115965/kaiju
+        mkdir -p results/SRR12115965/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115965/reads/true.mvome.reads1.fq.gz in2=results/SRR12115965/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115965/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115965/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115965/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
         
-        if [ -s results/SRR12115965/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115965/reads/true.virome.reads1.fq.gz             -j results/SRR12115965/reads/true.virome.reads2.fq.gz             -o results/SRR12115965/kaiju/virome.out
+Submitted job 486 with external jobid 'Submitted batch job 28453'.
 
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115965/kaiju/virome_summary.tsv results/SRR12115965/kaiju/virome.out
-        else
-            touch results/SRR12115965/kaiju/virome.out results/SRR12115965/kaiju/virome_summary.tsv
-        fi
-        
-Submitted job 482 with external jobid 'Submitted batch job 28271'.
-
-[Wed Jun 22 13:32:28 2022]
+[Wed Jun 22 16:01:56 2022]
 rule viromeQC_virome:
-    input: results/SRR12115964/reads/true.virome.reads1.fq.gz, results/SRR12115964/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115964/viromeQC/virome_QC.tsv
-    jobid: 467
-    reason: Missing output files: results/SRR12115964/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115964
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+    input: results/mv5/reads/true.virome.reads1.fq.gz, results/mv5/reads/true.virome.reads2.fq.gz
+    output: results/mv5/viromeQC/virome_QC.tsv
+    jobid: 179
+    reason: Missing output files: results/mv5/viromeQC/virome_QC.tsv
+    wildcards: sample=mv5
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115964/viromeQC
+        mkdir -p results/mv5/viromeQC
 
-        if [ -s results/SRR12115964/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115964/reads/true.virome.reads1.fq.gz results/SRR12115964/reads/true.virome.reads2.fq.gz             -o results/SRR12115964/viromeQC/virome_QC.tsv
+        if [ -s results/mv5/reads/true.virome.reads1.fq.gz ]; then
+            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/mv5/reads/true.virome.reads1.fq.gz results/mv5/reads/true.virome.reads2.fq.gz             -o results/mv5/viromeQC/virome_QC.tsv
         else
-            touch results/SRR12115964/viromeQC/virome_QC.tsv
+            touch results/mv5/viromeQC/virome_QC.tsv
         fi
         
-Submitted job 467 with external jobid 'Submitted batch job 28272'.
+Submitted job 179 with external jobid 'Submitted batch job 28454'.
 
-[Wed Jun 22 13:32:28 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115933/reads/virome.reads1.fastq.gz, results/SRR12115933/reads/virome.reads2.fastq.gz, results/SRR12115933/contigs/true.mvome.fasta
-    output: results/SRR12115933/reads/true.mvome.reads1.fq.gz, results/SRR12115933/reads/true.mvome.reads2.fq.gz, results/SRR12115933/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115933/log/map_virome_reads_to_mv_contigs.log
-    jobid: 310
-    reason: Missing output files: results/SRR12115933/reads/true.mvome.reads1.fq.gz, results/SRR12115933/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115933
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115933/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115933/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115933/reads/virome.reads1.fastq.gz in2=results/SRR12115933/reads/virome.reads2.fastq.gz             ref=results/SRR12115933/contigs/true.mvome.fasta             outm=results/SRR12115933/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115933/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115933/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115933/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115933/reads/true.mvome.reads1.fq.gz results/SRR12115933/reads/true.mvome.reads2.fq.gz results/SRR12115933/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 310 with external jobid 'Submitted batch job 28273'.
-
-[Wed Jun 22 13:32:28 2022]
-rule viromeQC_virome:
-    input: results/mv6/reads/true.virome.reads1.fq.gz, results/mv6/reads/true.virome.reads2.fq.gz
-    output: results/mv6/viromeQC/virome_QC.tsv
-    jobid: 197
-    reason: Missing output files: results/mv6/viromeQC/virome_QC.tsv
-    wildcards: sample=mv6
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv6/viromeQC
-
-        if [ -s results/mv6/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/mv6/reads/true.virome.reads1.fq.gz results/mv6/reads/true.virome.reads2.fq.gz             -o results/mv6/viromeQC/virome_QC.tsv
-        else
-            touch results/mv6/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 197 with external jobid 'Submitted batch job 28274'.
-
-[Wed Jun 22 13:32:28 2022]
-rule map_virome_reads_to_true_virome_contigs:
-    input: results/mv2/reads/virome.reads1.fastq.gz, results/mv2/reads/virome.reads2.fastq.gz, results/mv2/contigs/true.virome.fasta
-    output: results/mv2/reads/true.virome.reads1.fq.gz, results/mv2/reads/true.virome.reads2.fq.gz, results/mv2/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/mv2/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
-    log: results/mv2/log/map_virome_reads_vs_true_virome_contigs.log
-    jobid: 123
-    reason: Missing output files: results/mv2/reads/true.virome.reads2.fq.gz, results/mv2/reads/true.virome.reads1.fq.gz
-    wildcards: sample=mv2
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv2/mappings/input_reads_vs_true_virome_contigs/
-        if [ -s results/mv2/contigs/true.virome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv2/reads/virome.reads1.fastq.gz in2=results/mv2/reads/virome.reads2.fastq.gz             ref=results/mv2/contigs/true.virome.fasta             outm=results/mv2/reads/true.virome.reads1.fq.gz outm2=results/mv2/reads/true.virome.reads2.fq.gz             scafstats=results/mv2/mappings/input_reads_vs_true_virome_contigs/scafstats.txt             rpkm=results/mv2/mappings/input_reads_vs_true_virome_contigs/rpkm.txt             t=8             path=results/mv2/
-        else
-            # the input contig file IS empty
-            touch results/mv2/reads/true.virome.reads1.fq.gz results/mv2/reads/true.virome.reads2.fq.gz results/mv2/mappings/input_reads_vs_true_virome_contigs/scafstats.txt results/mv2/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
-        fi        
-        
-Submitted job 123 with external jobid 'Submitted batch job 28275'.
-
-[Wed Jun 22 13:32:28 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115961/reads/virome.reads1.fastq.gz, results/SRR12115961/reads/virome.reads2.fastq.gz, results/SRR12115961/contigs/true.mvome.fasta
-    output: results/SRR12115961/reads/true.mvome.reads1.fq.gz, results/SRR12115961/reads/true.mvome.reads2.fq.gz, results/SRR12115961/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115961/log/map_virome_reads_to_mv_contigs.log
-    jobid: 400
-    reason: Missing output files: results/SRR12115961/reads/true.mvome.reads2.fq.gz, results/SRR12115961/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115961
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115961/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115961/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115961/reads/virome.reads1.fastq.gz in2=results/SRR12115961/reads/virome.reads2.fastq.gz             ref=results/SRR12115961/contigs/true.mvome.fasta             outm=results/SRR12115961/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115961/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115961/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115961/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115961/reads/true.mvome.reads1.fq.gz results/SRR12115961/reads/true.mvome.reads2.fq.gz results/SRR12115961/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 400 with external jobid 'Submitted batch job 28276'.
-
-[Wed Jun 22 13:32:28 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115966/reads/virome.reads1.fastq.gz, results/SRR12115966/reads/virome.reads2.fastq.gz, results/SRR12115966/contigs/true.mvome.fasta
-    output: results/SRR12115966/reads/true.mvome.reads1.fq.gz, results/SRR12115966/reads/true.mvome.reads2.fq.gz, results/SRR12115966/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115966/log/map_virome_reads_to_mv_contigs.log
-    jobid: 490
-    reason: Missing output files: results/SRR12115966/reads/true.mvome.reads1.fq.gz, results/SRR12115966/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115966
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115966/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115966/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115966/reads/virome.reads1.fastq.gz in2=results/SRR12115966/reads/virome.reads2.fastq.gz             ref=results/SRR12115966/contigs/true.mvome.fasta             outm=results/SRR12115966/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115966/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115966/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115966/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115966/reads/true.mvome.reads1.fq.gz results/SRR12115966/reads/true.mvome.reads2.fq.gz results/SRR12115966/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 490 with external jobid 'Submitted batch job 28277'.
-
-[Wed Jun 22 13:32:29 2022]
-rule viromeQC_virome:
-    input: results/SRR12115969/reads/true.virome.reads1.fq.gz, results/SRR12115969/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115969/viromeQC/virome_QC.tsv
-    jobid: 557
-    reason: Missing output files: results/SRR12115969/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115969
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115969/viromeQC
-
-        if [ -s results/SRR12115969/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115969/reads/true.virome.reads1.fq.gz results/SRR12115969/reads/true.virome.reads2.fq.gz             -o results/SRR12115969/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115969/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 557 with external jobid 'Submitted batch job 28278'.
-
-[Wed Jun 22 13:32:29 2022]
+[Wed Jun 22 16:01:56 2022]
 rule kaiju_virome:
-    input: results/mv15/reads/true.virome.reads1.fq.gz, results/mv15/reads/true.virome.reads2.fq.gz
-    output: results/mv15/kaiju/virome.out, results/mv15/kaiju/virome_summary.tsv
-    jobid: 86
-    reason: Missing output files: results/mv15/kaiju/virome_summary.tsv
-    wildcards: sample=mv15
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv15/kaiju
-        
-        if [ -s results/mv15/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv15/reads/true.virome.reads1.fq.gz             -j results/mv15/reads/true.virome.reads2.fq.gz             -o results/mv15/kaiju/virome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv15/kaiju/virome_summary.tsv results/mv15/kaiju/virome.out
-        else
-            touch results/mv15/kaiju/virome.out results/mv15/kaiju/virome_summary.tsv
-        fi
-        
-Submitted job 86 with external jobid 'Submitted batch job 28279'.
-
-[Wed Jun 22 13:32:29 2022]
-rule viromeQC_virome:
-    input: results/SRR12115931/reads/true.virome.reads1.fq.gz, results/SRR12115931/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115931/viromeQC/virome_QC.tsv
-    jobid: 287
-    reason: Missing output files: results/SRR12115931/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115931
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115931/viromeQC
-
-        if [ -s results/SRR12115931/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115931/reads/true.virome.reads1.fq.gz results/SRR12115931/reads/true.virome.reads2.fq.gz             -o results/SRR12115931/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115931/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 287 with external jobid 'Submitted batch job 28280'.
-
-[Wed Jun 22 13:32:29 2022]
-rule viromeQC_virome:
-    input: results/SRR12115949/reads/true.virome.reads1.fq.gz, results/SRR12115949/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115949/viromeQC/virome_QC.tsv
-    jobid: 377
-    reason: Missing output files: results/SRR12115949/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115949
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115949/viromeQC
-
-        if [ -s results/SRR12115949/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115949/reads/true.virome.reads1.fq.gz results/SRR12115949/reads/true.virome.reads2.fq.gz             -o results/SRR12115949/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115949/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 377 with external jobid 'Submitted batch job 28281'.
-
-[Wed Jun 22 13:32:29 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/mv16/reads/virome.reads1.fastq.gz, results/mv16/reads/virome.reads2.fastq.gz, results/mv16/contigs/true.mvome.fasta
-    output: results/mv16/reads/true.mvome.reads1.fq.gz, results/mv16/reads/true.mvome.reads2.fq.gz, results/mv16/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv16/log/map_virome_reads_to_mv_contigs.log
-    jobid: 94
-    reason: Missing output files: results/mv16/reads/true.mvome.reads1.fq.gz, results/mv16/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=mv16
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv16/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/mv16/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv16/reads/virome.reads1.fastq.gz in2=results/mv16/reads/virome.reads2.fastq.gz             ref=results/mv16/contigs/true.mvome.fasta             outm=results/mv16/reads/true.mvome.reads1.fq.gz outm2=results/mv16/reads/true.mvome.reads2.fq.gz             statsfile=results/mv16/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv16/
-        else
-            # the input contig file IS empty
-            touch results/mv16/reads/true.mvome.reads1.fq.gz results/mv16/reads/true.mvome.reads2.fq.gz results/mv16/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 94 with external jobid 'Submitted batch job 28282'.
-
-[Wed Jun 22 13:32:29 2022]
-rule viromeQC_mvome:
-    input: results/mv2/reads/true.mvome.reads1.fq.gz, results/mv2/reads/true.mvome.reads2.fq.gz
-    output: results/mv2/viromeQC/mvome_QC.tsv
-    jobid: 124
-    reason: Missing output files: results/mv2/viromeQC/mvome_QC.tsv
-    wildcards: sample=mv2
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv2/viromeQC
-
-        if [ -s results/mv2/reads/true.mvome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/mv2/reads/true.mvome.reads1.fq.gz results/mv2/reads/true.mvome.reads2.fq.gz             -o results/mv2/viromeQC/mvome_QC.tsv
-        else
-            touch results/mv2/viromeQC/mvome_QC.tsv
-        fi
-        
-Submitted job 124 with external jobid 'Submitted batch job 28283'.
-
-[Wed Jun 22 13:32:29 2022]
-rule kaiju_virome:
-    input: results/SRR12115938/reads/true.virome.reads1.fq.gz, results/SRR12115938/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115938/kaiju/virome.out, results/SRR12115938/kaiju/virome_summary.tsv
-    jobid: 356
-    reason: Missing output files: results/SRR12115938/kaiju/virome_summary.tsv
-    wildcards: sample=SRR12115938
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115938/kaiju
-        
-        if [ -s results/SRR12115938/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115938/reads/true.virome.reads1.fq.gz             -j results/SRR12115938/reads/true.virome.reads2.fq.gz             -o results/SRR12115938/kaiju/virome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115938/kaiju/virome_summary.tsv results/SRR12115938/kaiju/virome.out
-        else
-            touch results/SRR12115938/kaiju/virome.out results/SRR12115938/kaiju/virome_summary.tsv
-        fi
-        
-Submitted job 356 with external jobid 'Submitted batch job 28284'.
-
-[Wed Jun 22 13:32:29 2022]
-rule kaiju_virome:
-    input: results/SRR12115963/reads/true.virome.reads1.fq.gz, results/SRR12115963/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115963/kaiju/virome.out, results/SRR12115963/kaiju/virome_summary.tsv
-    jobid: 446
-    reason: Missing output files: results/SRR12115963/kaiju/virome_summary.tsv
-    wildcards: sample=SRR12115963
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115963/kaiju
-        
-        if [ -s results/SRR12115963/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115963/reads/true.virome.reads1.fq.gz             -j results/SRR12115963/reads/true.virome.reads2.fq.gz             -o results/SRR12115963/kaiju/virome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115963/kaiju/virome_summary.tsv results/SRR12115963/kaiju/virome.out
-        else
-            touch results/SRR12115963/kaiju/virome.out results/SRR12115963/kaiju/virome_summary.tsv
-        fi
-        
-Submitted job 446 with external jobid 'Submitted batch job 28285'.
-
-[Wed Jun 22 13:32:29 2022]
-rule viromeQC_virome:
-    input: results/SRR12115967/reads/true.virome.reads1.fq.gz, results/SRR12115967/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115967/viromeQC/virome_QC.tsv
-    jobid: 521
-    reason: Missing output files: results/SRR12115967/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115967
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115967/viromeQC
-
-        if [ -s results/SRR12115967/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115967/reads/true.virome.reads1.fq.gz results/SRR12115967/reads/true.virome.reads2.fq.gz             -o results/SRR12115967/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115967/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 521 with external jobid 'Submitted batch job 28286'.
-
-[Wed Jun 22 13:32:29 2022]
-rule kaiju_virome:
-    input: results/SRR12115930/reads/true.virome.reads1.fq.gz, results/SRR12115930/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115930/kaiju/virome.out, results/SRR12115930/kaiju/virome_summary.tsv
-    jobid: 266
-    reason: Missing output files: results/SRR12115930/kaiju/virome_summary.tsv
-    wildcards: sample=SRR12115930
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115930/kaiju
-        
-        if [ -s results/SRR12115930/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115930/reads/true.virome.reads1.fq.gz             -j results/SRR12115930/reads/true.virome.reads2.fq.gz             -o results/SRR12115930/kaiju/virome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115930/kaiju/virome_summary.tsv results/SRR12115930/kaiju/virome.out
-        else
-            touch results/SRR12115930/kaiju/virome.out results/SRR12115930/kaiju/virome_summary.tsv
-        fi
-        
-Submitted job 266 with external jobid 'Submitted batch job 28287'.
-
-[Wed Jun 22 13:32:29 2022]
-rule kaiju_mvome:
-    input: results/mv14/reads/true.mvome.reads1.fq.gz, results/mv14/reads/true.mvome.reads2.fq.gz
-    output: results/mv14/kaiju/mvome.out, results/mv14/kaiju/mvome_summary.tsv
-    jobid: 57
-    reason: Missing output files: results/mv14/kaiju/mvome_summary.tsv
+    input: results/mv14/reads/true.virome.reads1.fq.gz, results/mv14/reads/true.virome.reads2.fq.gz
+    output: results/mv14/kaiju/virome.out, results/mv14/kaiju/virome_summary.tsv
+    jobid: 68
+    reason: Missing output files: results/mv14/kaiju/virome_summary.tsv
     wildcards: sample=mv14
     resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
 
 
         mkdir -p results/mv14/kaiju
         
-        if [ -s results/mv14/reads/true.mvome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv14/reads/true.mvome.reads1.fq.gz             -j results/mv14/reads/true.mvome.reads2.fq.gz             -o results/mv14/kaiju/mvome.out
+        if [ -s results/mv14/reads/true.virome.reads1.fq.gz ]; then
+            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv14/reads/true.virome.reads1.fq.gz             -j results/mv14/reads/true.virome.reads2.fq.gz             -o results/mv14/kaiju/virome.out
 
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv14/kaiju/mvome_summary.tsv results/mv14/kaiju/mvome.out
+            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv14/kaiju/virome_summary.tsv results/mv14/kaiju/virome.out
         else
-            touch results/mv14/kaiju/mvome.out results/mv14/kaiju/mvome_summary.tsv
+            touch results/mv14/kaiju/virome.out results/mv14/kaiju/virome_summary.tsv
         fi
         
-Submitted job 57 with external jobid 'Submitted batch job 28288'.
+Submitted job 68 with external jobid 'Submitted batch job 28455'.
 
-[Wed Jun 22 13:32:29 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115964/reads/virome.reads1.fastq.gz, results/SRR12115964/reads/virome.reads2.fastq.gz, results/SRR12115964/contigs/true.mvome.fasta
-    output: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz, results/SRR12115964/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115964/log/map_virome_reads_to_mv_contigs.log
-    jobid: 454
-    reason: Missing output files: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115964
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115930/reads/true.mvome.reads1.fq.gz, results/SRR12115930/reads/true.mvome.reads2.fq.gz, results/SRR12115930/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115930/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115930/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 270
+    reason: Missing output files: results/SRR12115930/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115930
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115964/mappings/input_reads_vs_mv_contigs/
+        mkdir -p results/SRR12115930/mappings/mvome_positive_vs_metagenome/
 
-        if [ -s results/SRR12115964/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115964/reads/virome.reads1.fastq.gz in2=results/SRR12115964/reads/virome.reads2.fastq.gz             ref=results/SRR12115964/contigs/true.mvome.fasta             outm=results/SRR12115964/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115964/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115964/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115964/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115964/reads/true.mvome.reads1.fq.gz results/SRR12115964/reads/true.mvome.reads2.fq.gz results/SRR12115964/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
+        bbmap.sh in=results/SRR12115930/reads/true.mvome.reads1.fq.gz in2=results/SRR12115930/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115930/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115930/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115930/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
         
-Submitted job 454 with external jobid 'Submitted batch job 28289'.
+Submitted job 270 with external jobid 'Submitted batch job 28456'.
 
-[Wed Jun 22 13:32:29 2022]
-rule viromeQC_virome:
-    input: results/mv11/reads/true.virome.reads1.fq.gz, results/mv11/reads/true.virome.reads2.fq.gz
-    output: results/mv11/viromeQC/virome_QC.tsv
-    jobid: 35
-    reason: Missing output files: results/mv11/viromeQC/virome_QC.tsv
-    wildcards: sample=mv11
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115938/reads/true.mvome.reads1.fq.gz, results/SRR12115938/reads/true.mvome.reads2.fq.gz, results/SRR12115938/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115938/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115938/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 360
+    reason: Missing output files: results/SRR12115938/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115938
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/mv11/viromeQC
+        mkdir -p results/SRR12115938/mappings/mvome_positive_vs_metagenome/
 
-        if [ -s results/mv11/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/mv11/reads/true.virome.reads1.fq.gz results/mv11/reads/true.virome.reads2.fq.gz             -o results/mv11/viromeQC/virome_QC.tsv
-        else
-            touch results/mv11/viromeQC/virome_QC.tsv
-        fi
+        bbmap.sh in=results/SRR12115938/reads/true.mvome.reads1.fq.gz in2=results/SRR12115938/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115938/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115938/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115938/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
         
-Submitted job 35 with external jobid 'Submitted batch job 28290'.
+Submitted job 360 with external jobid 'Submitted batch job 28457'.
 
-[Wed Jun 22 13:32:29 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/mv1/reads/virome.reads1.fastq.gz, results/mv1/reads/virome.reads2.fastq.gz, results/mv1/contigs/true.mvome.fasta
-    output: results/mv1/reads/true.mvome.reads1.fq.gz, results/mv1/reads/true.mvome.reads2.fq.gz, results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv1/log/map_virome_reads_to_mv_contigs.log
-    jobid: 4
-    reason: Missing output files: results/mv1/reads/true.mvome.reads1.fq.gz, results/mv1/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=mv1
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115963/reads/true.mvome.reads1.fq.gz, results/SRR12115963/reads/true.mvome.reads2.fq.gz, results/SRR12115963/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115963/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115963/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 450
+    reason: Missing output files: results/SRR12115963/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115963
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/mv1/mappings/input_reads_vs_mv_contigs/
+        mkdir -p results/SRR12115963/mappings/mvome_positive_vs_metagenome/
 
-        if [ -s results/mv1/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv1/reads/virome.reads1.fastq.gz in2=results/mv1/reads/virome.reads2.fastq.gz             ref=results/mv1/contigs/true.mvome.fasta             outm=results/mv1/reads/true.mvome.reads1.fq.gz outm2=results/mv1/reads/true.mvome.reads2.fq.gz             statsfile=results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv1/
-        else
-            # the input contig file IS empty
-            touch results/mv1/reads/true.mvome.reads1.fq.gz results/mv1/reads/true.mvome.reads2.fq.gz results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
+        bbmap.sh in=results/SRR12115963/reads/true.mvome.reads1.fq.gz in2=results/SRR12115963/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115963/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115963/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115963/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
         
-Submitted job 4 with external jobid 'Submitted batch job 28291'.
+Submitted job 450 with external jobid 'Submitted batch job 28458'.
 
-[Wed Jun 22 13:32:29 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/mv6/reads/virome.reads1.fastq.gz, results/mv6/reads/virome.reads2.fastq.gz, results/mv6/contigs/true.mvome.fasta
-    output: results/mv6/reads/true.mvome.reads1.fq.gz, results/mv6/reads/true.mvome.reads2.fq.gz, results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv6/log/map_virome_reads_to_mv_contigs.log
-    jobid: 184
-    reason: Missing output files: results/mv6/reads/true.mvome.reads2.fq.gz, results/mv6/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=mv6
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115968/reads/true.mvome.reads1.fq.gz, results/SRR12115968/reads/true.mvome.reads2.fq.gz, results/SRR12115968/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115968/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115968/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 540
+    reason: Missing output files: results/SRR12115968/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115968
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/mv6/mappings/input_reads_vs_mv_contigs/
+        mkdir -p results/SRR12115968/mappings/mvome_positive_vs_metagenome/
 
-        if [ -s results/mv6/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv6/reads/virome.reads1.fastq.gz in2=results/mv6/reads/virome.reads2.fastq.gz             ref=results/mv6/contigs/true.mvome.fasta             outm=results/mv6/reads/true.mvome.reads1.fq.gz outm2=results/mv6/reads/true.mvome.reads2.fq.gz             statsfile=results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv6/
-        else
-            # the input contig file IS empty
-            touch results/mv6/reads/true.mvome.reads1.fq.gz results/mv6/reads/true.mvome.reads2.fq.gz results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
+        bbmap.sh in=results/SRR12115968/reads/true.mvome.reads1.fq.gz in2=results/SRR12115968/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115968/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115968/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115968/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
         
-Submitted job 184 with external jobid 'Submitted batch job 28292'.
+Submitted job 540 with external jobid 'Submitted batch job 28459'.
 
-[Wed Jun 22 13:32:29 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115931/reads/virome.reads1.fastq.gz, results/SRR12115931/reads/virome.reads2.fastq.gz, results/SRR12115931/contigs/true.mvome.fasta
-    output: results/SRR12115931/reads/true.mvome.reads1.fq.gz, results/SRR12115931/reads/true.mvome.reads2.fq.gz, results/SRR12115931/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115931/log/map_virome_reads_to_mv_contigs.log
-    jobid: 274
-    reason: Missing output files: results/SRR12115931/reads/true.mvome.reads1.fq.gz, results/SRR12115931/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115931
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115931/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115931/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115931/reads/virome.reads1.fastq.gz in2=results/SRR12115931/reads/virome.reads2.fastq.gz             ref=results/SRR12115931/contigs/true.mvome.fasta             outm=results/SRR12115931/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115931/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115931/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115931/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115931/reads/true.mvome.reads1.fq.gz results/SRR12115931/reads/true.mvome.reads2.fq.gz results/SRR12115931/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 274 with external jobid 'Submitted batch job 28293'.
-
-[Wed Jun 22 13:32:29 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115949/reads/virome.reads1.fastq.gz, results/SRR12115949/reads/virome.reads2.fastq.gz, results/SRR12115949/contigs/true.mvome.fasta
-    output: results/SRR12115949/reads/true.mvome.reads1.fq.gz, results/SRR12115949/reads/true.mvome.reads2.fq.gz, results/SRR12115949/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115949/log/map_virome_reads_to_mv_contigs.log
-    jobid: 364
-    reason: Missing output files: results/SRR12115949/reads/true.mvome.reads2.fq.gz, results/SRR12115949/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115949
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115949/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115949/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115949/reads/virome.reads1.fastq.gz in2=results/SRR12115949/reads/virome.reads2.fastq.gz             ref=results/SRR12115949/contigs/true.mvome.fasta             outm=results/SRR12115949/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115949/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115949/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115949/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115949/reads/true.mvome.reads1.fq.gz results/SRR12115949/reads/true.mvome.reads2.fq.gz results/SRR12115949/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 364 with external jobid 'Submitted batch job 28294'.
-
-[Wed Jun 22 13:32:29 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115969/reads/virome.reads1.fastq.gz, results/SRR12115969/reads/virome.reads2.fastq.gz, results/SRR12115969/contigs/true.mvome.fasta
-    output: results/SRR12115969/reads/true.mvome.reads1.fq.gz, results/SRR12115969/reads/true.mvome.reads2.fq.gz, results/SRR12115969/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115969/log/map_virome_reads_to_mv_contigs.log
-    jobid: 544
-    reason: Missing output files: results/SRR12115969/reads/true.mvome.reads1.fq.gz, results/SRR12115969/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115969
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115969/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115969/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115969/reads/virome.reads1.fastq.gz in2=results/SRR12115969/reads/virome.reads2.fastq.gz             ref=results/SRR12115969/contigs/true.mvome.fasta             outm=results/SRR12115969/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115969/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115969/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115969/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115969/reads/true.mvome.reads1.fq.gz results/SRR12115969/reads/true.mvome.reads2.fq.gz results/SRR12115969/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 544 with external jobid 'Submitted batch job 28295'.
-Waiting at most 120 seconds for missing files.
-[Wed Jun 22 13:33:06 2022]
-Finished job 418.
-1 of 201 steps (0.5%) done
-Select jobs to execute...
-
-[Wed Jun 22 13:33:07 2022]
-rule viromeQC_virome:
-    input: results/SRR12115933/reads/true.virome.reads1.fq.gz, results/SRR12115933/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115933/viromeQC/virome_QC.tsv
-    jobid: 323
-    reason: Missing output files: results/SRR12115933/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115933
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115933/viromeQC
-
-        if [ -s results/SRR12115933/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115933/reads/true.virome.reads1.fq.gz results/SRR12115933/reads/true.virome.reads2.fq.gz             -o results/SRR12115933/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115933/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 323 with external jobid 'Submitted batch job 28296'.
-[Wed Jun 22 13:33:07 2022]
-Finished job 508.
-2 of 201 steps (1%) done
-[Wed Jun 22 13:33:07 2022]
-Finished job 256.
-3 of 201 steps (1%) done
-[Wed Jun 22 13:33:08 2022]
-Finished job 310.
-4 of 201 steps (2%) done
-[Wed Jun 22 13:33:08 2022]
-Finished job 400.
-5 of 201 steps (2%) done
-[Wed Jun 22 13:33:08 2022]
-Finished job 490.
-6 of 201 steps (3%) done
-Select jobs to execute...
-
-[Wed Jun 22 13:33:08 2022]
-rule kaiju_mvome:
-    input: results/SRR12115961/reads/true.mvome.reads1.fq.gz, results/SRR12115961/reads/true.mvome.reads2.fq.gz
-    output: results/SRR12115961/kaiju/mvome.out, results/SRR12115961/kaiju/mvome_summary.tsv
-    jobid: 399
-    reason: Missing output files: results/SRR12115961/kaiju/mvome_summary.tsv; Input files updated by another job: results/SRR12115961/reads/true.mvome.reads2.fq.gz, results/SRR12115961/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115961
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115961/kaiju
-        
-        if [ -s results/SRR12115961/reads/true.mvome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115961/reads/true.mvome.reads1.fq.gz             -j results/SRR12115961/reads/true.mvome.reads2.fq.gz             -o results/SRR12115961/kaiju/mvome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115961/kaiju/mvome_summary.tsv results/SRR12115961/kaiju/mvome.out
-        else
-            touch results/SRR12115961/kaiju/mvome.out results/SRR12115961/kaiju/mvome_summary.tsv
-        fi
-        
-Submitted job 399 with external jobid 'Submitted batch job 28297'.
-
-[Wed Jun 22 13:33:08 2022]
+[Wed Jun 22 16:01:56 2022]
 rule platon:
     input: results/mv4/contigs/virome.contigs.filtered.fasta, results/mv4/enough_filtered_virome_contigs.txt
     output: results/mv4/platon_out/platon_plasmids.log
     jobid: 157
     reason: Forced execution
     wildcards: sample=mv4
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
         platon --db /home/dlueckin/dbs/platon_db/db/ --prefix platon_plasmids         --output results/mv4/platon_out/         --threads 8         results/mv4/contigs/virome.contigs.filtered.fasta
         
-Submitted job 157 with external jobid 'Submitted batch job 28298'.
+Submitted job 157 with external jobid 'Submitted batch job 28460'.
 
-[Wed Jun 22 13:33:08 2022]
-rule kaiju_mvome:
-    input: results/mv3/reads/true.mvome.reads1.fq.gz, results/mv3/reads/true.mvome.reads2.fq.gz
-    output: results/mv3/kaiju/mvome.out, results/mv3/kaiju/mvome_summary.tsv
-    jobid: 129
-    reason: Missing output files: results/mv3/kaiju/mvome_summary.tsv
-    wildcards: sample=mv3
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv3/kaiju
-        
-        if [ -s results/mv3/reads/true.mvome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv3/reads/true.mvome.reads1.fq.gz             -j results/mv3/reads/true.mvome.reads2.fq.gz             -o results/mv3/kaiju/mvome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv3/kaiju/mvome_summary.tsv results/mv3/kaiju/mvome.out
-        else
-            touch results/mv3/kaiju/mvome.out results/mv3/kaiju/mvome_summary.tsv
-        fi
-        
-Submitted job 129 with external jobid 'Submitted batch job 28299'.
-
-[Wed Jun 22 13:33:08 2022]
-rule kaiju_virome:
-    input: results/mv11/reads/true.virome.reads1.fq.gz, results/mv11/reads/true.virome.reads2.fq.gz
-    output: results/mv11/kaiju/virome.out, results/mv11/kaiju/virome_summary.tsv
-    jobid: 32
-    reason: Missing output files: results/mv11/kaiju/virome_summary.tsv
-    wildcards: sample=mv11
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv11/kaiju
-        
-        if [ -s results/mv11/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv11/reads/true.virome.reads1.fq.gz             -j results/mv11/reads/true.virome.reads2.fq.gz             -o results/mv11/kaiju/virome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv11/kaiju/virome_summary.tsv results/mv11/kaiju/virome.out
-        else
-            touch results/mv11/kaiju/virome.out results/mv11/kaiju/virome_summary.tsv
-        fi
-        
-Submitted job 32 with external jobid 'Submitted batch job 28300'.
-
-[Wed Jun 22 13:33:08 2022]
-rule viromeQC_virome:
-    input: results/SRR12115961/reads/true.virome.reads1.fq.gz, results/SRR12115961/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115961/viromeQC/virome_QC.tsv
-    jobid: 413
-    reason: Missing output files: results/SRR12115961/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115961
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115961/viromeQC
-
-        if [ -s results/SRR12115961/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115961/reads/true.virome.reads1.fq.gz results/SRR12115961/reads/true.virome.reads2.fq.gz             -o results/SRR12115961/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115961/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 413 with external jobid 'Submitted batch job 28301'.
-[Wed Jun 22 13:33:09 2022]
-Finished job 557.
-7 of 201 steps (3%) done
-[Wed Jun 22 13:33:09 2022]
-Finished job 377.
-8 of 201 steps (4%) done
-Select jobs to execute...
-
-[Wed Jun 22 13:33:09 2022]
-rule map_mv_positive_reads_to_metagenome:
-    input: results/SRR12115961/reads/true.mvome.reads1.fq.gz, results/SRR12115961/reads/true.mvome.reads2.fq.gz, results/SRR12115961/contigs/metagenome.contigs.filtered.fasta.gz
-    output: results/SRR12115961/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115961/mappings/mvome_positive_vs_metagenome/scafstats.txt
-    jobid: 414
-    reason: Missing output files: results/SRR12115961/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/SRR12115961/reads/true.mvome.reads2.fq.gz, results/SRR12115961/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115961
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115961/mappings/mvome_positive_vs_metagenome/
-
-        bbmap.sh in=results/SRR12115961/reads/true.mvome.reads1.fq.gz in2=results/SRR12115961/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115961/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115961/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115961/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/SRR12115961/
-        
-Submitted job 414 with external jobid 'Submitted batch job 28302'.
-
-[Wed Jun 22 13:33:09 2022]
-rule kaiju_mvome:
-    input: results/SRR12115930/reads/true.mvome.reads1.fq.gz, results/SRR12115930/reads/true.mvome.reads2.fq.gz
-    output: results/SRR12115930/kaiju/mvome.out, results/SRR12115930/kaiju/mvome_summary.tsv
-    jobid: 255
-    reason: Missing output files: results/SRR12115930/kaiju/mvome_summary.tsv; Input files updated by another job: results/SRR12115930/reads/true.mvome.reads2.fq.gz, results/SRR12115930/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115930
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115930/kaiju
-        
-        if [ -s results/SRR12115930/reads/true.mvome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115930/reads/true.mvome.reads1.fq.gz             -j results/SRR12115930/reads/true.mvome.reads2.fq.gz             -o results/SRR12115930/kaiju/mvome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115930/kaiju/mvome_summary.tsv results/SRR12115930/kaiju/mvome.out
-        else
-            touch results/SRR12115930/kaiju/mvome.out results/SRR12115930/kaiju/mvome_summary.tsv
-        fi
-        
-Submitted job 255 with external jobid 'Submitted batch job 28303'.
-Select jobs to execute...
-[Wed Jun 22 13:33:09 2022]
-Error in rule map_virome_reads_to_mv_contigs:
-    jobid: 4
-    output: results/mv1/reads/true.mvome.reads1.fq.gz, results/mv1/reads/true.mvome.reads2.fq.gz, results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv1/log/map_virome_reads_to_mv_contigs.log (check log file(s) for error message)
-    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
-    shell:
-        
-        mkdir -p results/mv1/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/mv1/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv1/reads/virome.reads1.fastq.gz in2=results/mv1/reads/virome.reads2.fastq.gz             ref=results/mv1/contigs/true.mvome.fasta             outm=results/mv1/reads/true.mvome.reads1.fq.gz outm2=results/mv1/reads/true.mvome.reads2.fq.gz             statsfile=results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv1/
-        else
-            # the input contig file IS empty
-            touch results/mv1/reads/true.mvome.reads1.fq.gz results/mv1/reads/true.mvome.reads2.fq.gz results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
-    cluster_jobid: Submitted batch job 28291
-
-Error executing rule map_virome_reads_to_mv_contigs on cluster (jobid: 4, external: Submitted batch job 28291, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.4d9vulru/snakejob.map_virome_reads_to_mv_contigs.4.sh). For error details see the cluster log and the log files of the involved rule(s).
-[Wed Jun 22 13:33:10 2022]
-Finished job 454.
-9 of 201 steps (4%) done
-[Wed Jun 22 13:33:10 2022]
-Error in rule map_virome_reads_to_mv_contigs:
-    jobid: 184
-    output: results/mv6/reads/true.mvome.reads1.fq.gz, results/mv6/reads/true.mvome.reads2.fq.gz, results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv6/log/map_virome_reads_to_mv_contigs.log (check log file(s) for error message)
-    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
-    shell:
-        
-        mkdir -p results/mv6/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/mv6/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv6/reads/virome.reads1.fastq.gz in2=results/mv6/reads/virome.reads2.fastq.gz             ref=results/mv6/contigs/true.mvome.fasta             outm=results/mv6/reads/true.mvome.reads1.fq.gz outm2=results/mv6/reads/true.mvome.reads2.fq.gz             statsfile=results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv6/
-        else
-            # the input contig file IS empty
-            touch results/mv6/reads/true.mvome.reads1.fq.gz results/mv6/reads/true.mvome.reads2.fq.gz results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
-    cluster_jobid: Submitted batch job 28292
-
-Error executing rule map_virome_reads_to_mv_contigs on cluster (jobid: 184, external: Submitted batch job 28292, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.4d9vulru/snakejob.map_virome_reads_to_mv_contigs.184.sh). For error details see the cluster log and the log files of the involved rule(s).
-
-[Wed Jun 22 13:33:10 2022]
+[Wed Jun 22 16:01:56 2022]
 rule map_virome_reads_to_mv_contigs:
     input: results/mv15/reads/virome.reads1.fastq.gz, results/mv15/reads/virome.reads2.fastq.gz, results/mv15/contigs/true.mvome.fasta
     output: results/mv15/reads/true.mvome.reads1.fq.gz, results/mv15/reads/true.mvome.reads2.fq.gz, results/mv15/mappings/input_reads_vs_mv_contigs/statsfile.txt
@@ -963,396 +324,42 @@ rule map_virome_reads_to_mv_contigs:
     jobid: 76
     reason: Missing output files: results/mv15/reads/true.mvome.reads1.fq.gz, results/mv15/reads/true.mvome.reads2.fq.gz
     wildcards: sample=mv15
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
         mkdir -p results/mv15/mappings/input_reads_vs_mv_contigs/
 
         if [ -s results/mv15/contigs/true.mvome.fasta ]; then
             # the input contig file is NOT empty
-            bbmap.sh in=results/mv15/reads/virome.reads1.fastq.gz in2=results/mv15/reads/virome.reads2.fastq.gz             ref=results/mv15/contigs/true.mvome.fasta             outm=results/mv15/reads/true.mvome.reads1.fq.gz outm2=results/mv15/reads/true.mvome.reads2.fq.gz             statsfile=results/mv15/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv15/
+            bbmap.sh in=results/mv15/reads/virome.reads1.fastq.gz in2=results/mv15/reads/virome.reads2.fastq.gz             ref=results/mv15/contigs/true.mvome.fasta             outm=results/mv15/reads/true.mvome.reads1.fq.gz outm2=results/mv15/reads/true.mvome.reads2.fq.gz             statsfile=results/mv15/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             nodisk
         else
             # the input contig file IS empty
             touch results/mv15/reads/true.mvome.reads1.fq.gz results/mv15/reads/true.mvome.reads2.fq.gz results/mv15/mappings/input_reads_vs_mv_contigs/statsfile.txt
         fi
         
-Submitted job 76 with external jobid 'Submitted batch job 28304'.
-[Wed Jun 22 13:33:10 2022]
-Finished job 274.
-10 of 201 steps (5%) done
-[Wed Jun 22 13:33:10 2022]
-Finished job 364.
-11 of 201 steps (5%) done
-[Wed Jun 22 13:33:11 2022]
-Finished job 544.
-12 of 201 steps (6%) done
-Job failed, going on with independent jobs.
-Job failed, going on with independent jobs.
-Select jobs to execute...
+Submitted job 76 with external jobid 'Submitted batch job 28461'.
 
-[Wed Jun 22 13:33:11 2022]
-rule map_mv_positive_reads_to_metagenome:
-    input: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz, results/SRR12115964/contigs/metagenome.contigs.filtered.fasta.gz
-    output: results/SRR12115964/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115964/mappings/mvome_positive_vs_metagenome/scafstats.txt
-    jobid: 468
-    reason: Missing output files: results/SRR12115964/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115964
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115964/mappings/mvome_positive_vs_metagenome/
-
-        bbmap.sh in=results/SRR12115964/reads/true.mvome.reads1.fq.gz in2=results/SRR12115964/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115964/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115964/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115964/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/SRR12115964/
-        
-Submitted job 468 with external jobid 'Submitted batch job 28305'.
-
-[Wed Jun 22 13:33:11 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115963/reads/virome.reads1.fastq.gz, results/SRR12115963/reads/virome.reads2.fastq.gz, results/SRR12115963/contigs/true.mvome.fasta
-    output: results/SRR12115963/reads/true.mvome.reads1.fq.gz, results/SRR12115963/reads/true.mvome.reads2.fq.gz, results/SRR12115963/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115963/log/map_virome_reads_to_mv_contigs.log
-    jobid: 436
-    reason: Missing output files: results/SRR12115963/reads/true.mvome.reads2.fq.gz, results/SRR12115963/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115963
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115963/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115963/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115963/reads/virome.reads1.fastq.gz in2=results/SRR12115963/reads/virome.reads2.fastq.gz             ref=results/SRR12115963/contigs/true.mvome.fasta             outm=results/SRR12115963/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115963/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115963/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115963/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115963/reads/true.mvome.reads1.fq.gz results/SRR12115963/reads/true.mvome.reads2.fq.gz results/SRR12115963/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 436 with external jobid 'Submitted batch job 28306'.
-
-[Wed Jun 22 13:33:11 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/mv5/reads/virome.reads1.fastq.gz, results/mv5/reads/virome.reads2.fastq.gz, results/mv5/contigs/true.mvome.fasta
-    output: results/mv5/reads/true.mvome.reads1.fq.gz, results/mv5/reads/true.mvome.reads2.fq.gz, results/mv5/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv5/log/map_virome_reads_to_mv_contigs.log
-    jobid: 166
-    reason: Missing output files: results/mv5/reads/true.mvome.reads1.fq.gz, results/mv5/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=mv5
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv5/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/mv5/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv5/reads/virome.reads1.fastq.gz in2=results/mv5/reads/virome.reads2.fastq.gz             ref=results/mv5/contigs/true.mvome.fasta             outm=results/mv5/reads/true.mvome.reads1.fq.gz outm2=results/mv5/reads/true.mvome.reads2.fq.gz             statsfile=results/mv5/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv5/
-        else
-            # the input contig file IS empty
-            touch results/mv5/reads/true.mvome.reads1.fq.gz results/mv5/reads/true.mvome.reads2.fq.gz results/mv5/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 166 with external jobid 'Submitted batch job 28307'.
-
-[Wed Jun 22 13:33:11 2022]
+[Wed Jun 22 16:01:56 2022]
 rule viromeQC_mvome:
-    input: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz
-    output: results/SRR12115964/viromeQC/mvome_QC.tsv
-    jobid: 466
-    reason: Missing output files: results/SRR12115964/viromeQC/mvome_QC.tsv; Input files updated by another job: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115964
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115964/viromeQC
-
-        if [ -s results/SRR12115964/reads/true.mvome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115964/reads/true.mvome.reads1.fq.gz results/SRR12115964/reads/true.mvome.reads2.fq.gz             -o results/SRR12115964/viromeQC/mvome_QC.tsv
-        else
-            touch results/SRR12115964/viromeQC/mvome_QC.tsv
-        fi
-        
-Submitted job 466 with external jobid 'Submitted batch job 28308'.
-
-[Wed Jun 22 13:33:11 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115938/reads/virome.reads1.fastq.gz, results/SRR12115938/reads/virome.reads2.fastq.gz, results/SRR12115938/contigs/true.mvome.fasta
-    output: results/SRR12115938/reads/true.mvome.reads1.fq.gz, results/SRR12115938/reads/true.mvome.reads2.fq.gz, results/SRR12115938/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115938/log/map_virome_reads_to_mv_contigs.log
-    jobid: 346
-    reason: Missing output files: results/SRR12115938/reads/true.mvome.reads1.fq.gz, results/SRR12115938/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115938
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115938/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115938/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115938/reads/virome.reads1.fastq.gz in2=results/SRR12115938/reads/virome.reads2.fastq.gz             ref=results/SRR12115938/contigs/true.mvome.fasta             outm=results/SRR12115938/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115938/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115938/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115938/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115938/reads/true.mvome.reads1.fq.gz results/SRR12115938/reads/true.mvome.reads2.fq.gz results/SRR12115938/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 346 with external jobid 'Submitted batch job 28309'.
-Select jobs to execute...
-Waiting at most 120 seconds for missing files.
-[Wed Jun 22 13:34:08 2022]
-Finished job 399.
-13 of 201 steps (6%) done
-
-[Wed Jun 22 13:34:08 2022]
-rule viromeQC_virome:
-    input: results/SRR12115966/reads/true.virome.reads1.fq.gz, results/SRR12115966/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115966/viromeQC/virome_QC.tsv
-    jobid: 503
-    reason: Missing output files: results/SRR12115966/viromeQC/virome_QC.tsv
-    wildcards: sample=SRR12115966
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115966/viromeQC
-
-        if [ -s results/SRR12115966/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115966/reads/true.virome.reads1.fq.gz results/SRR12115966/reads/true.virome.reads2.fq.gz             -o results/SRR12115966/viromeQC/virome_QC.tsv
-        else
-            touch results/SRR12115966/viromeQC/virome_QC.tsv
-        fi
-        
-Submitted job 503 with external jobid 'Submitted batch job 28310'.
-[Wed Jun 22 13:34:08 2022]
-Finished job 467.
-14 of 201 steps (7%) done
-[Wed Jun 22 13:34:09 2022]
-Finished job 197.
-15 of 201 steps (7%) done
-[Wed Jun 22 13:34:09 2022]
-Finished job 521.
-16 of 201 steps (8%) done
-Select jobs to execute...
-[Wed Jun 22 13:34:09 2022]
-Error in rule map_virome_reads_to_mv_contigs:
-    jobid: 76
-    output: results/mv15/reads/true.mvome.reads1.fq.gz, results/mv15/reads/true.mvome.reads2.fq.gz, results/mv15/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv15/log/map_virome_reads_to_mv_contigs.log (check log file(s) for error message)
-    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
-    shell:
-        
-        mkdir -p results/mv15/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/mv15/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv15/reads/virome.reads1.fastq.gz in2=results/mv15/reads/virome.reads2.fastq.gz             ref=results/mv15/contigs/true.mvome.fasta             outm=results/mv15/reads/true.mvome.reads1.fq.gz outm2=results/mv15/reads/true.mvome.reads2.fq.gz             statsfile=results/mv15/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv15/
-        else
-            # the input contig file IS empty
-            touch results/mv15/reads/true.mvome.reads1.fq.gz results/mv15/reads/true.mvome.reads2.fq.gz results/mv15/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
-    cluster_jobid: Submitted batch job 28304
-
-Error executing rule map_virome_reads_to_mv_contigs on cluster (jobid: 76, external: Submitted batch job 28304, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.4d9vulru/snakejob.map_virome_reads_to_mv_contigs.76.sh). For error details see the cluster log and the log files of the involved rule(s).
-[Wed Jun 22 13:34:09 2022]
-Error in rule map_virome_reads_to_mv_contigs:
-    jobid: 166
-    output: results/mv5/reads/true.mvome.reads1.fq.gz, results/mv5/reads/true.mvome.reads2.fq.gz, results/mv5/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/mv5/log/map_virome_reads_to_mv_contigs.log (check log file(s) for error message)
-    conda-env: /home/dlueckin/envs/5d4e85a35c56e51e05439eea80ff814b
-    shell:
-        
-        mkdir -p results/mv5/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/mv5/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv5/reads/virome.reads1.fastq.gz in2=results/mv5/reads/virome.reads2.fastq.gz             ref=results/mv5/contigs/true.mvome.fasta             outm=results/mv5/reads/true.mvome.reads1.fq.gz outm2=results/mv5/reads/true.mvome.reads2.fq.gz             statsfile=results/mv5/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/mv5/
-        else
-            # the input contig file IS empty
-            touch results/mv5/reads/true.mvome.reads1.fq.gz results/mv5/reads/true.mvome.reads2.fq.gz results/mv5/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
-    cluster_jobid: Submitted batch job 28307
-
-Error executing rule map_virome_reads_to_mv_contigs on cluster (jobid: 166, external: Submitted batch job 28307, jobscript: /home/dlueckin/projects/mvome_pipeline/mviest/.snakemake/tmp.4d9vulru/snakejob.map_virome_reads_to_mv_contigs.166.sh). For error details see the cluster log and the log files of the involved rule(s).
-
-[Wed Jun 22 13:34:09 2022]
-rule kaiju_mvome:
-    input: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz
-    output: results/SRR12115964/kaiju/mvome.out, results/SRR12115964/kaiju/mvome_summary.tsv
-    jobid: 453
-    reason: Missing output files: results/SRR12115964/kaiju/mvome_summary.tsv; Input files updated by another job: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115964
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115964/kaiju
-        
-        if [ -s results/SRR12115964/reads/true.mvome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115964/reads/true.mvome.reads1.fq.gz             -j results/SRR12115964/reads/true.mvome.reads2.fq.gz             -o results/SRR12115964/kaiju/mvome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115964/kaiju/mvome_summary.tsv results/SRR12115964/kaiju/mvome.out
-        else
-            touch results/SRR12115964/kaiju/mvome.out results/SRR12115964/kaiju/mvome_summary.tsv
-        fi
-        
-Submitted job 453 with external jobid 'Submitted batch job 28311'.
-
-[Wed Jun 22 13:34:09 2022]
-rule viromeQC_virome:
-    input: results/mv16/reads/true.virome.reads1.fq.gz, results/mv16/reads/true.virome.reads2.fq.gz
-    output: results/mv16/viromeQC/virome_QC.tsv
-    jobid: 107
-    reason: Missing output files: results/mv16/viromeQC/virome_QC.tsv
+    input: results/mv16/reads/true.mvome.reads1.fq.gz, results/mv16/reads/true.mvome.reads2.fq.gz
+    output: results/mv16/viromeQC/mvome_QC.tsv
+    jobid: 106
+    reason: Missing output files: results/mv16/viromeQC/mvome_QC.tsv
     wildcards: sample=mv16
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
         mkdir -p results/mv16/viromeQC
 
-        if [ -s results/mv16/reads/true.virome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/mv16/reads/true.virome.reads1.fq.gz results/mv16/reads/true.virome.reads2.fq.gz             -o results/mv16/viromeQC/virome_QC.tsv
+        if [ -s results/mv16/reads/true.mvome.reads1.fq.gz ]; then
+            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/mv16/reads/true.mvome.reads1.fq.gz results/mv16/reads/true.mvome.reads2.fq.gz             -o results/mv16/viromeQC/mvome_QC.tsv
         else
-            touch results/mv16/viromeQC/virome_QC.tsv
+            touch results/mv16/viromeQC/mvome_QC.tsv
         fi
         
-Submitted job 107 with external jobid 'Submitted batch job 28312'.
+Submitted job 106 with external jobid 'Submitted batch job 28462'.
 
-[Wed Jun 22 13:34:09 2022]
-rule map_virome_reads_to_mv_contigs:
-    input: results/SRR12115968/reads/virome.reads1.fastq.gz, results/SRR12115968/reads/virome.reads2.fastq.gz, results/SRR12115968/contigs/true.mvome.fasta
-    output: results/SRR12115968/reads/true.mvome.reads1.fq.gz, results/SRR12115968/reads/true.mvome.reads2.fq.gz, results/SRR12115968/mappings/input_reads_vs_mv_contigs/statsfile.txt
-    log: results/SRR12115968/log/map_virome_reads_to_mv_contigs.log
-    jobid: 526
-    reason: Missing output files: results/SRR12115968/reads/true.mvome.reads2.fq.gz, results/SRR12115968/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115968
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115968/mappings/input_reads_vs_mv_contigs/
-
-        if [ -s results/SRR12115968/contigs/true.mvome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/SRR12115968/reads/virome.reads1.fastq.gz in2=results/SRR12115968/reads/virome.reads2.fastq.gz             ref=results/SRR12115968/contigs/true.mvome.fasta             outm=results/SRR12115968/reads/true.mvome.reads1.fq.gz outm2=results/SRR12115968/reads/true.mvome.reads2.fq.gz             statsfile=results/SRR12115968/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             path=results/SRR12115968/
-        else
-            # the input contig file IS empty
-            touch results/SRR12115968/reads/true.mvome.reads1.fq.gz results/SRR12115968/reads/true.mvome.reads2.fq.gz results/SRR12115968/mappings/input_reads_vs_mv_contigs/statsfile.txt
-        fi
-        
-Submitted job 526 with external jobid 'Submitted batch job 28313'.
-Waiting at most 120 seconds for missing files.
-[Wed Jun 22 13:34:12 2022]
-Finished job 436.
-17 of 201 steps (8%) done
-[Wed Jun 22 13:34:12 2022]
-Finished job 466.
-18 of 201 steps (9%) done
-[Wed Jun 22 13:34:12 2022]
-Finished job 346.
-19 of 201 steps (9%) done
-Job failed, going on with independent jobs.
-Job failed, going on with independent jobs.
-Select jobs to execute...
-
-[Wed Jun 22 13:34:12 2022]
-rule map_mv_positive_reads_to_metagenome:
-    input: results/SRR12115938/reads/true.mvome.reads1.fq.gz, results/SRR12115938/reads/true.mvome.reads2.fq.gz, results/SRR12115938/contigs/metagenome.contigs.filtered.fasta.gz
-    output: results/SRR12115938/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115938/mappings/mvome_positive_vs_metagenome/scafstats.txt
-    jobid: 360
-    reason: Missing output files: results/SRR12115938/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/SRR12115938/reads/true.mvome.reads1.fq.gz, results/SRR12115938/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115938
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115938/mappings/mvome_positive_vs_metagenome/
-
-        bbmap.sh in=results/SRR12115938/reads/true.mvome.reads1.fq.gz in2=results/SRR12115938/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115938/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115938/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115938/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/SRR12115938/
-        
-Submitted job 360 with external jobid 'Submitted batch job 28314'.
-
-[Wed Jun 22 13:34:13 2022]
-rule map_virome_reads_to_true_virome_contigs:
-    input: results/mv1/reads/virome.reads1.fastq.gz, results/mv1/reads/virome.reads2.fastq.gz, results/mv1/contigs/true.virome.fasta
-    output: results/mv1/reads/true.virome.reads1.fq.gz, results/mv1/reads/true.virome.reads2.fq.gz, results/mv1/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/mv1/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
-    log: results/mv1/log/map_virome_reads_vs_true_virome_contigs.log
-    jobid: 15
-    reason: Missing output files: results/mv1/reads/true.virome.reads2.fq.gz, results/mv1/reads/true.virome.reads1.fq.gz
-    wildcards: sample=mv1
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/mv1/mappings/input_reads_vs_true_virome_contigs/
-        if [ -s results/mv1/contigs/true.virome.fasta ]; then
-            # the input contig file is NOT empty
-            bbmap.sh in=results/mv1/reads/virome.reads1.fastq.gz in2=results/mv1/reads/virome.reads2.fastq.gz             ref=results/mv1/contigs/true.virome.fasta             outm=results/mv1/reads/true.virome.reads1.fq.gz outm2=results/mv1/reads/true.virome.reads2.fq.gz             scafstats=results/mv1/mappings/input_reads_vs_true_virome_contigs/scafstats.txt             rpkm=results/mv1/mappings/input_reads_vs_true_virome_contigs/rpkm.txt             t=8             path=results/mv1/
-        else
-            # the input contig file IS empty
-            touch results/mv1/reads/true.virome.reads1.fq.gz results/mv1/reads/true.virome.reads2.fq.gz results/mv1/mappings/input_reads_vs_true_virome_contigs/scafstats.txt results/mv1/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
-        fi        
-        
-Submitted job 15 with external jobid 'Submitted batch job 28315'.
-
-[Wed Jun 22 13:34:13 2022]
-rule viromeQC_mvome:
-    input: results/SRR12115967/reads/true.mvome.reads1.fq.gz, results/SRR12115967/reads/true.mvome.reads2.fq.gz
-    output: results/SRR12115967/viromeQC/mvome_QC.tsv
-    jobid: 520
-    reason: Missing output files: results/SRR12115967/viromeQC/mvome_QC.tsv; Input files updated by another job: results/SRR12115967/reads/true.mvome.reads2.fq.gz, results/SRR12115967/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115967
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115967/viromeQC
-
-        if [ -s results/SRR12115967/reads/true.mvome.reads1.fq.gz ]; then
-            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115967/reads/true.mvome.reads1.fq.gz results/SRR12115967/reads/true.mvome.reads2.fq.gz             -o results/SRR12115967/viromeQC/mvome_QC.tsv
-        else
-            touch results/SRR12115967/viromeQC/mvome_QC.tsv
-        fi
-        
-Submitted job 520 with external jobid 'Submitted batch job 28316'.
-
-[Wed Jun 22 13:34:13 2022]
-rule map_mv_positive_reads_to_metagenome:
-    input: results/SRR12115963/reads/true.mvome.reads1.fq.gz, results/SRR12115963/reads/true.mvome.reads2.fq.gz, results/SRR12115963/contigs/metagenome.contigs.filtered.fasta.gz
-    output: results/SRR12115963/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115963/mappings/mvome_positive_vs_metagenome/scafstats.txt
-    jobid: 450
-    reason: Missing output files: results/SRR12115963/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/SRR12115963/reads/true.mvome.reads2.fq.gz, results/SRR12115963/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115963
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115963/mappings/mvome_positive_vs_metagenome/
-
-        bbmap.sh in=results/SRR12115963/reads/true.mvome.reads1.fq.gz in2=results/SRR12115963/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115963/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115963/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115963/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/SRR12115963/
-        
-Submitted job 450 with external jobid 'Submitted batch job 28317'.
-
-[Wed Jun 22 13:34:13 2022]
-rule kaiju_mvome:
-    input: results/SRR12115938/reads/true.mvome.reads1.fq.gz, results/SRR12115938/reads/true.mvome.reads2.fq.gz
-    output: results/SRR12115938/kaiju/mvome.out, results/SRR12115938/kaiju/mvome_summary.tsv
-    jobid: 345
-    reason: Missing output files: results/SRR12115938/kaiju/mvome_summary.tsv; Input files updated by another job: results/SRR12115938/reads/true.mvome.reads1.fq.gz, results/SRR12115938/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115938
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
-
-
-        mkdir -p results/SRR12115938/kaiju
-        
-        if [ -s results/SRR12115938/reads/true.mvome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115938/reads/true.mvome.reads1.fq.gz             -j results/SRR12115938/reads/true.mvome.reads2.fq.gz             -o results/SRR12115938/kaiju/mvome.out
-
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115938/kaiju/mvome_summary.tsv results/SRR12115938/kaiju/mvome.out
-        else
-            touch results/SRR12115938/kaiju/mvome.out results/SRR12115938/kaiju/mvome_summary.tsv
-        fi
-        
-Submitted job 345 with external jobid 'Submitted batch job 28318'.
-Select jobs to execute...
-[Wed Jun 22 13:34:20 2022]
-Finished job 323.
-20 of 201 steps (10%) done
-
-[Wed Jun 22 13:34:20 2022]
+[Wed Jun 22 16:01:56 2022]
 rule kaiju_virome:
     input: results/SRR12115962/reads/true.virome.reads1.fq.gz, results/SRR12115962/reads/true.virome.reads2.fq.gz
     output: results/SRR12115962/kaiju/virome.out, results/SRR12115962/kaiju/virome_summary.tsv
@@ -1372,102 +379,278 @@ rule kaiju_virome:
             touch results/SRR12115962/kaiju/virome.out results/SRR12115962/kaiju/virome_summary.tsv
         fi
         
-Submitted job 428 with external jobid 'Submitted batch job 28319'.
-[Wed Jun 22 13:34:20 2022]
-Finished job 413.
-21 of 201 steps (10%) done
-[Wed Jun 22 13:34:20 2022]
-Finished job 255.
-22 of 201 steps (11%) done
-Select jobs to execute...
+Submitted job 428 with external jobid 'Submitted batch job 28463'.
 
-[Wed Jun 22 13:34:20 2022]
-rule kaiju_mvome:
-    input: results/SRR12115931/reads/true.mvome.reads1.fq.gz, results/SRR12115931/reads/true.mvome.reads2.fq.gz
-    output: results/SRR12115931/kaiju/mvome.out, results/SRR12115931/kaiju/mvome_summary.tsv
-    jobid: 273
-    reason: Missing output files: results/SRR12115931/kaiju/mvome_summary.tsv; Input files updated by another job: results/SRR12115931/reads/true.mvome.reads1.fq.gz, results/SRR12115931/reads/true.mvome.reads2.fq.gz
-    wildcards: sample=SRR12115931
-    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+[Wed Jun 22 16:01:56 2022]
+rule viromeQC_virome:
+    input: results/mv1/reads/true.virome.reads1.fq.gz, results/mv1/reads/true.virome.reads2.fq.gz
+    output: results/mv1/viromeQC/virome_QC.tsv
+    jobid: 17
+    reason: Missing output files: results/mv1/viromeQC/virome_QC.tsv
+    wildcards: sample=mv1
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115931/kaiju
-        
-        if [ -s results/SRR12115931/reads/true.mvome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115931/reads/true.mvome.reads1.fq.gz             -j results/SRR12115931/reads/true.mvome.reads2.fq.gz             -o results/SRR12115931/kaiju/mvome.out
+        mkdir -p results/mv1/viromeQC
 
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115931/kaiju/mvome_summary.tsv results/SRR12115931/kaiju/mvome.out
+        if [ -s results/mv1/reads/true.virome.reads1.fq.gz ]; then
+            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/mv1/reads/true.virome.reads1.fq.gz results/mv1/reads/true.virome.reads2.fq.gz             -o results/mv1/viromeQC/virome_QC.tsv
         else
-            touch results/SRR12115931/kaiju/mvome.out results/SRR12115931/kaiju/mvome_summary.tsv
+            touch results/mv1/viromeQC/virome_QC.tsv
         fi
         
-Submitted job 273 with external jobid 'Submitted batch job 28320'.
+Submitted job 17 with external jobid 'Submitted batch job 28464'.
 
-[Wed Jun 22 13:34:20 2022]
+[Wed Jun 22 16:01:56 2022]
 rule map_mv_positive_reads_to_metagenome:
-    input: results/SRR12115930/reads/true.mvome.reads1.fq.gz, results/SRR12115930/reads/true.mvome.reads2.fq.gz, results/SRR12115930/contigs/metagenome.contigs.filtered.fasta.gz
-    output: results/SRR12115930/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115930/mappings/mvome_positive_vs_metagenome/scafstats.txt
-    jobid: 270
-    reason: Missing output files: results/SRR12115930/mappings/mvome_positive_vs_metagenome/scafstats.txt; Input files updated by another job: results/SRR12115930/reads/true.mvome.reads2.fq.gz, results/SRR12115930/reads/true.mvome.reads1.fq.gz
-    wildcards: sample=SRR12115930
-    resources: tmpdir=/tmp, mem=50G, time=12:00:00, ntasks=8
+    input: results/SRR12115966/reads/true.mvome.reads1.fq.gz, results/SRR12115966/reads/true.mvome.reads2.fq.gz, results/SRR12115966/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115966/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115966/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 504
+    reason: Missing output files: results/SRR12115966/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115966
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115930/mappings/mvome_positive_vs_metagenome/
+        mkdir -p results/SRR12115966/mappings/mvome_positive_vs_metagenome/
 
-        bbmap.sh in=results/SRR12115930/reads/true.mvome.reads1.fq.gz in2=results/SRR12115930/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115930/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115930/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115930/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         path=results/SRR12115930/
+        bbmap.sh in=results/SRR12115966/reads/true.mvome.reads1.fq.gz in2=results/SRR12115966/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115966/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115966/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115966/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
         
-Submitted job 270 with external jobid 'Submitted batch job 28321'.
-[Wed Jun 22 13:34:21 2022]
-Finished job 305.
-23 of 201 steps (11%) done
-Select jobs to execute...
+Submitted job 504 with external jobid 'Submitted batch job 28465'.
 
-[Wed Jun 22 13:34:21 2022]
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/mv16/reads/true.mvome.reads1.fq.gz, results/mv16/reads/true.mvome.reads2.fq.gz, results/mv16/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/mv16/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/mv16/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 108
+    reason: Missing output files: results/mv16/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=mv16
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/mv16/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/mv16/reads/true.mvome.reads1.fq.gz in2=results/mv16/reads/true.mvome.reads2.fq.gz         ref=results/mv16/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/mv16/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/mv16/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 108 with external jobid 'Submitted batch job 28466'.
+
+[Wed Jun 22 16:01:56 2022]
+rule map_virome_reads_to_true_virome_contigs:
+    input: results/mv2/reads/virome.reads1.fastq.gz, results/mv2/reads/virome.reads2.fastq.gz, results/mv2/contigs/true.virome.fasta
+    output: results/mv2/reads/true.virome.reads1.fq.gz, results/mv2/reads/true.virome.reads2.fq.gz, results/mv2/mappings/input_reads_vs_true_virome_contigs/scafstats.txt, results/mv2/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+    log: results/mv2/log/map_virome_reads_vs_true_virome_contigs.log
+    jobid: 123
+    reason: Missing output files: results/mv2/reads/true.virome.reads1.fq.gz, results/mv2/reads/true.virome.reads2.fq.gz
+    wildcards: sample=mv2
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/mv2/mappings/input_reads_vs_true_virome_contigs/
+        if [ -s results/mv2/contigs/true.virome.fasta ]; then
+            # the input contig file is NOT empty
+            bbmap.sh in=results/mv2/reads/virome.reads1.fastq.gz in2=results/mv2/reads/virome.reads2.fastq.gz             ref=results/mv2/contigs/true.virome.fasta             outm=results/mv2/reads/true.virome.reads1.fq.gz outm2=results/mv2/reads/true.virome.reads2.fq.gz             scafstats=results/mv2/mappings/input_reads_vs_true_virome_contigs/scafstats.txt             rpkm=results/mv2/mappings/input_reads_vs_true_virome_contigs/rpkm.txt             t=8             nodisk
+        else
+            # the input contig file IS empty
+            touch results/mv2/reads/true.virome.reads1.fq.gz results/mv2/reads/true.virome.reads2.fq.gz results/mv2/mappings/input_reads_vs_true_virome_contigs/scafstats.txt results/mv2/mappings/input_reads_vs_true_virome_contigs/rpkm.txt
+        fi        
+        
+Submitted job 123 with external jobid 'Submitted batch job 28467'.
+
+[Wed Jun 22 16:01:56 2022]
 rule kaiju_virome:
-    input: results/SRR12115933/reads/true.virome.reads1.fq.gz, results/SRR12115933/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115933/kaiju/virome.out, results/SRR12115933/kaiju/virome_summary.tsv
-    jobid: 320
-    reason: Missing output files: results/SRR12115933/kaiju/virome_summary.tsv
-    wildcards: sample=SRR12115933
+    input: results/mv1/reads/true.virome.reads1.fq.gz, results/mv1/reads/true.virome.reads2.fq.gz
+    output: results/mv1/kaiju/virome.out, results/mv1/kaiju/virome_summary.tsv
+    jobid: 14
+    reason: Missing output files: results/mv1/kaiju/virome_summary.tsv
+    wildcards: sample=mv1
     resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115933/kaiju
+        mkdir -p results/mv1/kaiju
         
-        if [ -s results/SRR12115933/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115933/reads/true.virome.reads1.fq.gz             -j results/SRR12115933/reads/true.virome.reads2.fq.gz             -o results/SRR12115933/kaiju/virome.out
+        if [ -s results/mv1/reads/true.virome.reads1.fq.gz ]; then
+            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv1/reads/true.virome.reads1.fq.gz             -j results/mv1/reads/true.virome.reads2.fq.gz             -o results/mv1/kaiju/virome.out
 
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115933/kaiju/virome_summary.tsv results/SRR12115933/kaiju/virome.out
+            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv1/kaiju/virome_summary.tsv results/mv1/kaiju/virome.out
         else
-            touch results/SRR12115933/kaiju/virome.out results/SRR12115933/kaiju/virome_summary.tsv
+            touch results/mv1/kaiju/virome.out results/mv1/kaiju/virome_summary.tsv
         fi
         
-Submitted job 320 with external jobid 'Submitted batch job 28322'.
-Select jobs to execute...
-[Wed Jun 22 13:34:22 2022]
-Finished job 35.
-24 of 201 steps (12%) done
+Submitted job 14 with external jobid 'Submitted batch job 28468'.
 
-[Wed Jun 22 13:34:22 2022]
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115931/reads/true.mvome.reads1.fq.gz, results/SRR12115931/reads/true.mvome.reads2.fq.gz, results/SRR12115931/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115931/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115931/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 288
+    reason: Missing output files: results/SRR12115931/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115931
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115931/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115931/reads/true.mvome.reads1.fq.gz in2=results/SRR12115931/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115931/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115931/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115931/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 288 with external jobid 'Submitted batch job 28469'.
+
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115964/reads/true.mvome.reads1.fq.gz, results/SRR12115964/reads/true.mvome.reads2.fq.gz, results/SRR12115964/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115964/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115964/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 468
+    reason: Missing output files: results/SRR12115964/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115964
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115964/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115964/reads/true.mvome.reads1.fq.gz in2=results/SRR12115964/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115964/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115964/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115964/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 468 with external jobid 'Submitted batch job 28470'.
+
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115969/reads/true.mvome.reads1.fq.gz, results/SRR12115969/reads/true.mvome.reads2.fq.gz, results/SRR12115969/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115969/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115969/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 558
+    reason: Missing output files: results/SRR12115969/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115969
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115969/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115969/reads/true.mvome.reads1.fq.gz in2=results/SRR12115969/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115969/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115969/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115969/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 558 with external jobid 'Submitted batch job 28471'.
+
+[Wed Jun 22 16:01:56 2022]
 rule kaiju_virome:
-    input: results/SRR12115961/reads/true.virome.reads1.fq.gz, results/SRR12115961/reads/true.virome.reads2.fq.gz
-    output: results/SRR12115961/kaiju/virome.out, results/SRR12115961/kaiju/virome_summary.tsv
-    jobid: 410
-    reason: Missing output files: results/SRR12115961/kaiju/virome_summary.tsv
-    wildcards: sample=SRR12115961
+    input: results/mv5/reads/true.virome.reads1.fq.gz, results/mv5/reads/true.virome.reads2.fq.gz
+    output: results/mv5/kaiju/virome.out, results/mv5/kaiju/virome_summary.tsv
+    jobid: 176
+    reason: Missing output files: results/mv5/kaiju/virome_summary.tsv
+    wildcards: sample=mv5
     resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
 
 
-        mkdir -p results/SRR12115961/kaiju
+        mkdir -p results/mv5/kaiju
         
-        if [ -s results/SRR12115961/reads/true.virome.reads1.fq.gz ]; then
-            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/SRR12115961/reads/true.virome.reads1.fq.gz             -j results/SRR12115961/reads/true.virome.reads2.fq.gz             -o results/SRR12115961/kaiju/virome.out
+        if [ -s results/mv5/reads/true.virome.reads1.fq.gz ]; then
+            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv5/reads/true.virome.reads1.fq.gz             -j results/mv5/reads/true.virome.reads2.fq.gz             -o results/mv5/kaiju/virome.out
 
-            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/SRR12115961/kaiju/virome_summary.tsv results/SRR12115961/kaiju/virome.out
+            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv5/kaiju/virome_summary.tsv results/mv5/kaiju/virome.out
         else
-            touch results/SRR12115961/kaiju/virome.out results/SRR12115961/kaiju/virome_summary.tsv
+            touch results/mv5/kaiju/virome.out results/mv5/kaiju/virome_summary.tsv
         fi
         
-Submitted job 410 with external jobid 'Submitted batch job 28323'.
-Waiting at most 120 seconds for missing files.
+Submitted job 176 with external jobid 'Submitted batch job 28472'.
+
+[Wed Jun 22 16:01:56 2022]
+rule map_mv_positive_reads_to_metagenome:
+    input: results/SRR12115949/reads/true.mvome.reads1.fq.gz, results/SRR12115949/reads/true.mvome.reads2.fq.gz, results/SRR12115949/contigs/metagenome.contigs.filtered.fasta.gz
+    output: results/SRR12115949/mappings/mvome_positive_vs_metagenome/rpkm.txt, results/SRR12115949/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    jobid: 378
+    reason: Missing output files: results/SRR12115949/mappings/mvome_positive_vs_metagenome/scafstats.txt
+    wildcards: sample=SRR12115949
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115949/mappings/mvome_positive_vs_metagenome/
+
+        bbmap.sh in=results/SRR12115949/reads/true.mvome.reads1.fq.gz in2=results/SRR12115949/reads/true.mvome.reads2.fq.gz         ref=results/SRR12115949/contigs/metagenome.contigs.filtered.fasta.gz         scafstats=results/SRR12115949/mappings/mvome_positive_vs_metagenome/scafstats.txt         rpkm=results/SRR12115949/mappings/mvome_positive_vs_metagenome/rpkm.txt         t=8         nodisk
+        
+Submitted job 378 with external jobid 'Submitted batch job 28473'.
+
+[Wed Jun 22 16:01:56 2022]
+rule viromeQC_virome:
+    input: results/SRR12115962/reads/true.virome.reads1.fq.gz, results/SRR12115962/reads/true.virome.reads2.fq.gz
+    output: results/SRR12115962/viromeQC/virome_QC.tsv
+    jobid: 431
+    reason: Missing output files: results/SRR12115962/viromeQC/virome_QC.tsv
+    wildcards: sample=SRR12115962
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/SRR12115962/viromeQC
+
+        if [ -s results/SRR12115962/reads/true.virome.reads1.fq.gz ]; then
+            python /home/dlueckin/bin/viromeqc/viromeQC.py -w environmental             --diamond_threads 8 --bowtie2_threads 8             -i results/SRR12115962/reads/true.virome.reads1.fq.gz results/SRR12115962/reads/true.virome.reads2.fq.gz             -o results/SRR12115962/viromeQC/virome_QC.tsv
+        else
+            touch results/SRR12115962/viromeQC/virome_QC.tsv
+        fi
+        
+Submitted job 431 with external jobid 'Submitted batch job 28474'.
+
+[Wed Jun 22 16:01:57 2022]
+rule map_virome_reads_to_mv_contigs:
+    input: results/mv6/reads/virome.reads1.fastq.gz, results/mv6/reads/virome.reads2.fastq.gz, results/mv6/contigs/true.mvome.fasta
+    output: results/mv6/reads/true.mvome.reads1.fq.gz, results/mv6/reads/true.mvome.reads2.fq.gz, results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt
+    log: results/mv6/log/map_virome_reads_to_mv_contigs.log
+    jobid: 184
+    reason: Missing output files: results/mv6/reads/true.mvome.reads2.fq.gz, results/mv6/reads/true.mvome.reads1.fq.gz
+    wildcards: sample=mv6
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/mv6/mappings/input_reads_vs_mv_contigs/
+
+        if [ -s results/mv6/contigs/true.mvome.fasta ]; then
+            # the input contig file is NOT empty
+            bbmap.sh in=results/mv6/reads/virome.reads1.fastq.gz in2=results/mv6/reads/virome.reads2.fastq.gz             ref=results/mv6/contigs/true.mvome.fasta             outm=results/mv6/reads/true.mvome.reads1.fq.gz outm2=results/mv6/reads/true.mvome.reads2.fq.gz             statsfile=results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             nodisk
+        else
+            # the input contig file IS empty
+            touch results/mv6/reads/true.mvome.reads1.fq.gz results/mv6/reads/true.mvome.reads2.fq.gz results/mv6/mappings/input_reads_vs_mv_contigs/statsfile.txt
+        fi
+        
+Submitted job 184 with external jobid 'Submitted batch job 28475'.
+
+[Wed Jun 22 16:01:57 2022]
+rule map_virome_reads_to_mv_contigs:
+    input: results/mv1/reads/virome.reads1.fastq.gz, results/mv1/reads/virome.reads2.fastq.gz, results/mv1/contigs/true.mvome.fasta
+    output: results/mv1/reads/true.mvome.reads1.fq.gz, results/mv1/reads/true.mvome.reads2.fq.gz, results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt
+    log: results/mv1/log/map_virome_reads_to_mv_contigs.log
+    jobid: 4
+    reason: Missing output files: results/mv1/reads/true.mvome.reads1.fq.gz, results/mv1/reads/true.mvome.reads2.fq.gz
+    wildcards: sample=mv1
+    resources: tmpdir=/tmp, mem=100G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/mv1/mappings/input_reads_vs_mv_contigs/
+
+        if [ -s results/mv1/contigs/true.mvome.fasta ]; then
+            # the input contig file is NOT empty
+            bbmap.sh in=results/mv1/reads/virome.reads1.fastq.gz in2=results/mv1/reads/virome.reads2.fastq.gz             ref=results/mv1/contigs/true.mvome.fasta             outm=results/mv1/reads/true.mvome.reads1.fq.gz outm2=results/mv1/reads/true.mvome.reads2.fq.gz             statsfile=results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt             t=8             nodisk
+        else
+            # the input contig file IS empty
+            touch results/mv1/reads/true.mvome.reads1.fq.gz results/mv1/reads/true.mvome.reads2.fq.gz results/mv1/mappings/input_reads_vs_mv_contigs/statsfile.txt
+        fi
+        
+Submitted job 4 with external jobid 'Submitted batch job 28476'.
+[Wed Jun 22 16:02:34 2022]
+Finished job 108.
+1 of 115 steps (1%) done
+Select jobs to execute...
+
+[Wed Jun 22 16:02:34 2022]
+rule kaiju_mvome:
+    input: results/mv16/reads/true.mvome.reads1.fq.gz, results/mv16/reads/true.mvome.reads2.fq.gz
+    output: results/mv16/kaiju/mvome.out, results/mv16/kaiju/mvome_summary.tsv
+    jobid: 93
+    reason: Missing output files: results/mv16/kaiju/mvome_summary.tsv
+    wildcards: sample=mv16
+    resources: tmpdir=/tmp, mem=250G, time=12:00:00, ntasks=8
+
+
+        mkdir -p results/mv16/kaiju
+        
+        if [ -s results/mv16/reads/true.mvome.reads1.fq.gz ]; then
+            kaiju-multi -z 8             -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -f /bioinf/home/dlueckin/dbs/kaiju_db_nr/kaiju_db_nr.fmi             -i results/mv16/reads/true.mvome.reads1.fq.gz             -j results/mv16/reads/true.mvome.reads2.fq.gz             -o results/mv16/kaiju/mvome.out
+
+            kaiju2table -t /bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp -n /bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp             -r genus -o results/mv16/kaiju/mvome_summary.tsv results/mv16/kaiju/mvome.out
+        else
+            touch results/mv16/kaiju/mvome.out results/mv16/kaiju/mvome_summary.tsv
+        fi
+        
+Submitted job 93 with external jobid 'Submitted batch job 28477'.

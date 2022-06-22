@@ -4782,3 +4782,6 @@ Finished job 153.
 [Tue Jun 21 02:27:31 2022]
 Finished job 238.
 48 of 108 steps (44%) done
+Terminating processes on user request, this might take some time.
+Will exit after finishing currently running jobs.
+Cancelling snakemake on user request.

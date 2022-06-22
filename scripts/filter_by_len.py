@@ -3,7 +3,6 @@ from Bio import SeqIO
 import sys
 import os
 
-
 CONTIG_FILE=sys.argv[1]
 MIN_LEN=int(sys.argv[2])
 
