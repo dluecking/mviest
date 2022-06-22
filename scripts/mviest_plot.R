@@ -40,18 +40,39 @@ SAMPLE <- unlist(strsplit(outfile, "\\/"))[2]
 # plot 1 - viral vs non-viral ratio ---------------------------------------
 
 NO_OF_TOTAL_CONTIGS <- nrow(fread(contig_summary))
-NO_OF_READS_MVOME <- fread(viromeQC_mvome) %>% 
-    select(Reads) %>% 
-    top_n(1)
-NO_OF_READS_VIROME <- fread(viromeQC_virome) %>% 
-    select(Reads) %>% 
-    top_n(1)
-VIROMEQC_SCORE_MVOME <- fread(viromeQC_mvome) %>% 
-    select(`total enrichmnet score`) %>% 
-    top_n(1)
-VIROMEQC_SCORE_VIROME <- fread(viromeQC_virome) %>% 
-    select(`total enrichmnet score`) %>% 
-    top_n(1)
+
+if(file.size(viromeQC_mvome) > 0){
+    NO_OF_READS_MVOME <- fread(viromeQC_mvome) %>% 
+        select(Reads) %>% 
+        top_n(1) %>% 
+        unlist()
+}else
+    NO_OF_READS_MVOME <- 0
+
+if(file.size(viromeQC_virome) > 0){
+    NO_OF_READS_VIROME <- fread(viromeQC_virome) %>% 
+        select(Reads) %>% 
+        top_n(1) %>% 
+        unlist()
+}else
+    NO_OF_READS_VIROME <- 0
+
+if(file.size(viromeQC_mvome)){
+    VIROMEQC_SCORE_MVOME <- fread(viromeQC_mvome) %>% 
+        select(`total enrichmnet score`) %>% 
+        top_n(1) %>% 
+        unlist()
+}else
+    VIROMEQC_SCORE_MVOME <- 0
+
+if(file.size(viromeQC_virome)){
+    VIROMEQC_SCORE_VIROME <- fread(viromeQC_virome) %>% 
+        select(`total enrichmnet score`) %>% 
+        top_n(1) %>% 
+        unlist()
+}else
+    VIROMEQC_SCORE_VIROME <- 0
+
 
 mini_df <- data.table(sample = c(SAMPLE, SAMPLE),
                       label = c('viral', 'non-viral'), 
@@ -79,18 +100,23 @@ plot_1 <- ggplot(mini_df, aes(fill=label, y=no_of_reads, x = sample)) +
 
 # kaiju plots -------------------------------------------------------------
 
-kiaju_mvome_df <- fread(kaiju_table_mvome) %>% 
-    arrange(desc(percent)) %>% 
-    filter(percent >= 1) %>% 
-    mutate(sample = SAMPLE) %>% 
-    mutate(origin = 'non-viral')
+if(file.size(kaiju_table_mvome) > 0){
+    kiaju_mvome_df <- fread(kaiju_table_mvome) %>% 
+        arrange(desc(percent)) %>% 
+        filter(percent >= 1) %>% 
+        mutate(sample = SAMPLE) %>% 
+        mutate(origin = 'non-viral')
+}else
+    kiaju_mvome_df <- data.table()
 
-
-kiaju_virome_df<- fread(kaiju_table_virome) %>%
-    arrange(desc(percent)) %>% 
-    filter(percent >= 1) %>%  
-    mutate(sample = SAMPLE) %>% 
-    mutate(origin = 'viral')
+if(file.size(kaiju_table_virome) > 0){
+    kiaju_virome_df<- fread(kaiju_table_virome) %>%
+        arrange(desc(percent)) %>% 
+        filter(percent >= 1) %>%  
+        mutate(sample = SAMPLE) %>% 
+        mutate(origin = 'viral')
+}else
+    kiaju_virome_df <- data.table()
 
 kaiju_plot_df <- rbind(kiaju_virome_df, kiaju_mvome_df)
 

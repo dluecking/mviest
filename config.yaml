@@ -1,5 +1,5 @@
 sbatch_normal_mem: "50G"
-sbatch_high_mem: "100G"
+sbatch_high_mem: "250G"
 virome_min_len: 2000
 minimum_number_of_virome_input_contigs: 1
 long_contig_cutoff: 150000
@@ -22,7 +22,7 @@ samples:
     # - 109_DCM
     # - 109_SRF
     # - 111_DCM
-    # - 111_MES # missing reads
+    # - 111_MES # missing reads -> found reads by selecting the second read file in the table
     # - 111_SRF
     # - 11_SRF
     # - 122_DCM

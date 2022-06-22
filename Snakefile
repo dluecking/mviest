@@ -13,8 +13,8 @@ ntasks: 8
 
 import os
 
-localrules: mviest_summary, mviest_plot, count_virome_contigs, filter_input_virome_by_length, zip_filterd_metagenome_contigs,
-            filter_input_metagenome_by_length, contig_summary, contig_selector, vs2_summary
+localrules: mviest_summary, mviest_plot, count_virome_contigs,
+            filter_input_virome_by_length, contig_summary, contig_selector, vs2_summary
 
 configfile: "config.yaml"
 ### all ########################################################################
@@ -155,18 +155,49 @@ rule contig_selector:
 
 
 ### kaiju ######################################################################
-rule kaiju:
+rule kaiju_mvome:
     conda:
         "envs/kaiju.yaml"
     input:
         mvome_r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
-        mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
+        mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz"
+    output:
+        mvome_raw="results/{sample}/kaiju/mvome.out",
+        mvome_table="results/{sample}/kaiju/mvome_summary.tsv"
+    params:
+        kaiju_fmi=config["kaiju_fmi"],
+        kaiju_nodes=config["kaiju_nodes"],
+        kaiju_names=config["kaiju_names"]
+    resources:
+        mem=config["sbatch_high_mem"],
+        time="12:00:00",
+        ntasks=8
+    shell:
+        """
+        mkdir -p results/{wildcards.sample}/kaiju
+        
+        if [ -s {input.mvome_r1} ]; then
+            kaiju-multi -z {resources.ntasks} \
+            -t {params.kaiju_nodes} -f {params.kaiju_fmi} \
+            -i {input.mvome_r1} \
+            -j {input.mvome_r2} \
+            -o {output.mvome_raw}
+
+            kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
+            -r genus -o {output.mvome_table} {output.mvome_raw}
+        else
+            touch {output.mvome_raw} {output.mvome_table}
+        fi
+        """
+
+rule kaiju_virome:
+    conda:
+        "envs/kaiju.yaml"
+    input:
         virome_r1="results/{sample}/reads/true.virome.reads1.fq.gz",
         virome_r2="results/{sample}/reads/true.virome.reads2.fq.gz"
     output:
-        mvome_raw="results/{sample}/kaiju/mvome.out",
         virome_raw="results/{sample}/kaiju/virome.out",
-        mvome_table="results/{sample}/kaiju/mvome_summary.tsv",
         virome_table="results/{sample}/kaiju/virome_summary.tsv"
     params:
         kaiju_fmi=config["kaiju_fmi"],
@@ -180,25 +211,25 @@ rule kaiju:
         """
         mkdir -p results/{wildcards.sample}/kaiju
         
-        kaiju-multi -z {resources.ntasks} \
-        -t {params.kaiju_nodes} -f {params.kaiju_fmi} \
-        -i {input.mvome_r1},{input.virome_r1} \
-        -j {input.mvome_r2},{input.virome_r2} \
-        -o {output.mvome_raw},{output.virome_raw}
+        if [ -s {input.virome_r1} ]; then
+            kaiju-multi -z {resources.ntasks} \
+            -t {params.kaiju_nodes} -f {params.kaiju_fmi} \
+            -i {input.virome_r1} \
+            -j {input.virome_r2} \
+            -o {output.virome_raw}
 
-        kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
-        -r genus -o {output.mvome_table} {output.mvome_raw}
-
-        kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
-        -r genus -o {output.virome_table} {output.virome_raw}
-
+            kaiju2table -t {params.kaiju_nodes} -n {params.kaiju_names} \
+            -r genus -o {output.virome_table} {output.virome_raw}
+        else
+            touch {output.virome_raw} {output.virome_table}
+        fi
         """
 
 
 ### viromeQC ###################################################################
-rule viromeQC:
+rule viromeQC_mvome:
     """
-    This runs viromeQC on the input reads, mvome reads and creates a report file.
+    This runs viromeQC on the true mvome reads, mvome reads and creates a report file.
     """
     conda:
         "envs/viromeQC.yaml"
@@ -210,27 +241,53 @@ rule viromeQC:
         ntasks=8
     input:
         mvome_r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
-        mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
-        virome_r1="results/{sample}/reads/true.virome.reads1.fq.gz",
-        virome_r2="results/{sample}/reads/true.virome.reads2.fq.gz"
+        mvome_r2="results/{sample}/reads/true.mvome.reads2.fq.gz"
     output:
-        mvome_out="results/{sample}/viromeQC/mvome_QC.tsv",
-        virome_out="results/{sample}/viromeQC/virome_QC.tsv"        
+        mvome_out="results/{sample}/viromeQC/mvome_QC.tsv",       
     shell:
         """
         mkdir -p results/{wildcards.sample}/viromeQC
 
-        python {params.viromeQC_path}/viromeQC.py -w environmental \
-        --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
-        -i {input.mvome_r1} {input.mvome_r2} \
-        -o {output.mvome_out}
-
-        python {params.viromeQC_path}/viromeQC.py -w environmental \
-        --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
-        -i {input.virome_r1} {input.virome_r2} \
-        -o {output.virome_out}
+        if [ -s {input.mvome_r1} ]; then
+            python {params.viromeQC_path}/viromeQC.py -w environmental \
+            --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
+            -i {input.mvome_r1} {input.mvome_r2} \
+            -o {output.mvome_out}
+        else
+            touch {output.mvome_out}
+        fi
         """
 
+rule viromeQC_virome:
+    """
+    This runs viromeQC on the true virome reads, virome reads and creates a report file.
+    """
+    conda:
+        "envs/viromeQC.yaml"
+    params:
+        viromeQC_path=config["viromeQC_path"]
+    resources:
+        mem=config["sbatch_normal_mem"],
+        time="12:00:00",
+        ntasks=8
+    input:
+        virome_r1="results/{sample}/reads/true.virome.reads1.fq.gz",
+        virome_r2="results/{sample}/reads/true.virome.reads2.fq.gz"
+    output:
+        virome_out="results/{sample}/viromeQC/virome_QC.tsv",       
+    shell:
+        """
+        mkdir -p results/{wildcards.sample}/viromeQC
+
+        if [ -s {input.virome_r1} ]; then
+            python {params.viromeQC_path}/viromeQC.py -w environmental \
+            --diamond_threads {resources.ntasks} --bowtie2_threads {resources.ntasks} \
+            -i {input.virome_r1} {input.virome_r2} \
+            -o {output.virome_out}
+        else
+            touch {output.virome_out}
+        fi
+        """
 
 ### viral prediction ###########################################################
 rule DeepVirFinder:
@@ -353,12 +410,18 @@ rule map_virome_reads_to_mv_contigs:
         """
         mkdir -p results/{wildcards.sample}/mappings/input_reads_vs_mv_contigs/
 
-        bbmap.sh in={input.r1} in2={input.r2} \
-        ref={input.mv_contigs} \
-        outm={output.r1} outm2={output.r2} \
-        statsfile={output.statsfile} \
-        t={resources.ntasks} \
-        path=results/{wildcards.sample}/
+        if [ -s {input.mv_contigs} ]; then
+            # the input contig file is NOT empty
+            bbmap.sh in={input.r1} in2={input.r2} \
+            ref={input.mv_contigs} \
+            outm={output.r1} outm2={output.r2} \
+            statsfile={output.statsfile} \
+            t={resources.ntasks} \
+            path=results/{wildcards.sample}/
+        else
+            # the input contig file IS empty
+            touch {output.r1} {output.r2} {output.statsfile}
+        fi
         """
 
 rule map_virome_reads_to_true_virome_contigs:
@@ -382,14 +445,19 @@ rule map_virome_reads_to_true_virome_contigs:
     shell:
         """
         mkdir -p results/{wildcards.sample}/mappings/input_reads_vs_true_virome_contigs/
-
-        bbmap.sh in={input.r1} in2={input.r2} \
-        ref={input.virome_contigs} \
-        outm={output.r1} outm2={output.r2} \
-        scafstats={output.scafstats} \
-        rpkm={output.rpkm} \
-        t={resources.ntasks} \
-        path=results/{wildcards.sample}/
+        if [ -s {input.virome_contigs} ]; then
+            # the input contig file is NOT empty
+            bbmap.sh in={input.r1} in2={input.r2} \
+            ref={input.virome_contigs} \
+            outm={output.r1} outm2={output.r2} \
+            scafstats={output.scafstats} \
+            rpkm={output.rpkm} \
+            t={resources.ntasks} \
+            path=results/{wildcards.sample}/
+        else
+            # the input contig file IS empty
+            touch {output.r1} {output.r2} {output.scafstats} {output.rpkm}
+        fi        
         """
 
 rule map_mv_positive_reads_to_metagenome:
