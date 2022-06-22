@@ -13,14 +13,13 @@ ntasks: 8
 
 import os
 
-localrules: mviest_summary, mviest_plot, check_input, count_virome_contigs, 
-            filter_input_virome_by_length, filter_input_metagenome_by_length, contig_summary, contig_selector, vs2_summary
+localrules: mviest_summary, mviest_plot, count_virome_contigs, filter_input_virome_by_length, zip_filterd_metagenome_contigs,
+            filter_input_metagenome_by_length, contig_summary, contig_selector, vs2_summary
 
 configfile: "config.yaml"
 ### all ########################################################################
 rule all:
     input:
-        expand("results/{sample}/log/00_INPUT_CHECK_DONE.log", sample = config["samples"]),
         expand("results/{sample}/{sample}_mviest_summary.tsv", sample = config["samples"]),
         expand("results/{sample}/{sample}_mviest_plot.png", sample = config["samples"])
 
@@ -58,17 +57,6 @@ rule mviest_plot:
 
 
 ### sanity checks ##############################################################
-rule check_input:
-    input:
-        vr1="results/{sample}/reads/virome.reads1.fastq.gz",
-        vr2="results/{sample}/reads/virome.reads2.fastq.gz",
-        vc="results/{sample}/contigs/virome.contigs.fasta",
-        mc="results/{sample}/contigs/metagenome.contigs.fasta"
-    output:
-        "results/{sample}/log/00_INPUT_CHECK_DONE.log"
-    shell:
-        "touch {output}"
-
 rule count_virome_contigs:
     input:
         "results/{sample}/contigs/virome.contigs.filtered.fasta"
@@ -94,7 +82,6 @@ rule filter_input_virome_by_length:
         "envs/python.yaml"
     input:
         vc="results/{sample}/contigs/virome.contigs.fasta",
-        input_check="results/{sample}/log/00_INPUT_CHECK_DONE.log"
     output:
         vc_filtered="results/{sample}/contigs/virome.contigs.filtered.fasta",
     params:
@@ -105,21 +92,33 @@ rule filter_input_virome_by_length:
         {params.virome_min_len} > {output.vc_filtered}
         """
 
-rule filter_input_metagenome_by_length:
-    conda:
-        "envs/python.yaml"
-    input:
-        mc="results/{sample}/contigs/metagenome.contigs.fasta",
-        input_check="results/{sample}/log/00_INPUT_CHECK_DONE.log"
-    output:
-        mc_filtered="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
-    params:
-        metagenome_min_min_len=config["metagenome_min_min_len"]
-    shell:
-        """
-        python3 scripts/filter_by_len.py {input.mc} \
-        {params.metagenome_min_min_len} > {output.mc_filtered}
-        """
+# rule filter_input_metagenome_by_length:
+#     conda:
+#         "envs/python.yaml"
+#     input:
+#         mc="results/{sample}/contigs/metagenome.contigs.fasta",
+#     output:
+#         mc_filtered="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
+#     params:
+#         metagenome_min_min_len=config["metagenome_min_min_len"]
+#     shell:
+#         """
+#         python3 scripts/filter_by_len.py {input.mc} \
+#         {params.metagenome_min_min_len} > {output.mc_filtered}
+#         """
+
+# rule zip_filterd_metagenome_contigs:
+#     conda:
+#         "envs/python.yaml"
+#     input:
+#         mc_filtered="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
+#     output:
+#         mc_packed="results/{sample}/contigs/metagenome.contigs.filtered.fasta.gz"
+#     shell:
+#         """
+#         gzip {input}
+#         """
+
 
 rule contig_summary:
     conda:
@@ -399,7 +398,7 @@ rule map_mv_positive_reads_to_metagenome:
     input:
         r1="results/{sample}/reads/true.mvome.reads1.fq.gz",
         r2="results/{sample}/reads/true.mvome.reads2.fq.gz",
-        metagenome_contigs="results/{sample}/contigs/metagenome.contigs.filtered.fasta"
+        metagenome_contigs="results/{sample}/contigs/metagenome.contigs.filtered.fasta.gz"
     output:
         rpkm="results/{sample}/mappings/mvome_positive_vs_metagenome/rpkm.txt",
         scafstats="results/{sample}/mappings/mvome_positive_vs_metagenome/scafstats.txt"

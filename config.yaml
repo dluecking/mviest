@@ -1,8 +1,7 @@
-sbatch_normal_mem: "80G"
-sbatch_high_mem: "250G"
+sbatch_normal_mem: "50G"
+sbatch_high_mem: "100G"
 virome_min_len: 2000
-metagenome_min_min_len: 100000
-minimum_number_of_virome_input_contigs: 20
+minimum_number_of_virome_input_contigs: 1
 long_contig_cutoff: 150000
 threads: 2
 dvf_path: "/home/dlueckin/bin/DeepVirFinder/dvf.py"
@@ -15,19 +14,52 @@ kaiju_nodes: "/bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp"
 kaiju_names: "/bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp"
 mv_producer_list: "data/mv_producer/list_of_mv_producer.list"
 samples:
-    - 100_DCM
-    - 100_SRF
-    - 102_DCM
-    - 102_MES
-    - 102_SRF
-    - 109_DCM
-    - 109_SRF
-    - 111_DCM
+    # - 100_DCM
+    # - 100_SRF
+    # - 102_DCM
+    # - 102_MES
+    # - 102_SRF
+    # - 109_DCM
+    # - 109_SRF
+    # - 111_DCM
     # - 111_MES # missing reads
-    - 111_SRF
-    - 11_SRF
-    - 122_DCM
-    - 122_MES
-    - 122_SRF
-    - 123_MIX
-    # - 123_SRF # missing reads
+    # - 111_SRF
+    # - 11_SRF
+    # - 122_DCM
+    # - 122_MES
+    # - 122_SRF
+    # - 123_MIX
+    # - 123_SRF # missing reads -> found reads by selecting the second read file in the table
+    - mv1
+    - mv11
+    - mv13
+    - mv14
+    - mv15
+    - mv16
+    - mv2
+    - mv3
+    - mv4
+    - mv5
+    - mv6
+    - mv8
+    - mv9
+    - SRR12115929
+    - SRR12115930
+    - SRR12115931
+    - SRR12115932
+    - SRR12115933
+    - SRR12115934
+    - SRR12115938
+    - SRR12115949
+    - SRR12115951
+    - SRR12115961
+    - SRR12115962
+    - SRR12115963
+    - SRR12115964
+    - SRR12115965
+    - SRR12115966
+    - SRR12115967
+    - SRR12115968
+    - SRR12115969
+    - SRR12115970
+    - virome

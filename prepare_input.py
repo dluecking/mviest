@@ -13,6 +13,8 @@ parser.add_argument("sample", help = "name of the sample")
 parser.add_argument("-vc", "--virome_contigs")
 parser.add_argument("-mc", "--metagenome_contigs")
 
+parser.add_argument("-mcgz", '--metagenome_contigs_gz')
+
 parser.add_argument("-vr1", "--virome_reads_1", help = "forward reads of the virome")
 parser.add_argument("-vr2", "--virome_reads_2", help = "reverse reads of the virome")
 
@@ -32,6 +34,8 @@ else:
 # basic structure
 SAMPLE = args.sample
 OUTDIR = os.path.join(PARENT_DIRECTORY, SAMPLE)
+
+print(f' preparing {OUTDIR}')
 
 if os.path.exists(OUTDIR):
     if FORCE_OVERWRITE:
@@ -59,6 +63,8 @@ copyContigs(infile=args.virome_contigs,
             outfile=os.path.join(CONTIGS_DIR, "virome.contigs.fasta"))
 copyContigs(infile=args.metagenome_contigs, 
             outfile=os.path.join(CONTIGS_DIR, "metagenome.contigs.fasta"))
+copyContigs(infile=args.metagenome_contigs_gz, 
+            outfile=os.path.join(CONTIGS_DIR, "metagenome.contigs.filtered.fasta.gz"))
 
 # move virome read files (if existing) 
 def copyReads(r1, r2, r1_out, r2_out):
