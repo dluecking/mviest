@@ -30,36 +30,37 @@ samples:
     # - 122_SRF
     # - 123_MIX
     # - 123_SRF # missing reads -> found reads by selecting the second read file in the table
-    - mv1
-    - mv11
-    - mv13
-    - mv14
-    - mv15
-    - mv16
-    - mv2
-    - mv3
-    - mv4
-    - mv5
-    - mv6
-    - mv8
-    - mv9
-    - SRR12115929
+    # - mv1 -> done
+    # - mv11 -> done
+    # - mv13 -> done
+    # - mv14 -> done
+    # - mv15 -> done
+    # - mv16 -> done
+    # - mv2 -> done
+    # - mv3 -> done
+    # - mv4 -> done
+    # - mv5 -> done
+    # - mv6 -> done
+    # - mv8 -> done
+    # - mv9 -> done
+    # - SRR12115929 -> done
+    # - SRR12115932 -> done
+    # - SRR12115934 -> done
+    # - SRR12115961 -> done
+    # - SRR12115962 -> done
+    # - SRR12115967 -> done
+    # - SRR12115970 -> done
+    # - virome -> done
     - SRR12115930
     - SRR12115931
-    - SRR12115932
     - SRR12115933
-    - SRR12115934
     - SRR12115938
     - SRR12115949
     - SRR12115951
-    - SRR12115961
-    - SRR12115962
     - SRR12115963
     - SRR12115964
     - SRR12115965
     - SRR12115966
-    - SRR12115967
     - SRR12115968
     - SRR12115969
-    - SRR12115970
-    - virome
+

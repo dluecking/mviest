@@ -137,13 +137,14 @@ kaiju_plot <- ggplot(kaiju_plot_df, aes(x = origin, y = percent, fill = taxon_na
 
 # mv producer table  -------------------------------------------------------
 
-mv_prod_df <- fread(mvome_reads_vs_metagenome_scafstats) %>% 
-    arrange(desc(assignedReads)) %>% 
-    select('#name', 'assignedReads') %>% 
-    head(10)
+if(file.size(mvome_reads_vs_metagenome_scafstats) > 0){
+    mv_prod_df <- fread(mvome_reads_vs_metagenome_scafstats) %>% 
+        arrange(desc(assignedReads)) %>% 
+        select('#name', 'assignedReads') %>% 
+        head(10)
+}else
+    mv_prod_df <- data.table("V1" == "no scafstats calculated.")
 
-mv_prod_df <-  mv_prod_df %>% 
-    head(10)
 
 fwrite(mv_prod_df, str_replace(outfile, pattern = '\\_mviest\\_plot\\.png', 'potential_mv_producer.tsv'))
 

@@ -410,7 +410,7 @@ rule map_virome_reads_to_mv_contigs:
         """
         mkdir -p results/{wildcards.sample}/mappings/input_reads_vs_mv_contigs/
 
-        if [ -s {input.mv_contigs} ]; then
+        if [[ -s {input.mv_contigs} && -s {input.r1} && -s {input.r2} ]]; then
             # the input contig file is NOT empty
             bbmap.sh in={input.r1} in2={input.r2} \
             ref={input.mv_contigs} \
@@ -445,8 +445,9 @@ rule map_virome_reads_to_true_virome_contigs:
     shell:
         """
         mkdir -p results/{wildcards.sample}/mappings/input_reads_vs_true_virome_contigs/
-        if [ -s {input.virome_contigs} ]; then
-            # the input contig file is NOT empty
+        
+        if [[ -s {input.virome_contigs} && -s {input.r1} && -s {input.r2} ]]; then
+            # the input contig file or the reads are NOT empty
             bbmap.sh in={input.r1} in2={input.r2} \
             ref={input.virome_contigs} \
             outm={output.r1} outm2={output.r2} \
@@ -478,10 +479,16 @@ rule map_mv_positive_reads_to_metagenome:
         """
         mkdir -p results/{wildcards.sample}/mappings/mvome_positive_vs_metagenome/
 
-        bbmap.sh in={input.r1} in2={input.r2} \
-        ref={input.metagenome_contigs} \
-        scafstats={output.scafstats} \
-        rpkm={output.rpkm} \
-        t={resources.ntasks} \
-        nodisk
+        if [[ -s {input.metagenome_contigs} && -s {input.r1} && -s {input.r2} ]]; then
+            # the input contig file or the reads are NOT empty
+            bbmap.sh in={input.r1} in2={input.r2} \
+            ref={input.metagenome_contigs} \
+            scafstats={output.scafstats} \
+            rpkm={output.rpkm} \
+            t={resources.ntasks} \
+            nodisk
+        else
+            # the input contig file IS empty
+            touch {output.scafstats} {output.rpkm}
+        fi      
         """    
