@@ -146,7 +146,7 @@ if(file.size(mvome_reads_vs_metagenome_scafstats) > 0){
     mv_prod_df <- data.table("V1" == "no scafstats calculated.")
 
 
-fwrite(mv_prod_df, str_replace(outfile, pattern = '\\_mviest\\_plot\\.png', 'potential_mv_producer.tsv'))
+fwrite(mv_prod_df, str_replace(outfile, pattern = '\\_mviest\\_plot\\.png', '_potential_mv_producer.tsv'))
 
 
 # patchwork plots ---------------------------------------------------------
@@ -159,4 +159,17 @@ final_plot <- plot_1 +  kaiju_plot
 ggsave(paste0(outfile), plot = final_plot, width = 25, height = 15, units = "cm")
 
 
+# save data ---------------------------------------------------------------
 
+summary_df <- data.table(
+    'sample' = SAMPLE,
+    'no_of_contigs' = NO_OF_TOTAL_CONTIGS,
+    'no_of_reads_viral' = NO_OF_READS_VIROME,
+    'no_of_reads_non-viral' = NO_OF_READS_MVOME,
+    'viromeQC_score_viral' = VIROMEQC_SCORE_VIROME,
+    'viromeQC_score_non-viral' = VIROMEQC_SCORE_MVOME,
+    'mviest_mvome_ratio' = 0
+)
+summary_df$mviest_mvome_ratio = NO_OF_READS_MVOME / sum(NO_OF_READS_VIROME, NO_OF_READS_MVOME)
+
+fwrite(summary_df, str_replace(outfile, pattern = '\\_mviest\\_plot\\.png', '_mviest_summary.tsv'))

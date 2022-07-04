@@ -13,7 +13,7 @@ ntasks: 8
 
 import os
 
-localrules: mviest_summary, mviest_plot, count_virome_contigs,
+localrules: mviest_plot, count_virome_contigs,
             filter_input_virome_by_length, contig_summary, contig_selector, vs2_summary
 
 configfile: "config.yaml"
@@ -25,14 +25,6 @@ rule all:
 
 
 ### summary steps ##############################################################
-rule mviest_summary:
-    input: 
-        "results/{sample}/{sample}_mviest_plot.png"
-    output:
-        "results/{sample}/{sample}_mviest_summary.tsv"
-    shell:
-        "touch {output}"
-
 rule mviest_plot:
     conda:
         "envs/R.yaml"
@@ -44,7 +36,8 @@ rule mviest_plot:
         contig_summary="results/{sample}/contig_summary_{sample}.tsv",
         mvome_reads_vs_metagenome_scafstats="results/{sample}/mappings/mvome_positive_vs_metagenome/scafstats.txt"
     output:
-        "results/{sample}/{sample}_mviest_plot.png"
+        plot="results/{sample}/{sample}_mviest_plot.png",
+        tsv="results/{sample}/{sample}_mviest_summary.tsv"
     shell:
         """
         Rscript scripts/mviest_plot.R \
@@ -52,7 +45,7 @@ rule mviest_plot:
         {input.viromeQC_mvome} {input.viromeQC_virome} \
         {input.contig_summary} \
         {input.mvome_reads_vs_metagenome_scafstats} \
-        {output}
+        {output.plot}
         """
 
 
@@ -445,7 +438,7 @@ rule map_virome_reads_to_true_virome_contigs:
     shell:
         """
         mkdir -p results/{wildcards.sample}/mappings/input_reads_vs_true_virome_contigs/
-        
+
         if [[ -s {input.virome_contigs} && -s {input.r1} && -s {input.r2} ]]; then
             # the input contig file or the reads are NOT empty
             bbmap.sh in={input.r1} in2={input.r2} \

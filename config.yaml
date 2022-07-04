@@ -22,45 +22,92 @@ samples:
     # - 109_DCM
     # - 109_SRF
     # - 111_DCM
-    # - 111_MES # missing reads -> found reads by selecting the second read file in the table
+    # # - 111_MES # missing reads -> found reads by selecting the second read file in the table # also has an issue with vs2
     # - 111_SRF
     # - 11_SRF
     # - 122_DCM
-    # - 122_MES
+    # # - 122_MES # there is a weird error with this one. Doesnt matter
     # - 122_SRF
     # - 123_MIX
     # - 123_SRF # missing reads -> found reads by selecting the second read file in the table
-    # - mv1 -> done
-    # - mv11 -> done
-    # - mv13 -> done
-    # - mv14 -> done
-    # - mv15 -> done
-    # - mv16 -> done
-    # - mv2 -> done
-    # - mv3 -> done
-    # - mv4 -> done
-    # - mv5 -> done
-    # - mv6 -> done
-    # - mv8 -> done
-    # - mv9 -> done
-    # - SRR12115929 -> done
-    # - SRR12115932 -> done
-    # - SRR12115934 -> done
-    # - SRR12115961 -> done
-    # - SRR12115962 -> done
-    # - SRR12115967 -> done
-    # - SRR12115970 -> done
-    # - virome -> done
-    - SRR12115930
-    - SRR12115931
-    - SRR12115933
-    - SRR12115938
-    - SRR12115949
-    - SRR12115951
-    - SRR12115963
-    - SRR12115964
-    - SRR12115965
-    - SRR12115966
-    - SRR12115968
-    - SRR12115969
-
+    # - 124_MIX
+    # - 124_SRF
+    # - 125_MIX
+    # - 125_SRF
+    # - 137_DCM
+    # - 137_MES
+    # - 137_SRF
+    # - 138_DCM
+    # - 138_MES
+    # - 138_SRF
+    # - 155_DCM
+    - 155_MES
+    # - 155_SRF
+    # - 158_DCM
+    # - 158_MES
+    # - 158_SRF
+    # - mv1 --> done and moved!
+    # - mv11 --> done and moved!
+    # - mv13 --> done and moved!
+    # - mv14 --> done and moved!
+    # - mv15 --> done and moved!
+    # - mv16 --> done and moved!
+    # - mv2 --> done and moved!
+    # - mv3 --> done and moved!
+    # - mv4 --> done and moved!
+    # - mv5 --> done and moved!
+    # - mv6 --> done and moved!
+    # - mv8 --> done and moved!
+    # - mv9 --> done and moved!
+    # - SRR12115929 --> done and moved!
+    # - SRR12115932 --> done and moved!
+    # - SRR12115934 --> done and moved!
+    # - SRR12115961 --> done and moved!
+    # - SRR12115962 --> done and moved!
+    # - SRR12115967 --> done and moved!
+    # - SRR12115970 --> done and moved!
+    # - virome --> done and moved!
+    # - SRR12115930 --> done and moved!
+    # - SRR12115931 # there is a weird error with this one. Doesnt matter
+    # - SRR12115933 --> done and moved!
+    # - SRR12115938 --> done and moved!
+    # - SRR12115949 --> done and moved!
+    # - SRR12115951 --> done and moved!
+    # - SRR12115963 --> done and moved!
+    # - SRR12115964 --> done and moved!
+    # - SRR12115965 --> done and moved!
+    # - SRR12115966 --> done and moved!
+    # - SRR12115968 --> done and moved!
+    # - SRR12115969 --> done and moved!
+    # - med4 --> done and moved!
+    # - SRR1015709 --> done and moved!
+    # - SRR1015707 --> done and moved!
+    # - DRR173063 --> done and moved!
+    # - DRR173064 --> done and moved!
+    # - DRR173065 --> done and moved!
+    # - DRR173066 --> done and moved!
+    # - DRR173067 --> done and moved!
+    # - DRR173069 --> done and moved!
+    # - DRR173070 --> done and moved!
+    # - DRR173071 --> done and moved!
+    # - DRR173072 --> done and moved!
+    # - DRR173073 --> done and moved!
+    # - DRR173074 --> done and moved!
+    # - DRR173075 --> done and moved!
+    # - DRR173076 --> done and moved!
+    # - DRR173077 --> done and moved!
+    # - DRR173078 --> done and moved!
+    # - DRR173079 --> done and moved!
+    # - DRR173080 --> done and moved!
+    # - DRR173081 --> done and moved!
+    # - DRR173082 --> done and moved!
+    # - DRR173083 --> done and moved!
+    # - DRR173084 --> done and moved!
+    # - DRR173085 --> done and moved!
+    # - DRR173086 --> done and moved!
+    # - DRR173087 --> done and moved!
+    # - DRR173089 --> done and moved!
+    # - DRR173090 --> done and moved!
+    # - DRR173091 --> done and moved!
+    # - DRR173093 --> done and moved!
+    # - DRR173094 --> done and moved!
