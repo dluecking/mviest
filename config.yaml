@@ -14,38 +14,131 @@ kaiju_nodes: "/bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp"
 kaiju_names: "/bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp"
 mv_producer_list: "data/mv_producer/list_of_mv_producer.list"
 samples:
-    # - 100_DCM
-    # - 100_SRF
-    # - 102_DCM
-    # - 102_MES
-    # - 102_SRF
-    # - 109_DCM
-    # - 109_SRF
-    # - 111_DCM
-    # # - 111_MES # missing reads -> found reads by selecting the second read file in the table # also has an issue with vs2
-    # - 111_SRF
-    # - 11_SRF
-    # - 122_DCM
-    # # - 122_MES # there is a weird error with this one. Doesnt matter
-    # - 122_SRF
-    # - 123_MIX
+    - 42_SRF
+    - 45_SRF
+    - 46_SRF
+    - 48_SRF
+    - 52_DCM
+    - 52_SRF
+    - 56_MES
+    - 56_SRF
+    - 58_DCM
+    - 62_SRF
+    # - 65_DCM
+    # - 65_SRF
+    # - 66_DCM
+    # - 66_SRF
+    # - 67_SRF
+    # - 68_DCM
+    # - 68_MES
+    # - 68_SRF # some error
+    # - 70_MES # some error
+    # - 70_SRF
+    # - 72_DCM
+    # - 72_MES
+    # # - 72_SRF
+    # - 76_DCM
+    # # - 76_MES
+    # # - 76_SRF
+    # # - 78_DCM
+    # - 78_MES
+    # - 78_SRF
+    # - 85_DCM -> need solution for dvf
+    # - 85_MES
+    # - 85_SRF
+    # - 82_DCM
+    # - 82_SRF -> done
+    # - 84_SRF -> done
+    # - 122_DCM -> done and moved to three_stations
+    # - 122_MES -> done and moved to three_stations
+    # - 122_SRF -> done and moved to three_stations
+    # - 158_DCM -> done and moved to three_stations
+    # - 158_MES -> done and moved to three_stations
+    # - 158_SRF -> done and moved to three_stations
+    # - 64_DCM -> done and moved to three_stations
+    # - 64_MES # -> this has been resequenced: ERR2752155
+    # - 64_SRF # -> done and moved to three_stations
+    # # - 193_SRF
+    # - 194_DCM
+    # # - 194_SRF
+    # # - 196_SRF
+    # # - 201_DCM
+    # - 201_MES
+    # - 201_SRF
+    # - 205_MES 
+    # # - 205_SRF
+    # - 206_MES
+    # - 206_SRF
+    # - 208_SRF
+    # - 209_MES
+    # - 209_SRF
+    # - 210_MES
+    # - 210_SRF
+    # - 22_SRF
+    # - 23_DCM
+    # - 25_DCM
+    # - 25_SRF
+    # - 30_DCM
+    # - 31_SRF
+    # - 32_DCM
+    # - 32_SRF
+    # - 33_SRF
+    # - 178_SRF # problem!
+    # - 180_DCM # problem!
+    # - 188_DCM # problem!
+    # - 138_MES # problem!
+    # - 158_DCM # problem!
+    # - 158_MES # problem!
+    # - 168_SRF # problem!
+    # - 168_DCM # problem!
+    # - 175_SRF # problem!
+    # - 173_DCM # problem!
+    # - 137_MES # problem!
+    # - 111_MES # problem!
+    # - 122_MES # problem!
+    # - 155_MES # problem!
+    # - 175_ZZZ # problem!
+    # - 4976_AA --> done and moved!
+    # - 4976_AB --> done and moved!
+    # - 4976_AD --> done and moved!
+    # - 4976_AE --> done and moved!
+    # - 100_DCM --> done and moved!
+    # - 100_SRF --> done and moved!
+    # - 102_DCM --> done and moved!
+    # - 102_MES --> done and moved!
+    # - 102_SRF --> done and moved!
+    # - 109_DCM --> done and moved!
+    # - 109_SRF --> done and moved!
+    # - 111_DCM --> done and moved!
+    # - 111_SRF --> done and moved!
+    # - 11_SRF --> done and moved!
+    # - 122_DCM --> done and moved!
+    # - 122_SRF --> done and moved!
+    # - 123_MIX --> done and moved!
     # - 123_SRF # missing reads -> found reads by selecting the second read file in the table
-    # - 124_MIX
-    # - 124_SRF
-    # - 125_MIX
-    # - 125_SRF
-    # - 137_DCM
-    # - 137_MES
-    # - 137_SRF
-    # - 138_DCM
-    # - 138_MES
-    # - 138_SRF
-    # - 155_DCM
-    - 155_MES
-    # - 155_SRF
-    # - 158_DCM
-    # - 158_MES
-    # - 158_SRF
+    # - 124_MIX --> done and moved!
+    # - 124_SRF --> done and moved!
+    # - 125_MIX --> done and moved!
+    # - 125_SRF --> done and moved!
+    # - 137_DCM --> done and moved!
+    # - 137_SRF --> done and moved!
+    # - 138_DCM --> done and moved!
+    # - 138_SRF --> done and moved!
+    # - 155_DCM --> done and moved!
+    # - 155_SRF --> done and moved!
+    # - 158_SRF --> done and moved!
+    # - 163_MES --> done and moved!
+    # - 173_SRF --> done and moved!
+    # - 163_SRF --> done and moved!
+    # - 168_MIX --> done and moved!
+    # - 175_MIX --> done and moved!
+    # - 180_SRF --> done and moved
+    # - 188_SRF --> done and moved
+    # - 189_DCM --> done and moved
+    # - 189_MES --> done and moved
+    # - 18_DCM --> done and moved
+    # - 18_SRF --> done and moved
+    # - 191_SRF --> done and moved
     # - mv1 --> done and moved!
     # - mv11 --> done and moved!
     # - mv13 --> done and moved!
@@ -111,3 +204,4 @@ samples:
     # - DRR173091 --> done and moved!
     # - DRR173093 --> done and moved!
     # - DRR173094 --> done and moved!
+

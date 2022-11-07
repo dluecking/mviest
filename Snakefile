@@ -3,7 +3,7 @@ Command to run:
  snakemake -pr -j 16 --use-conda --conda-frontend mamba --keep-going \
  --latency-wait 340 --rerun-incomplete --conda-prefix ~/envs/ \
  --cluster  "sbatch --time={resources.time} --mem={resources.mem} --ntasks={resources.threads} \
- --output log/%x.%j.out --partition=CLUSTER"
+ --output log/%x.%j.out --partition=CLUSTER --exclude=smallmem-1,smallmem-2"
 
 Where
 mem: 80G (kaiju 250)
@@ -293,7 +293,7 @@ rule DeepVirFinder:
         "results/{sample}/dvf/virome.contigs.filtered.fasta_gt1bp_dvfpred.txt"
     resources:
         mem=config["sbatch_normal_mem"],
-        time="12:00:00",
+        time="24:00:00",
         ntasks=8
     params:
         dvf_executable=config["dvf_path"]
@@ -315,7 +315,7 @@ rule vs2:
         "results/{sample}/vs2/final-viral-score.tsv"
     resources:
         mem=config["sbatch_normal_mem"],
-        time="12:00:00",
+        time="24:00:00",
         ntasks=8
     params:
         vsdbdir=config["vs2_db"]
@@ -335,7 +335,7 @@ rule checkv:
         "results/{sample}/checkv/contamination.tsv",
     resources:
         mem=config["sbatch_normal_mem"],
-        time="12:00:00",
+        time="24:00:00",
         ntasks=8
     params:
         checkvdbdir=config["checkv_db"]
@@ -370,7 +370,7 @@ rule platon:
         platon_db=config["platon_db"]
     resources:
         mem=config["sbatch_normal_mem"],
-        time="12:00:00",
+        time="24:00:00",
         ntasks=8
     shell:
         """
@@ -433,7 +433,7 @@ rule map_virome_reads_to_true_virome_contigs:
         "results/{sample}/log/map_virome_reads_vs_true_virome_contigs.log"
     resources:
         mem=config["sbatch_normal_mem"],
-        time="12:00:00",
+        time="24:00:00",
         ntasks=8
     shell:
         """
@@ -466,7 +466,7 @@ rule map_mv_positive_reads_to_metagenome:
         scafstats="results/{sample}/mappings/mvome_positive_vs_metagenome/scafstats.txt"
     resources:
         mem=config["sbatch_normal_mem"],
-        time="12:00:00",
+        time="24:00:00",
         ntasks=8
     shell:
         """

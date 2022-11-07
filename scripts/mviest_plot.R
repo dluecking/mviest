@@ -27,13 +27,14 @@ contig_summary <- args[5]
 mvome_reads_vs_metagenome_scafstats <- args[6]
 outfile <- args[7]
 
-# kaiju_table_mvome <- 'results/DRR173069/kaiju/mvome_summary.tsv'
-# kaiju_table_virome <- 'results/DRR173069/kaiju/virome_summary.tsv'
-# viromeQC_mvome <- 'results/DRR173069/viromeQC/mvome_QC.tsv'
-# viromeQC_virome <- 'results/DRR173069/viromeQC/virome_QC.tsv'
-# contig_summary <- 'results/DRR173069/contig_summary_DRR173069.tsv'
-# mvome_reads_vs_metagenome_scafstats <- "results/DRR173069/mappings/mvome_positive_vs_metagenome/scafstats.txt"
-# outfile <- 'results/DRR173069/DRR173064_mviest_plot.png'
+
+# kaiju_table_mvome <- '4976_AA/kaiju/mvome_summary.tsv'
+# kaiju_table_virome <- '4976_AA/kaiju/virome_summary.tsv'
+# viromeQC_mvome <- '4976_AA/viromeQC/mvome_QC.tsv'
+# viromeQC_virome <- '4976_AA/viromeQC/virome_QC.tsv'
+# contig_summary <- '4976_AA/contig_summary_4976_AA.tsv'
+# mvome_reads_vs_metagenome_scafstats <- "4976_AA/mappings/mvome_positive_vs_metagenome/scafstats.txt"
+# outfile <- '4976_AA/4976_AA_mviest_plot_local.png'
 
 SAMPLE <- unlist(strsplit(outfile, "\\/"))[2]
 
