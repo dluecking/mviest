@@ -14,16 +14,52 @@ kaiju_nodes: "/bioinf/home/dlueckin/dbs/kaiju_db_nr/nodes.dmp"
 kaiju_names: "/bioinf/home/dlueckin/dbs/kaiju_db_nr/names.dmp"
 mv_producer_list: "data/mv_producer/list_of_mv_producer.list"
 samples:
-    - 42_SRF
-    - 45_SRF
-    - 46_SRF
-    - 48_SRF
-    - 52_DCM
-    - 52_SRF
-    - 56_MES
-    - 56_SRF
-    - 58_DCM
-    - 62_SRF
+    # - 111_MES
+    # - 137_MES
+    # - 138_MES
+    # - 155_MES # later
+    - 168_DCM
+    - 168_SRF
+    # - 173_DCM # later
+    # - 175_SRF
+    # - 175_ZZZ
+    # - 178_SRF
+    # - 18_DCM
+    # - 18_SRF
+    # - 180_DCM
+    # - 188_DCM
+    # - 201_MES
+    # - 201_SRF
+    # - 205_MES
+    # - 206_MES
+    # - 206_SRF
+    # - 208_SRF
+    # - 209_MES
+    # - 209_SRF
+    # - 34_DCM
+    # - 34_SRF
+    # - 36_DCM
+    # - 36_SRF
+    # - 37_MES1
+    # - 38_DCM
+    # - 38_MES
+    # - 38_SRF
+    # - 39_DCM
+    # - 39_MES
+    # - 39_SRF
+    # - 41_DCM
+    # - 41_SRF
+    # - 42_DCM
+    # - 42_SRF
+    # - 45_SRF
+    # - 46_SRF
+    # - 48_SRF
+    # - 52_DCM
+    # - 52_SRF
+    # - 56_MES
+    # - 56_SRF
+    # - 58_DCM
+    # - 62_SRF
     # - 65_DCM
     # - 65_SRF
     # - 66_DCM
